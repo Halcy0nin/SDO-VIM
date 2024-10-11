@@ -31,7 +31,7 @@ require base_path('views/partials/head.php') ?>
             <li>Date Acquired</li>
          </ul>
       </div>
-   <section class="table-responsive h-dvh bg-zinc-50 rounded border-[1px]">
+   <section class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
       <table class="table table-striped">
          <thead>
         <tr>

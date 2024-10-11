@@ -233,7 +233,7 @@ body {
   
   margin-top: 2rem;
   margin-bottom: 2.5rem;
-  margin-left: 3rem;
+  margin-left: 0rem;
   width: fit-content;
   border-radius: 0.25rem;
   overflow: hidden;
@@ -431,7 +431,7 @@ body {
   width: 10rem;
   line-height: 0%;
   position: relative;
-  margin-left: 23rem;
+  margin-left: 20rem;
   margin-top: -4.7rem;
   margin-bottom: 1.5rem;
 
