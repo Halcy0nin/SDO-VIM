@@ -129,6 +129,8 @@ $router->get('/custodian', 'custodian/create.php')->only('custodian');
 $router->post('/custodian/receipt', 'custodian/receipt/store.php')->only('custodian');
 
 $router->get('/custodian/custodian-inventory', 'custodian-inventory/index.php')->only('custodian');
+
+$router->post('/custodian/custodian-inventory/s', 'custodian-inventory/show.php')->only('custodian');
 //Create Item
 $router->post('/custodian/custodian-inventory', '/custodian-inventory/store.php')->only('custodian');
 //Edit Item

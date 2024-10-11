@@ -23,19 +23,6 @@ require base_path('views/partials/head.php') ?>
          </button>
       </form>
 
-      <div class="dropdown">
-         <div class="select">
-            <span class="selected">Filter</span>
-            <div class="caret"></div>
-         </div>
-         <ul class="menu">
-            <li>School</li>
-            <li>School1</li>
-            <li>School2</li>
-            <li>School3</li>
-         </ul>
-      </div>
-
    </section>
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
@@ -255,6 +242,31 @@ document.addEventListener('click', function(e) {
   });
 });
 </script> 
+
+<script>
+function sortTable(columnIndex, sortOrder) {
+    const table = document.querySelector("table tbody");
+    const rowsArray = Array.from(table.rows);
+
+    // Sorting rows
+    rowsArray.sort((rowA, rowB) => {
+        const cellA = rowA.cells[columnIndex].innerText.trim();
+        const cellB = rowB.cells[columnIndex].innerText.trim();
+        
+        if (!isNaN(cellA) && !isNaN(cellB)) {
+            // Compare numbers
+            return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
+        } else {
+            // Compare text
+            return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        }
+    });
+
+    // Re-append sorted rows to the table
+    rowsArray.forEach(row => table.appendChild(row));
+}
+</script>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

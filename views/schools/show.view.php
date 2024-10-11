@@ -7,7 +7,7 @@ require base_path('views/partials/head.php') ?>
 
 
 <!-- Your HTML code goes here -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <main class="main-col">
     <section class="flex items-center pr-12 gap-3">
         <?php require base_path('views/partials/banner.php') ?>
@@ -27,16 +27,92 @@ require base_path('views/partials/head.php') ?>
         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
             <table class="table table-striped m-0">
                 <thead>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Division</th>
-                    <th>District</th>
-                    <th>Contact Name</th>
-                    <th>Contact Number</th>
-                    <th>Contact Email</th>
-                    <th>Date Added</th>
-                    <th>Actions</th>
+                    <tr>
+                        <th>
+                            <div class="header-content">
+                                ID
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(0, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(0, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Name
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(1, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(1, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Type
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(2, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(2, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Division
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(3, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(3, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                District
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(4, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(4, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Contact Name
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(5, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(5, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Contact Number
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(6, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(6, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Contact Email
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(7, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(7, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Date Added
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(8, 'asc')"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(8, 'desc')"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
                     <?php if (count($schools) > 0): ?>
@@ -115,3 +191,23 @@ require base_path('views/partials/head.php') ?>
     </section>
 </main>
 <?php require base_path('views/partials/footer.php') ?>
+
+<script>
+function sortTable(columnIndex, sortOrder) {
+    const table = document.querySelector("table tbody");
+    const rowsArray = Array.from(table.rows);
+
+    rowsArray.sort((rowA, rowB) => {
+        const cellA = rowA.cells[columnIndex].innerText.trim();
+        const cellB = rowB.cells[columnIndex].innerText.trim();
+        
+        if (!isNaN(cellA) && !isNaN(cellB)) {
+            return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
+        } else {
+            return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        }
+    });
+
+    rowsArray.forEach(row => table.appendChild(row));
+}
+</script>
