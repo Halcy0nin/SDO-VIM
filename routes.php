@@ -51,6 +51,7 @@ $router->patch('/coordinator', 'coordinator/patch.php')->only('coordinator');
 
 $router->get('/coordinator/resources', 'resources/index.php')->only('coordinator');
 $router->post('/coordinator/resources/s', 'resources/show.php')->only('coordinator');
+
 $router->get('/coordinator/resources/unassigned', 'resources/unassigned/index.php')->only('coordinator');
 $router->post('/coordinator/resources/unassigned/s', 'resources/unassigned/show.php')->only('coordinator');
 $router->get('/coordinator/resources/working', 'resources/working/index.php')->only('coordinator');
@@ -143,6 +144,8 @@ $router->post('/custodian/custodian-inventory/exportpdf', '/custodian-inventory/
 $router->post('/custodian/custodian-inventory/exportxls', '/custodian-inventory/export_items_xls.php')->only('custodian');
 
 $router->get('/custodian/custodian-resources', 'custodian-resources/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/s', 'custodian-resources/show.php')->only('custodian');
+
 $router->get('/custodian/custodian-resources/unassigned', 'custodian-resources/unassigned/index.php')->only('custodian');
 $router->get('/custodian/custodian-resources/working', 'custodian-resources/working/index.php')->only('custodian');
 $router->get('/custodian/custodian-resources/repair', 'custodian-resources/repair/index.php')->only('custodian');

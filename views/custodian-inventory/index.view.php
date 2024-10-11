@@ -14,8 +14,8 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/custodian/custodian-inventory/add_item_modal.php') ?>
       <?php require base_path('views/partials/custodian/custodian-inventory/export_items_modal.php') ?>
    </section>
-   <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
-      <form class="search-container1 search" method="POST" action="">
+   <section class="mx-12 mt-12 mb-12 h-dvh rounded flex flex-col">
+      <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/<?= $id ?>/s">
          <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
          <button type="submit" class="search">
             <i class="bi bi-search"></i>
@@ -31,7 +31,7 @@ require base_path('views/partials/head.php') ?>
             <li>Date Acquired</li>
          </ul>
       </div>
-   <section class="table-responsive h-dvh mx-12 mb-12 bg-zinc-50 rounded border-[1px]">
+   <section class="table-responsive h-dvh bg-zinc-50 rounded border-[1px]">
       <table class="table table-striped">
          <thead>
         <tr>
