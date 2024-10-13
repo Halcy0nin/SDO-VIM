@@ -91,9 +91,9 @@ $statusMap = [
 ];
 
 view('custodian-resources/index.view.php', [
+    'notificationCount' => $notificationCount,
     'statusMap' => $statusMap,
     'heading' => 'Resources',
-    'notificationCount' => $notificationCount,
     'resources' => $resources,
     'pagination' => $pagination
 ]);

@@ -20,7 +20,6 @@ require base_path('views/partials/head.php') ?>
       <div class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped">
             <thead>
-
                <tr>
                   <th>
                      <div class="header-content">
@@ -62,8 +61,8 @@ require base_path('views/partials/head.php') ?>
                      <div class="header-content">
                         Date Acquired
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick="sortTable(4, 'asc')"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick="sortTable(4, 'desc')"></i>
+                           <i class="fas fa-sort-up sort-icon" onclick="sortTable(3, 'asc')"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick="sortTable(3, 'desc')"></i>
                         </span>
                      </div>
                   </th>
@@ -95,23 +94,30 @@ require base_path('views/partials/head.php') ?>
                      <div class="w-full flex flex-wrap items-center justify-end gap-2">
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>
-                           <a
-                              href="/custodian/custodian-resources?page=1"
-                              class="pagination-link">
-                              <i class="bi bi-chevron-bar-left"></i>
-                           </a>
-                           <a
-                              href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
-                              <i class="bi bi-chevron-left"></i>
-                           </a>
-                           <a href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
-                              class="pagination-link">
-                              <i class="bi bi-chevron-right"></i>
-                           </a>
-                           <a href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
-                              class="pagination-link">
-                              <i class="bi bi-chevron-bar-right"></i>
-                           </a>
+                            <form
+                              method="POST"
+                              action="/custodian/custodian-resources/s?page=1">
+                              <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+                              <button class="pagination-link" type="submit"><i class="bi bi-chevron-bar-left"></i></button>
+                           </form>
+                           <form
+                              method="POST"
+                              action="/custodian/custodian-resources/s?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>">
+                              <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+                              <button class="pagination-link" type="submit"><i class="bi bi-chevron-left"></i></button>
+                           </form>
+                           <form
+                              method="POST"
+                              action="/custodian/custodian-resources/s?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>">
+                              <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+                              <button class="pagination-link" type="submit"><i class="bi bi-chevron-right"></i></button>
+                           </form>
+                           <form
+                              method="POST"
+                              action="/custodian/custodian-resources/s?page=<?= htmlspecialchars($pagination['pages_total']) ?>">
+                              <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+                              <button class="pagination-link" type="submit"><i class="bi bi-chevron-bar-right"></i></button>
+                           </form>
                         <?php endif; ?>
                      </div>
                   </td>
@@ -123,31 +129,6 @@ require base_path('views/partials/head.php') ?>
 </main>
 
 <?php require base_path('views/partials/footer.php') ?>
-
-<script>
-function sortTable(columnIndex, sortOrder) {
-    const table = document.querySelector("table tbody");
-    const rowsArray = Array.from(table.rows);
-
-    // Sorting rows
-    rowsArray.sort((rowA, rowB) => {
-        const cellA = rowA.cells[columnIndex].innerText.trim();
-        const cellB = rowB.cells[columnIndex].innerText.trim();
-        
-        if (!isNaN(cellA) && !isNaN(cellB)) {
-            // Compare numbers
-            return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
-        } else {
-            // Compare text
-            return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-        }
-    });
-
-    // Re-append sorted rows to the table
-    rowsArray.forEach(row => table.appendChild(row));
-}
-</script>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
