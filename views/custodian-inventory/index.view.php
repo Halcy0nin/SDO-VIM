@@ -164,7 +164,7 @@ require base_path('views/partials/head.php') ?>
                         <?php 
                            foreach ($histories as $history):
                               if ($history['item_code'] == $item['item_code']) {
-                                 echo htmlspecialchars($history['action'] . ' by ' . $history['user_name'] . ' on ' . $history['modified_at']);
+                                 echo htmlspecialchars($history['action'] . ' by ' . $history['user_name'] . ' on ' . formatTimestamp($history['modified_at'], 'M d, Y h:iA '));
                               }
                            endforeach;
                         ?>

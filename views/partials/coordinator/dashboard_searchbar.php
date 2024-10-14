@@ -1,6 +1,6 @@
 <form class="search-containers search" method="POST" action="/coordinator">
     <input name="_method" value="PATCH" hidden />
-    <input type="hidden" name="schoolFilterValue" id="schoolFilterValue" />
+    <input type="hidden" name="schoolSearchValue" id="schoolSearchValue" />
     <input type="text" name="search" id="search" placeholder="Search" value="<?= htmlspecialchars($search ?? '') ?>" onkeyup="showDropdown()" />
     <button type="submit" class="search" onclick="handleSubmit(event)">
         <i class="bi bi-search"></i>
@@ -62,7 +62,7 @@ function performSearch() {
                         li.style.cursor = "pointer";
                         li.onclick = function() {
                             document.getElementById("search").value = school.school_name; // Set input value
-                            document.getElementById("schoolFilterValue").value = school.school_name; // Set the hidden input value
+                            document.getElementById("schoolSearchValue").value = school.school_name; // Set the hidden input value
                             var form = document.querySelector('.search-containers.search');  // Explicitly selecting the form
                             form.submit();
                             dropdown.style.display = "none"; // Hide the dropdown
@@ -92,7 +92,7 @@ function handleSubmit(event) {
     event.preventDefault(); // Prevent default form submission for now
 
     var input = document.getElementById("search").value;
-    var hiddenInput = document.getElementById("schoolFilterValue");
+    var hiddenInput = document.getElementById("schoolSearchValue");
 
     // Check if the manually entered value matches any school name in the list
     if (schoolList.includes(input)) {
