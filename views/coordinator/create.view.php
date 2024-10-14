@@ -9,12 +9,7 @@ require base_path('views/partials/head.php') ?>
 <main class="main-col">
    <section>
       <?php require base_path('views/partials/banner.php') ?> 
-      <form class="search-containers search" method="POST" action="">
-         <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
-         <button type="submit" class="search">
-            <i class="bi bi-search"></i>
-         </button>
-      </form>
+      <?php require base_path('views/partials/coordinator/dashboard_searchbar.php') ?> 
 
       <div class="dropdown1">
          <div class="select">

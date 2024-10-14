@@ -117,7 +117,6 @@ $itemCountsJson = json_encode($itemCounts);
 
 $schoolDropdownContent = $db->query('
         SELECT school_name FROM schools;
-
 ') ->get();
 
 $notificationCountQuery = $db->query('
