@@ -32,7 +32,7 @@ require base_path('views/partials/head.php') ?>
          </form>
       </div>
       
-         <h2> <?= $schoolName ?? "All School" ?></h2>
+         <h2> <?= $schoolName ?? "All Schools" ?></h2>
          <h2> Data as of: <?php echo date("F Y"); ?></h2>
 
    </section>

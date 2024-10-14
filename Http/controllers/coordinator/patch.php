@@ -10,14 +10,17 @@ $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
     WHERE viewed IS NULL
-')->find();
+    AND  created_by != :user_id 
+',[
+    'user_id' => get_uid(),
+])->find();
 
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
-if ($notificationCount > 5) {
+if ($notificationCount > 5){
     $notificationCount = '5+';
-}
+};
 
 // Get school filter and search values
 $schoolFilterValue = $_POST['schoolFilterValue'] ?? null;
@@ -175,7 +178,7 @@ WHERE school_name = :schoolFilterValue;',
         'schoolFilterValue' => $schoolNameToFilter
     ])->find();
 
-$schoolName = $schoolNameQuery['school_name'] ?? '';
+$schoolName = $schoolNameQuery['school_name'] ?? 'All Schools';
 
 // Render the view
 view('coordinator/create.view.php', [
