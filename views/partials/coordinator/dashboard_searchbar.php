@@ -31,6 +31,8 @@ function performSearch() {
     var input = document.getElementById("search").value;
     var dropdown = document.getElementById("dropdownMenu");
 
+    dropdown.style.width = input.offsetWidth + "px";
+
     if (input.length > 0) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/coordinator/searchinfo", true); // Update with your PHP endpoint

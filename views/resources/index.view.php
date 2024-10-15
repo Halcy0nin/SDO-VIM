@@ -73,9 +73,6 @@ require base_path('views/partials/head.php') ?>
                     </span>
                 </div>
             </th>
-            <th>
-                  Action
-            </th>
          </tr>
             </thead>
             <tbody class="oveflow-y-scroll">
@@ -87,12 +84,6 @@ require base_path('views/partials/head.php') ?>
                         <td><?= htmlspecialchars($resource['school_name'] ?? 'Unassigned') ?></td>
                         <td><?= htmlspecialchars($statusMap[$resource['status']]) ?></td>
                         <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
-                        <td>
-                           <div class="h-full w-full flex items-center gap-2">
-                              <button class="view-btn">
-                                 <i class="bi bi-eye-fill"></i>
-                              </button>
-                        </td>
                      </tr>
                   <?php endforeach; ?>
                <?php else: ?>
@@ -108,7 +99,7 @@ require base_path('views/partials/head.php') ?>
             <tfoot class="overflow-hidden">
                <tr>
                   <td colspan="6" class="py-2 pr-4">
-                     <div class="w-full flex items-center justify-end gap-2">
+                     <div class="w-full flex items-center justify-end gap-5">
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>
                            <a

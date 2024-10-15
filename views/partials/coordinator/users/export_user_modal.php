@@ -18,9 +18,9 @@
                     </div>
                     <button type="button" class="btn-close hover:text-red-500" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-               <div>
+                <div class="flex gap-1 ms-3">
                     Are you sure you want to export this data?
-               </div>
+                </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
                     <form action="#" method="POST">

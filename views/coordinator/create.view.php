@@ -32,9 +32,11 @@ require base_path('views/partials/head.php') ?>
          </form>
       </div>
       
-         <h2> <?= $schoolName ?? "All School" ?></h2>
-         <h2> Data as of: <?php echo date("F Y"); ?></h2>
-
+      <section class="school-name">
+        <h2><?= $schoolName ?? "All School" ?></h2>
+        <h2>Data as of: <?php echo date("F Y"); ?></h2>
+      </section>      
+          
    </section>
    <section class="mx-6 px-12 flex gap-6">
       <?php dashboard_card('Total Equipments', $totalEquipment); ?>
@@ -245,56 +247,38 @@ require base_path('views/partials/head.php') ?>
 const dropdowns = document.querySelectorAll('.dropdown1');
 
 dropdowns.forEach(dropdown1 => {
-  const select = dropdown1.querySelector('.select');
-  const caret = dropdown1.querySelector('.caret');
-  const menu = dropdown1.querySelector('.menu');
-  const options = dropdown1.querySelectorAll('.menu li'); // Fixed query to select all <li>
-  const selected = dropdown1.querySelector('.selected');
 
-  // Toggle dropdown open/close when the select box is clicked
-  select.addEventListener('click', () => {
-    select.classList.toggle('select-clicked');
-    caret.classList.toggle('caret-rotate');
-    menu.classList.toggle('menu-open');
-  });
+   const select =dropdown1.querySelector('.select');
+   const caret =dropdown1.querySelector('.caret');
+   const menu =dropdown1.querySelector('.menu');
+   const options =dropdown1.querySelector('.menu li');
+   const selected =dropdown1.querySelector('.selected');
 
-  // Iterate through each option (list item) in the menu
-  options.forEach(option => {
-    option.addEventListener('click', () => {
-      // Update the selected text with the clicked option's text
+   select.addEventListener('click', () => {
+   
+      select.classList.toggle('select-clicked');
+      caret.classList.toggle('caret-rotate');
+      menu.classList.toggle('menu-open');
+   });
+
+   
+
+options.forEach(option => {
+
+   option.addEventListener('click', () => {
+
       selected.innerText = option.innerText;
-
-      // Close the dropdown by removing the toggled classes
       select.classList.remove('select-clicked');
       caret.classList.remove('caret-rotate');
       menu.classList.remove('menu-open');
-
-      // Remove the 'active' class from all options
       options.forEach(option => {
-        option.classList.remove('active');
+         option.classList.remove('active');
       });
-
-      // Add 'active' class to the clicked option
       option.classList.add('active');
-    });
-  });
+   });   
+});
 });
 
-// Close the dropdown if clicked outside
-document.addEventListener('click', function(e) {
-  dropdowns.forEach(dropdown1 => {
-    if (!dropdown1.contains(e.target)) {
-      const select = dropdown1.querySelector('.select');
-      const caret = dropdown1.querySelector('.caret');
-      const menu = dropdown1.querySelector('.menu');
-
-      // Ensure dropdown is closed if clicked outside
-      select.classList.remove('select-clicked');
-      caret.classList.remove('caret-rotate');
-      menu.classList.remove('menu-open');
-    }
-  });
-});
 </script> 
 
 <script>
