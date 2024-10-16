@@ -8,7 +8,7 @@
 <!-- Modal -->
 
 <main class="modal fade " id="exportItemsModal" tabindex="-1" aria-labelledby="exportItemsLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered w-1/2">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 580px;">
         <div class="modal-content">
             <div class="modal-body h-fit flex flex-col gap-2">
                 <div class="modal-header mb-4">
@@ -18,10 +18,10 @@
                     </div>
                     <button type="button" class="btn-close hover:text-red-500" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-               <div>
+                <div class="flex gap-1 ms-3">
                     Are you sure you want to export this data?
                </div>
-                <div class="modal-footer mt-4">
+                <div class="modal-footer mt-4 d-flex justify-content-evenly">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
                     <form action="/custodian/custodian-inventory/exportpdf" method="POST">
                         <button type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Export as PDF</button>

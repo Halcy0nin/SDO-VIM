@@ -67,9 +67,6 @@ require base_path('views/partials/head.php') ?>
                         </span>
                      </div>
                   </th>
-                  <th>
-                     Action
-                  </th>
                </tr>
             </thead>
             <tbody>
@@ -80,12 +77,6 @@ require base_path('views/partials/head.php') ?>
                      <td><?= htmlspecialchars($resource['school_name']) ?></td>
                      <td><?= htmlspecialchars($statusMap[$resource['status']]) ?></td>
                      <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
-                     <td>
-                        <div class="h-full w-full flex items-center gap-2">
-                           <button class="view-btn">
-                              <i class="bi bi-eye-fill"></i>
-                           </button>
-                     </td>
                   </tr>
                <?php endforeach; ?>
             </tbody>
