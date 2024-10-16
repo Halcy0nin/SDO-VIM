@@ -25,8 +25,8 @@ require base_path('views/partials/head.php') ?>
                      <div class="header-content">
                         ID
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick="sortTable(0, 'asc')"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick="sortTable(0, 'desc')"></i>
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                         </span>
                      </div>
                   </th>
@@ -34,8 +34,8 @@ require base_path('views/partials/head.php') ?>
                      <div class="header-content">
                         Item Article
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick="sortTable(1, 'asc')"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick="sortTable(1, 'desc')"></i>
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
                         </span>
                      </div>
                   </th>
@@ -43,8 +43,8 @@ require base_path('views/partials/head.php') ?>
                      <div class="header-content">
                         School
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick="sortTable(2, 'asc')"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick="sortTable(2, 'desc')"></i>
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
                         </span>
                      </div>
                   </th>
@@ -52,8 +52,8 @@ require base_path('views/partials/head.php') ?>
                      <div class="header-content">
                         Status
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick="sortTable(3, 'asc')"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick="sortTable(3, 'desc')"></i>
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
                         </span>
                      </div>
                   </th>
@@ -61,8 +61,8 @@ require base_path('views/partials/head.php') ?>
                      <div class="header-content">
                         Date Acquired
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick="sortTable(3, 'asc')"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick="sortTable(3, 'desc')"></i>
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
                         </span>
                      </div>
                   </th>
@@ -94,7 +94,7 @@ require base_path('views/partials/head.php') ?>
                      <div class="w-full flex flex-wrap items-center justify-end gap-2">
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>
-                            <form
+                           <form
                               method="POST"
                               action="/custodian/custodian-resources/s?page=1">
                               <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
@@ -129,6 +129,35 @@ require base_path('views/partials/head.php') ?>
 </main>
 
 <?php require base_path('views/partials/footer.php') ?>
+
+<script>
+   let sortOrder = 'asc'; // Initially set to ascending order
+
+   function sortTable(columnIndex) {
+      const table = document.querySelector("table tbody");
+      const rowsArray = Array.from(table.rows);
+
+      // Toggle the sort order
+      sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+      // Sorting rows
+      rowsArray.sort((rowA, rowB) => {
+         const cellA = rowA.cells[columnIndex].innerText.trim();
+         const cellB = rowB.cells[columnIndex].innerText.trim();
+
+         if (!isNaN(cellA) && !isNaN(cellB)) {
+            // Compare numbers
+            return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
+         } else {
+            // Compare text
+            return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+         }
+      });
+
+      // Re-append sorted rows to the table
+      rowsArray.forEach(row => table.appendChild(row));
+   }
+</script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
