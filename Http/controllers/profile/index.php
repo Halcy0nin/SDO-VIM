@@ -49,8 +49,12 @@ $userInfo = $db->query('
     $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
-    WHERE viewed IS NULL
-    AND user_id = :user_id
+    WHERE
+        viewed IS NULL
+    AND (
+        (user_id = :user_id AND (created_by != :user_id OR created_by IS NULL))
+        OR is_public = 1
+    );
 ',[
     'user_id' => get_uid()
 ])->find();

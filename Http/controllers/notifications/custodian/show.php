@@ -19,11 +19,14 @@ FROM
     notifications
 WHERE
     user_id = :user_id
+   AND (
+        created_by != :user_id OR created_by IS NULL
+    )
 OR
     is_public = 1
 ORDER BY
     date_added DESC
-LIMIT 5
+LIMIT 5;
 ', [
     'user_id' => get_uid(),
 ])->get();
