@@ -19,19 +19,44 @@
 //      
 //   view('notes/{id}', ['notes' => $notes])
 //
-//   view variables are passed as keu-value
+//   view variables are passed as key-value
 //   pairs as illustrated in the example above.
-//
+// 
 
 use Core\Database;
 use Core\App;
 
 $db = App::resolve(Database::class);
 
-$db->query('DELETE from users where user_id = :id_to_delete', [
-    'id_to_delete' => $_POST['id_to_delete'],
-]);
+try {
+    // Delete the user from the database
+    $db->query('DELETE FROM users WHERE user_id = :id_to_delete', [
+        'id_to_delete' => $_POST['id_to_delete'],
+    ]);
 
-toast('Account deletion done successfully!');
+    // Show a success message
+    toast('Account deletion done successfully!');
 
-redirect('/coordinator/users');
+    // Redirect to the users list
+    redirect('/coordinator/users');
+
+} catch (PDOException $e) {
+    // Log the error message for debugging
+    error_log($e->getMessage());
+
+    // Show an error toast message
+    toast('Failed to delete account. Please try again.');
+
+    // Redirect back to the users list
+    redirect('/coordinator/users');
+
+} catch (Exception $e) {
+    // Handle any other types of exceptions
+    error_log($e->getMessage());
+
+    // Show a general error toast message
+    toast('An unexpected error occurred. Please try again later.');
+
+    // Redirect back to the users list
+    redirect('/coordinator/users');
+}

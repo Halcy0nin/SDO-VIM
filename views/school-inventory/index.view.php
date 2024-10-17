@@ -108,3 +108,27 @@ require base_path('views/partials/head.php') ?>
 
 </main>
 <?php require base_path('views/partials/footer.php') ?>
+
+<script>
+function sortTable(columnIndex, sortOrder) {
+    const table = document.querySelector("table tbody");
+    const rowsArray = Array.from(table.rows);
+
+    // Sorting rows
+    rowsArray.sort((rowA, rowB) => {
+        const cellA = rowA.cells[columnIndex].innerText.trim();
+        const cellB = rowB.cells[columnIndex].innerText.trim();
+        
+        if (!isNaN(cellA) && !isNaN(cellB)) {
+            // Compare numbers
+            return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
+        } else {
+            // Compare text
+            return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        }
+    });
+
+    // Re-append sorted rows to the table
+    rowsArray.forEach(row => table.appendChild(row));
+}
+</script>

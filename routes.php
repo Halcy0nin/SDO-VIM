@@ -48,9 +48,11 @@ $router->get('/notifications/custodian', 'notifications/custodian/index.php')->o
 
 $router->get('/coordinator', 'coordinator/create.php')->only('coordinator');
 $router->patch('/coordinator', 'coordinator/patch.php')->only('coordinator');
+$router->post('/coordinator/searchinfo', 'coordinator/dashboard_search_input.php')->only('coordinator');
 
 $router->get('/coordinator/resources', 'resources/index.php')->only('coordinator');
 $router->post('/coordinator/resources/s', 'resources/show.php')->only('coordinator');
+
 $router->get('/coordinator/resources/unassigned', 'resources/unassigned/index.php')->only('coordinator');
 $router->post('/coordinator/resources/unassigned/s', 'resources/unassigned/show.php')->only('coordinator');
 $router->get('/coordinator/resources/working', 'resources/working/index.php')->only('coordinator');
@@ -128,6 +130,8 @@ $router->get('/custodian', 'custodian/create.php')->only('custodian');
 $router->post('/custodian/receipt', 'custodian/receipt/store.php')->only('custodian');
 
 $router->get('/custodian/custodian-inventory', 'custodian-inventory/index.php')->only('custodian');
+
+$router->post('/custodian/custodian-inventory/s', 'custodian-inventory/show.php')->only('custodian');
 //Create Item
 $router->post('/custodian/custodian-inventory', '/custodian-inventory/store.php')->only('custodian');
 //Edit Item
@@ -143,6 +147,8 @@ $router->post('/custodian/custodian-inventory/exportpdf', '/custodian-inventory/
 $router->post('/custodian/custodian-inventory/exportxls', '/custodian-inventory/export_items_xls.php')->only('custodian');
 
 $router->get('/custodian/custodian-resources', 'custodian-resources/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/s', 'custodian-resources/show.php')->only('custodian');
+
 $router->get('/custodian/custodian-resources/unassigned', 'custodian-resources/unassigned/index.php')->only('custodian');
 $router->get('/custodian/custodian-resources/working', 'custodian-resources/working/index.php')->only('custodian');
 $router->get('/custodian/custodian-resources/repair', 'custodian-resources/repair/index.php')->only('custodian');

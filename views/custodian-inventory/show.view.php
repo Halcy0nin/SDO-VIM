@@ -21,6 +21,7 @@ require base_path('views/partials/head.php') ?>
                 <i class="bi bi-search"></i>
             </button>
         </form>
+
         <section class="table-responsive h-dvh bg-zinc-50 rounded border-[1px]">
             <table class="table table-striped">
                 <thead>
@@ -174,23 +175,30 @@ require base_path('views/partials/head.php') ?>
                             <div class="w-full flex items-center justify-end gap-2">
                                 <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                                 <?php if ($pagination['pages_total'] > 1): ?>
-                                    <a
-                                        href="/custodian/custodian-inventory?page=1"
-                                        class="pagination-link">
-                                        <i class="bi bi-chevron-bar-left"></i>
-                                    </a>
-                                    <a
-                                        href="/custodian/custodian-inventory?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
-                                        <i class="bi bi-chevron-left"></i>
-                                    </a>
-                                    <a href="/custodian/custodian-inventory?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
-                                        class="pagination-link">
-                                        <i class="bi bi-chevron-right"></i>
-                                    </a>
-                                    <a href="/custodian/custodian-inventory?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
-                                        class="pagination-link">
-                                        <i class="bi bi-chevron-bar-right"></i>
-                                    </a>
+                                    <form
+                                        method="POST"
+                                        action="/custodian/custodian-inventory/s?page=1">
+                                        <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+                                        <button class="pagination-link" type="submit"><i class="bi bi-chevron-bar-left"></i></button>
+                                    </form>
+                                    <form
+                                        method="POST"
+                                        action="/custodian/custodian-inventory/s?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>">
+                                        <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+                                        <button class="pagination-link" type="submit"><i class="bi bi-chevron-left"></i></button>
+                                    </form>
+                                    <form
+                                        method="POST"
+                                        action="/custodian/custodian-inventory/s?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>">
+                                        <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+                                        <button class="pagination-link" type="submit"><i class="bi bi-chevron-right"></i></button>
+                                    </form>
+                                    <form
+                                        method="POST"
+                                        action="/custodian/custodian-inventory/s?page=<?= htmlspecialchars($pagination['pages_total']) ?>">
+                                        <input type="hidden" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+                                        <button class="pagination-link" type="submit"><i class="bi bi-chevron-bar-right"></i></button>
+                                    </form>
                                 <?php endif; ?>
                             </div>
                         </td>

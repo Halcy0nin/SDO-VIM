@@ -19,19 +19,38 @@
 //      
 //   view('notes/{id}', ['notes' => $notes])
 //
-//   view variables are passed as keu-value
+//   view variables are passed as key-value
 //   pairs as illustrated in the example above.
-//
+// 
 
 use Core\Database;
 use Core\App;
 
 $db = App::resolve(Database::class);
 
-$db->query('DELETE from school_inventory where item_code = :id_to_delete', [
-    'id_to_delete' => $_POST['id_to_delete'],
-]);
+try {
+    // Attempt to delete the item from the inventory
+    $db->query('DELETE from school_inventory where item_code = :id_to_delete', [
+        'id_to_delete' => $_POST['id_to_delete'],
+    ]);
 
-$id = $_POST['id'];
+    // Show a success message after deletion
+    toast('Successfully deleted item with code: ' . $_POST['id_to_delete']);
 
+} catch (PDOException $e) {
+    // Log the error message for debugging
+    error_log($e->getMessage());
+
+    // Show an error toast message
+    toast('Failed to delete the item. Please try again.');
+
+} catch (Exception $e) {
+    // Handle any other types of exceptions
+    error_log($e->getMessage());
+
+    // Show a general error toast message
+    toast('An unexpected error occurred. Please try again later.');
+}
+
+// Redirect back to the inventory page
 redirect('/custodian/custodian-inventory');

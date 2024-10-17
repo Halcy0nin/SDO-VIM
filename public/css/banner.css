@@ -81,6 +81,12 @@ th .header-content {
   flex-direction: column;
   margin-top: -10px;
   margin-left: 5px;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s;
+}
+
+.header-content:hover .sort-icons {
+  opacity: 1; /* Show on hover */
 }
 
 .sort-icon {
@@ -89,4 +95,67 @@ th .header-content {
   margin: -0.6rem;
   margin-top: 0rem;
   color: white;
+}
+
+.school-name {
+  text-align:right;
+  margin: 0rem;
+  padding: 5px;
+  position: relative;
+  left: 73rem;
+  top: -4rem;
+  z-index: 1;
+  max-width: 400px;
+}
+
+.school-name h2:first-of-type {
+  font-family: 'Arial', sans-serif; /* Choose a specific font */
+  font-size: 22px;
+  font-weight: bold; /* Adjust font size */
+  color: #3F4A6B; /* Dark blue-grey color for school name */
+  margin: 0px 0;
+}
+
+.school-name h2:last-of-type {
+  font-family: 'Roboto', sans-serif; /* Different font for the date */
+  font-size: 18px;
+  color: #3F4A6B; /* Lighter grey for the date */
+  margin: 0px 0;
+  margin-bottom: -3rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  width: 19.3rem;
+  top: 78px;
+  line-height: 1rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  list-style-type: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-menu li:hover {
+  background-color: #3F4A6B;
+  color: #f0f0f0;
+}
+
+.dropdown-menu li[style*="pointer-events: none"] {
+  color: #999; /* Gray text for no results message */
+  font-style: italic;
+}
+
+.show {
+  display: block !important;
 }
