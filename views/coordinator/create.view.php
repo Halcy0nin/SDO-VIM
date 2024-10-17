@@ -32,10 +32,12 @@ require base_path('views/partials/head.php') ?>
          </form>
       </div>
       
-      <section class="school-name">
-        <h2><?= $schoolName ?? "All School" ?></h2>
-        <h2>Data as of: <?php echo date("F Y"); ?></h2>
-      </section>      
+      <section class="school-name-container">
+  <div class="right-group">
+    <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
+    <h2 class="date">Data as of: <?php echo date("F Y"); ?></h2>
+  </div>
+</section>    
           
    </section>
    <section class="mx-6 px-12 flex gap-6">

@@ -73,9 +73,6 @@ require base_path('views/partials/head.php') ?>
                         </span>
                      </div>
                   </th>
-                  <th>
-                     Action
-                  </th>
                </tr>
             </thead>
             <tbody class="oveflow-y-scroll">
