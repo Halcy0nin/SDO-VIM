@@ -109,7 +109,7 @@ if (isset($_POST['send_recovery_email'])) {
             <p>Hi <strong>' . $recipient . '</strong>,</p>
             <p>Your request has been received. Please click the button below to reset your password:</p>
             <!-- Apply btn class directly to the <a> tag -->
-            <a href="http://localhost:8888/set-new-password/' . $recipientID . '" class="btn">Set a new password</a>
+            <a href="http://167.71.243.124/set-new-password/' . $recipientID . '" class="btn">Set a new password</a>
         </div>
         <div class="footer">
             <div class="contact-info">

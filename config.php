@@ -11,7 +11,7 @@
      ],
      'user' => [
          'username' => 'root',
-         'password' => '',
+         'password' => 'root',
      ],
  ];
 
