@@ -26,14 +26,14 @@ require base_path('views/partials/head.php') ?>
     <section class="mx-12 mb-12 inline-block grow rounded">
         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
             <table class="table table-striped m-0">
-                <thead>
+            <thead>
                     <tr>
                         <th>
                             <div class="header-content">
                                 ID
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(0, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(0, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
                             </div>
                         </th>
@@ -41,8 +41,8 @@ require base_path('views/partials/head.php') ?>
                             <div class="header-content">
                                 Name
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(1, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(1, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
                                 </span>
                             </div>
                         </th>
@@ -50,8 +50,8 @@ require base_path('views/partials/head.php') ?>
                             <div class="header-content">
                                 Type
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(2, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(2, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
                                 </span>
                             </div>
                         </th>
@@ -59,8 +59,8 @@ require base_path('views/partials/head.php') ?>
                             <div class="header-content">
                                 Division
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(3, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(3, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
                                 </span>
                             </div>
                         </th>
@@ -68,8 +68,8 @@ require base_path('views/partials/head.php') ?>
                             <div class="header-content">
                                 District
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(4, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(4, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
                                 </span>
                             </div>
                         </th>
@@ -77,8 +77,8 @@ require base_path('views/partials/head.php') ?>
                             <div class="header-content">
                                 Contact Name
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(5, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(5, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(5)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(5)"></i>
                                 </span>
                             </div>
                         </th>
@@ -86,8 +86,8 @@ require base_path('views/partials/head.php') ?>
                             <div class="header-content">
                                 Contact Number
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(6, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(6, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(6)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(6)"></i>
                                 </span>
                             </div>
                         </th>
@@ -95,8 +95,8 @@ require base_path('views/partials/head.php') ?>
                             <div class="header-content">
                                 Contact Email
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(7, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(7, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(7)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(7)"></i>
                                 </span>
                             </div>
                         </th>
@@ -104,8 +104,8 @@ require base_path('views/partials/head.php') ?>
                             <div class="header-content">
                                 Date Added
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(8, 'asc')"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(8, 'desc')"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(8)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(8)"></i>
                                 </span>
                             </div>
                         </th>
@@ -193,21 +193,30 @@ require base_path('views/partials/head.php') ?>
 <?php require base_path('views/partials/footer.php') ?>
 
 <script>
-function sortTable(columnIndex, sortOrder) {
-    const table = document.querySelector("table tbody");
-    const rowsArray = Array.from(table.rows);
+   let sortOrder = 'asc'; // Initially set to ascending order
 
-    rowsArray.sort((rowA, rowB) => {
-        const cellA = rowA.cells[columnIndex].innerText.trim();
-        const cellB = rowB.cells[columnIndex].innerText.trim();
-        
-        if (!isNaN(cellA) && !isNaN(cellB)) {
+   function sortTable(columnIndex) {
+      const table = document.querySelector("table tbody");
+      const rowsArray = Array.from(table.rows);
+
+      // Toggle the sort order
+      sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+      // Sorting rows
+      rowsArray.sort((rowA, rowB) => {
+         const cellA = rowA.cells[columnIndex].innerText.trim();
+         const cellB = rowB.cells[columnIndex].innerText.trim();
+
+         if (!isNaN(cellA) && !isNaN(cellB)) {
+            // Compare numbers
             return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
-        } else {
+         } else {
+            // Compare text
             return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-        }
-    });
+         }
+      });
 
-    rowsArray.forEach(row => table.appendChild(row));
-}
+      // Re-append sorted rows to the table
+      rowsArray.forEach(row => table.appendChild(row));
+   }
 </script>

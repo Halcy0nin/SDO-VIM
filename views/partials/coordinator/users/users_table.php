@@ -1,15 +1,87 @@
 <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
     <table class="table table-striped m-0">
         <thead>
-            <th class="w-[5ch]">ID</th>
-            <th>Username</th>
-            <th class="w-[12ch]">Role</th>
-            <th>School</th>
-            <th>Contact Name</th>
-            <th class="w-[16ch]">Mobile Number</th>
-            <th class="w-[24ch]">Email</th>
-            <th class="w-[12ch]">Date Added</th>
-            <th class="w-[12ch]">Date Modified</th>
+            <th class="w-[5ch]">
+                <div class="header-content">
+                    ID
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                    </span>
+                </div>
+            </th>
+            <th>
+                <div class="header-content">
+                    Username
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                    </span>
+                </div>
+            </th>
+            <th class="w-[12ch]">
+                <div class="header-content">
+                    Role
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
+                    </span>
+                </div>
+            </th>
+            <th>
+                <div class="header-content">
+                    School
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                    </span>
+                </div>
+            </th>
+            <th>
+                <div class="header-content">
+                    Contact Name
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                    </span>
+                </div>
+            </th>
+            <th class="w-[16ch]">
+                <div class="header-content">
+                    Mobile Number
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(5)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(5)"></i>
+                    </span>
+                </div>
+            </th>
+            <th class="w-[24ch]">
+                <div class="header-content">
+                    Email
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(6)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(6)"></i>
+                    </span>
+                </div>
+            </th>
+            <th class="w-[12ch]">
+                <div class="header-content">
+                    Date Added
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(7)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(7)"></i>
+                    </span>
+                </div>
+            </th>
+            <th class="w-[12ch]">
+                <div class="header-content">
+                    Date Modified
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(8)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(8)"></i>
+                    </span>
+                </div>
+            </th>
             <th class="w-[16ch]">Actions</th>
         </thead>
         <tbody>
