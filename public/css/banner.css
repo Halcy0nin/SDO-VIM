@@ -97,31 +97,38 @@ th .header-content {
   color: white;
 }
 
+.school-name-container {
+  display: flex; /* Enable flexbox */
+  justify-content: flex-end; /* Align content to the right side */
+  align-items: center; /* Align items vertically */
+  width: 97%; /* Take full screen width */
+  padding: 5px 20px;
+  position: sticky;
+  top: 10;
+  z-index: 10;
+}
+
+.right-group {
+  display: flex; /* Group the two h2 elements in a row */
+  flex-direction: column; /* Stack them vertically */
+  align-items: flex-end; /* Align both h2 elements to the right */
+  gap: 2px; /* Add space between the two h2 elements */
+  margin-top: -5rem;
+}
+
 .school-name {
-  text-align:right;
-  margin: 0rem;
-  padding: 5px;
-  position: relative;
-  left: 73rem;
-  top: -4rem;
-  z-index: 1;
-  max-width: 400px;
-}
-
-.school-name h2:first-of-type {
-  font-family: 'Arial', sans-serif; /* Choose a specific font */
+  font-family: 'Arial', sans-serif;
   font-size: 22px;
-  font-weight: bold; /* Adjust font size */
-  color: #3F4A6B; /* Dark blue-grey color for school name */
-  margin: 0px 0;
+  font-weight: bold;
+  color: #3F4A6B;
+  margin: 0;
 }
 
-.school-name h2:last-of-type {
-  font-family: 'Roboto', sans-serif; /* Different font for the date */
+.date {
+  font-family: 'Roboto', sans-serif;
   font-size: 18px;
-  color: #3F4A6B; /* Lighter grey for the date */
-  margin: 0px 0;
-  margin-bottom: -3rem;
+  color: #3F4A6B;
+  margin: 0;
 }
 
 .dropdown-menu {
