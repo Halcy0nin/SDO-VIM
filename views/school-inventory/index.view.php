@@ -14,6 +14,23 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/coordinator/school-inventory/add_item_modal.php') ?>
       <?php require base_path('views/partials/coordinator/schools/export_school_modal.php') ?>
    </section>
+
+   <div class="dropdown2">
+         <div class="select">
+            <span class="selected">Filter</span>
+            <div class="caret"></div>
+         </div>
+         
+         <form id="schoolFilterForm" method="POST" action="/coordinator">
+            <input name="_method" value="PATCH" hidden />
+            <input id="schoolFilterValue" name="schoolFilterValue" value="All" type="hidden" /> <!-- Hidden input to store selected value -->
+            
+            <ul class="menu">
+                  <li data-value="All">Status</li> <!-- Default option to show all schools -->
+            </ul>
+         </form>
+   </div>
+
    <section class="mx-12 flex flex-col">
       <form class="search-container search" method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
          <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
@@ -131,4 +148,52 @@ function sortTable(columnIndex, sortOrder) {
     // Re-append sorted rows to the table
     rowsArray.forEach(row => table.appendChild(row));
 }
+</script>
+
+<script>  
+const dropdowns = document.querySelectorAll('.dropdown2');
+
+dropdowns.forEach(dropdown2 => {
+
+   const select =dropdown2.querySelector('.select');
+   const caret =dropdown2.querySelector('.caret');
+   const menu =dropdown2.querySelector('.menu');
+   const options =dropdown2.querySelector('.menu li');
+   const selected =dropdown2.querySelector('.selected');
+
+   select.addEventListener('click', () => {
+   
+      select.classList.toggle('select-clicked');
+      caret.classList.toggle('caret-rotate');
+      menu.classList.toggle('menu-open');
+   });
+
+   
+
+options.forEach(option => {
+
+   option.addEventListener('click', () => {
+
+      selected.innerText = option.innerText;
+      select.classList.remove('select-clicked');
+      caret.classList.remove('caret-rotate');
+      menu.classList.remove('menu-open');
+      options.forEach(option => {
+         option.classList.remove('active');
+      });
+      option.classList.add('active');
+   });   
+});
+});
+
+</script> 
+
+<script>
+    document.querySelectorAll('.menu li').forEach(function(item) {
+        item.addEventListener('click', function() {
+            const selectedValue = this.getAttribute('data-value'); // Get the value from the clicked <li>
+            document.getElementById('schoolFilterValue').value = selectedValue; // Set the hidden input value
+            document.getElementById('schoolFilterForm').submit(); // Submit the form
+        });
+    });
 </script>

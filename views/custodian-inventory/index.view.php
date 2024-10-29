@@ -14,6 +14,33 @@ require base_path('views/partials/head.php') ?>
         <?php require base_path('views/partials/custodian/custodian-inventory/add_item_modal.php') ?>
         <?php require base_path('views/partials/custodian/custodian-inventory/export_items_modal.php') ?>
     </section>
+
+    <div class="dropdown3">
+         <div class="select">
+            <span class="selected">Filter</span>
+            <div class="caret"></div>
+         </div>
+         
+         <form id="schoolFilterForm" method="POST" action="/coordinator">
+            <input name="_method" value="PATCH" hidden />
+            <input id="schoolFilterValue" name="schoolFilterValue" value="All" type="hidden" /> <!-- Hidden input to store selected value -->
+            
+            <ul class="menu">
+                  <li data-value="All">Status</li> <!-- Default option to show all schools -->
+            </ul>
+         </form>
+      </div>
+
+    <div class="date-filter-container">
+        <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date" />
+
+        <label for="end-date">End Date:</label>
+            <input type="date" id="end-date" />
+
+        <button class="filter-button">Filter</button>
+    </div>
+
     <section class="mx-12 mt-12 mb-12 h-dvh rounded flex flex-col">
         <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s">
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
@@ -233,3 +260,51 @@ require base_path('views/partials/head.php') ?>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<script>  
+const dropdowns = document.querySelectorAll('.dropdown3');
+
+dropdowns.forEach(dropdown3 => {
+
+   const select =dropdown3.querySelector('.select');
+   const caret =dropdown3.querySelector('.caret');
+   const menu =dropdown3.querySelector('.menu');
+   const options =dropdown3.querySelector('.menu li');
+   const selected =dropdown3.querySelector('.selected');
+
+   select.addEventListener('click', () => {
+   
+      select.classList.toggle('select-clicked');
+      caret.classList.toggle('caret-rotate');
+      menu.classList.toggle('menu-open');
+   });
+
+   
+
+options.forEach(option => {
+
+   option.addEventListener('click', () => {
+
+      selected.innerText = option.innerText;
+      select.classList.remove('select-clicked');
+      caret.classList.remove('caret-rotate');
+      menu.classList.remove('menu-open');
+      options.forEach(option => {
+         option.classList.remove('active');
+      });
+      option.classList.add('active');
+   });   
+});
+});
+
+</script> 
+
+<script>
+    document.querySelectorAll('.menu li').forEach(function(item) {
+        item.addEventListener('click', function() {
+            const selectedValue = this.getAttribute('data-value'); // Get the value from the clicked <li>
+            document.getElementById('schoolFilterValue').value = selectedValue; // Set the hidden input value
+            document.getElementById('schoolFilterForm').submit(); // Submit the form
+        });
+    });
+</script>
