@@ -78,7 +78,7 @@ $statusMap = [
     3 => 'Condemned'
 ];
 
-view('resources/show.view.php', [
+view('resources/unassigned/show.view.php', [
     'statusMap' => $statusMap,
     'heading' => 'Resources',
     'resources' => $resources,

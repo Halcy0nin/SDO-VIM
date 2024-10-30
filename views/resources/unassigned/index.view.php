@@ -60,19 +60,19 @@ require base_path('views/partials/head.php') ?>
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>
                            <a
-                              href="/coordinator/resources?page=1"
+                              href="/coordinator/resources/unassigned?page=1"
                               class="pagination-link">
                               <i class="bi bi-chevron-bar-left"></i>
                            </a>
                            <a
-                              href="/coordinator/resources?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
+                              href="/coordinator/resources/unassigned?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
                               <i class="bi bi-chevron-left"></i>
                            </a>
-                           <a href="/coordinator/resources?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
+                           <a href="/coordinator/resources/unassigned?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
                               class="pagination-link">
                               <i class="bi bi-chevron-right"></i>
                            </a>
-                           <a href="/coordinator/resources?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
+                           <a href="/coordinator/resources/unassigned?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
                               class="pagination-link">
                               <i class="bi bi-chevron-bar-right"></i>
                            </a>
