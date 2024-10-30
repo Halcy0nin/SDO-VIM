@@ -31,6 +31,16 @@ require base_path('views/partials/head.php') ?>
          </form>
    </div>
 
+   <div class="date-filter-container2">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" />
+
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" />
+
+    <button class="filter-button" id="filter-btn">Filter</button>
+  </div>
+
    <section class="mx-12 flex flex-col">
       <form class="search-container search" method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
          <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
@@ -197,3 +207,19 @@ options.forEach(option => {
         });
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // JavaScript to handle button click event
+    document.getElementById('filter-btn').addEventListener('click', function () {
+      const startDate = document.getElementById('start-date').value;
+      const endDate = document.getElementById('end-date').value;
+
+      if (startDate && endDate) {
+        alert(`Filtering from ${startDate} to ${endDate}`);
+      } else {
+        alert('Please select both start and end dates.');
+      }
+    });
+  </script>
