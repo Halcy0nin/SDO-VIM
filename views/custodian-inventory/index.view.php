@@ -41,127 +41,135 @@ require base_path('views/partials/head.php') ?>
     <button class="filter-button" id="filter-btn">Filter</button>
   </div>
 
-    <section class="mx-12 mt-12 mb-12 h-dvh rounded flex flex-col">
+    <section class="mx-12 flex flex-col">
         <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s">
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
         </form>
-        <section class="table-responsive h-dvh bg-zinc-50 rounded border-[1px]">
-            <table class="table table-striped">
+    </section>
+    <section class="mx-12 mb-12 inline-block grow rounded">
+        <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
+            <table class="table table-striped m-0">
                 <thead>
-                    <tr>
-                        <th>
-                            <div class="header-content">
+                    <th style="width: 20ch;">
+                        <div class="header-content">
                                 Item Code
                                 <span class="sort-icons">
                                     <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
                                     <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th style="width: 10ch;">
+                        <div class="header-content">
                                 Article
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th style="width: 10ch;">
+                        <div class="header-content">
                                 Description
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th style="width: 12ch;">
+                        <div class="header-content">
                                 Date Acquired
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(3)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(3)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th style="width: 11ch;">
+                        <div class="header-content">
                                 Status
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(4)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(4)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-content">
                                 Source of Funds
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(5)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(5)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-content">
                                 Unit Value
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(6)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(6)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
-                                Qty.
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-content">
+                                Qty
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(7)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(7)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-content">
                                 Total Value
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(8)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(8)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-content">
                                 Active
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(9)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(9)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-content">
                                 Inactive
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(10)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(10)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="header-content">
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-content">
                                 Last Updated
                                 <span class="sort-icons">
-                                    <i class="fas fa-sort-up sort-icon" onclick="sortTable(11)"></i>
-                                    <i class="fas fa-sort-down sort-icon" onclick="sortTable(11)"></i>
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
                                 </span>
-                            </div>
-                        </th>
-                        <th>Action</th>
-                    </tr>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-content">
+                                Action
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                                </span>
+                        </div>
+                    </th>
                 </thead>
                 <tbody>
                     <?php foreach ($items as $item): ?>
@@ -224,7 +232,9 @@ require base_path('views/partials/head.php') ?>
                     </tr>
                 </tfoot>
             </table>
-        </section>
+        </div>
+    </section>
+    
 </main>
 <?php require base_path('views/partials/footer.php') ?>
 

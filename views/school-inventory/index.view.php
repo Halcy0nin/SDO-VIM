@@ -7,7 +7,7 @@ require base_path('views/partials/head.php') ?>
 
 
 <!-- Your HTML code goes here -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <main class="main-col">
    <section class="flex items-center pr-12 gap-3">
       <?php require base_path('views/partials/banner.php') ?>
@@ -53,19 +53,123 @@ require base_path('views/partials/head.php') ?>
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
             <thead>
-               <th style="width: 20ch;">Item Code</th>
-               <th style="width: 10ch;">Article</th>
-               <th style="width: 10ch;">Description</th>
-               <th style="width: 12ch;">Date Acquired</th>
-               <th style="width: 11ch;">Status</th>
-               <th>Source of Funds</th>
-               <th>Unit Value</th>
-               <th>Qty.</th>
-               <th>Total Value</th>
-               <th>Active</th>
-               <th>Inactive</th>
-               <th>Last Updated</th>
-               <th>Action</th>
+               <th style="width: 20ch;">
+                  <div class="header-content">
+                           Item Code
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th style="width: 10ch;">
+                  <div class="header-content">
+                           Article
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th style="width: 10ch;">
+                  <div class="header-content">
+                           Description
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th style="width: 12ch;">
+                  <div class="header-content">
+                           Date Acquired
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th style="width: 11ch;">
+                  <div class="header-content">
+                           Status
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th>
+                  <div class="header-content">
+                           Source of Funds
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th>
+                  <div class="header-content">
+                           Unit Value
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th>
+                  <div class="header-content">
+                           Qty
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th>
+                  <div class="header-content">
+                           Total Value
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th>
+                  <div class="header-content">
+                           Active
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th>
+                  <div class="header-content">
+                           Inactive
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th>
+                  <div class="header-content">
+                           Last Updated
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
+               <th>
+                  <div class="header-content">
+                           Action
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                  </div>
+               </th>
             </thead>
             <tbody>
                <?php if (count($items) > 0): ?>
@@ -223,3 +327,37 @@ options.forEach(option => {
       }
     });
   </script>
+
+<script>
+   let sortOrder = 'asc'; // Initially set to ascending order
+
+   function sortTable(columnIndex) {
+      const table = document.querySelector("table tbody");
+      const rowsArray = Array.from(table.rows);
+
+      // Toggle the sort order
+      sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+      // Sorting rows
+      rowsArray.sort((rowA, rowB) => {
+         const cellA = rowA.cells[columnIndex].innerText.trim();
+         const cellB = rowB.cells[columnIndex].innerText.trim();
+
+         if (!isNaN(cellA) && !isNaN(cellB)) {
+            // Compare numbers
+            return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
+         } else {
+            // Compare text
+            return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+         }
+      });
+
+      // Re-append sorted rows to the table
+      rowsArray.forEach(row => table.appendChild(row));
+   }
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
