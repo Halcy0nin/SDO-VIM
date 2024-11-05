@@ -6,48 +6,68 @@ use Core\App;
 $db = App::resolve(Database::class);
 
 try {
-    // Get the ID and prepare the new item code
-    $id = $_POST['id'];
-    $item_code = $_POST['school_id'] . '-' . $id;
+    // Get the selected items from the POST request
+    $selectedItems = $_POST['selected_items'] ?? [];
+    $school_id = $_POST['school_id'] ?? null; // Assuming you have a school_id input in your form
+    $item_code = $_POST['item_code'] ?? null; // Assuming you are still sending a single item_code for the original update
 
-    // Update the school inventory
-    $db->query('UPDATE school_inventory 
-                SET school_id = :school_id, 
-                    item_code = :new_item_code
-                WHERE item_code = :id', [
-        'id' => $id, 
-        'new_item_code' => $item_code,
-        'school_id' => $_POST['school_id']
-    ]);
+    // Check if there are selected items to process
+    if (!empty($selectedItems)) {
+        foreach ($selectedItems as $item_code) {
+            $new_item_code = $school_id . '-' . $item_code;
 
-    // Fetch the school name
-    $school_name_query = $db->query('
-        SELECT school_name
-        FROM schools
-        WHERE school_id = :school_id
-    ', [
-        'school_id' => $_POST['school_id']
-    ]);
+            // Update the school inventory for each selected item
+            $db->query('UPDATE school_inventory 
+                        SET school_id = :school_id, 
+                            item_code = :new_item_code,
+                            updated_by = :updated_by
+                        WHERE item_code = :id;', [
+                'id' => $item_code,
+                'new_item_code' => $new_item_code,
+                'school_id' => $school_id,
+                'updated_by' => $_SESSION['user']['user_id'] ?? 'Admin'
+            ]);
+        }
 
-    // Get the school name or fallback to 'Unknown School'
-    $school_name = $school_name_query->find();
-    $school_destination = $school_name['school_name'] ?? 'Unknown School';
+        // Show a success message for multiple items
+        toast('Successfully updated item codes for selected items.');
 
-    // Show success toast message
-    toast('Successfully allocated item ' . $_POST['id'] . ' to ' . $school_destination . '.');
+    } elseif ($item_code) { // If no selected items but a single item_code is present
+        $new_item_code = $school_id . '-' . $item_code;
 
-    // Redirect to the unassigned resources page
-    redirect('/coordinator/resources/unassigned');
+        // Update the school inventory for the single item
+        $db->query('UPDATE school_inventory 
+                    SET school_id = :school_id, 
+                        item_code = :new_item_code,
+                        updated_by = :updated_by
+                    WHERE item_code = :id;', [
+            'id' => $item_code,
+            'new_item_code' => $new_item_code,
+            'school_id' => $school_id,
+            'updated_by' => $_SESSION['user']['user_id'] ?? 'Admin'
+        ]);
+
+        // Show a success message for a single item
+        toast('Successfully updated item code: ' . $new_item_code);
+
+    } else {
+        // Show a message if no items were selected and no item_code was provided
+        toast('No items were selected for update and no item code was provided.');
+    }
+
+    // Redirect to the specified resources page
+   redirect('/coordinator/resources/unassigned');
 
 } catch (PDOException $e) {
     // Log the error message for debugging
     error_log($e->getMessage());
 
     // Show an error toast message
-    toast('Failed to allocate the item. Please try again.');
+    toast('Failed to assign the item. Please try again.');
 
-    // Redirect back to the unassigned resources page
-    redirect('/coordinator/resources/unassigned');
+    // Redirect back to the resources page
+   redirect('/coordinator/resources/unassigned');
+
 } catch (Exception $e) {
     // Handle any other types of exceptions
     error_log($e->getMessage());
@@ -55,6 +75,6 @@ try {
     // Show a general error toast message
     toast('An unexpected error occurred. Please try again later.');
 
-    // Redirect back to the unassigned resources page
-    redirect('/coordinator/resources/unassigned');
+    // Redirect back to the resources page
+   redirect('/coordinator/resources/unassigned');
 }

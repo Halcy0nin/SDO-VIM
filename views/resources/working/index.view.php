@@ -1,13 +1,15 @@
 <?php $page_styles = ['/css/banner.css'];
 require base_path('views/partials/head.php') ?>
 <?php require base_path('views/partials/sidebar.php') ?>
-
+<?php require base_path('views/components/text-input.php') ?>
 
 <!-- Your HTML code goes here -->
 
 <main class="main-col">
    <section class="flex items-center pr-12 gap-3">
       <?php require base_path('views/partials/banner.php') ?>
+      <?php require base_path('views/partials/coordinator/resources/add_resource_modal.php') ?>
+      <?php require base_path('views/partials/coordinator/resources/import_resource_modal.php') ?>
    </section>
    <section class="mx-12 flex flex-col">
       <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>

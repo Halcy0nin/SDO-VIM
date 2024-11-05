@@ -1,13 +1,17 @@
 <?php $page_styles = ['/css/banner.css'];
 require base_path('views/partials/head.php') ?>
 <?php require base_path('views/partials/sidebar.php') ?>
-
+<?php require base_path('views/components/text-input.php') ?>
+<?php require base_path('views/components/select-input.php') ?>
+<?php require base_path('views/components/radio-group.php') ?>
 
 <!-- Your HTML code goes here -->
 
 <main class="main-col">
    <section class="flex items-center pr-12 gap-3">
       <?php require base_path('views/partials/banner.php') ?>
+      <?php require base_path('views/partials/coordinator/resources/add_resource_modal.php') ?>
+      <?php require base_path('views/partials/coordinator/resources/import_resource_modal.php') ?>
    </section>
    <section class="mx-12 flex flex-col">
       <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>
@@ -26,6 +30,8 @@ require base_path('views/partials/head.php') ?>
                <th>Item Article</th>
                <th>School</th>
                <th>Date Acquired</th>
+               <th>No. Of Items</th>
+               <th>Actions</th>
             </thead>
             <tbody class="oveflow-y-scroll">
                <?php if (count($resources) > 0): ?>
@@ -35,6 +41,11 @@ require base_path('views/partials/head.php') ?>
                         <td><?= htmlspecialchars($resource['item_article']) ?></td>
                         <td><?= htmlspecialchars($resource['school_name']) ?></td>
                         <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
+                        <td><?= htmlspecialchars($resource['item_inactive']) ?></td>
+                        <td>
+                           <div class="h-full w-full flex items-center gap-2">
+                           <?php require base_path('views/partials/coordinator/resources/view_repair_modal.php') ?>
+                        </td>
                      </tr>
                   <?php endforeach; ?>
                <?php else: ?>
