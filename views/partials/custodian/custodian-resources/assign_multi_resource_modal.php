@@ -15,19 +15,19 @@
                 <div class="modal-header mb-4">
                     <div class="flex gap-2 justify-center items-center text-green-600 text-xl">
                         <i class="bi bi-box-seam-fill sidebar-li-icon"></i>
-                        <h1 class="modal-title fs-5 font-bold" id="addItemModalLabel">Assign Resource: <?php echo htmlspecialchars($resource['item_article']); ?> </h1>
+                        <h1 class="modal-title fs-5 font-bold" id="addItemModalLabel">Assign Resources </h1>
                     </div>
                     <button type="button" class="btn-close hover:text-red-500" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="flex items-center gap-2">
                     Are you sure you want to assign these items to your school?
                 </div>
+                <div id="selectedItemsContainer"></div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Assign</button>
                 </div>
             </form>
-
         </div>
     </div>
 </main>
