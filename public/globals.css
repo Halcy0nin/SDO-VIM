@@ -232,7 +232,7 @@ body {
 .search-container1 {
   
   margin-top: 2rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 0rem;
   margin-left: 0rem;
   width: fit-content;
   border-radius: 0.25rem;
@@ -399,6 +399,48 @@ body {
   box-sizing: border-box;
 }
 
+.dropdown2 {
+  width: 10rem;
+  line-height: 0%;
+  position: relative;
+  margin-left: 23.5rem;
+  margin-top: 1rem;
+  margin-bottom: -3.5rem;
+
+}
+
+.dropdown2 * {
+  box-sizing: border-box;
+}
+
+.dropdown3 {
+  width: 10rem;
+  line-height: 0%;
+  position: relative;
+  margin-left: 23.5rem;
+  margin-top: 1rem;
+  margin-bottom: -4.3rem;
+
+}
+
+.dropdown3 * {
+  box-sizing: border-box;
+}
+
+.dropdown4 {
+  width: 10rem;
+  line-height: 0%;
+  position: relative;
+  margin-left: 20rem;
+  margin-top: -2.4rem;
+  margin-bottom: 0rem;
+
+}
+
+.dropdown4 * {
+  box-sizing: border-box;
+}
+
 .sort {
   width: 10rem;
   line-height: 0%;
@@ -497,3 +539,134 @@ body {
     line-height: 48px;
 }
 
+.date-filter-container {
+  transform: translate(0%, -5%);
+  gap: 10px;
+  margin-left: 35rem;
+  margin-bottom: -4.3rem;
+  margin-top: 1.9rem;
+}
+
+.date-filter-container label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.date-filter-container input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 180px; /* Adjust width of date inputs */
+}
+
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background-color: #0056b3;
+}
+
+.date-filter-container2 {
+  transform: translate(0%, -40%);
+  gap: 10px;
+  margin-left: 35rem;
+  margin-bottom: -4.3rem;
+  margin-top: 1.9rem;
+}
+
+.date-filter-container2 label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.date-filter-container2 input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 180px; /* Adjust width of date inputs */
+}
+
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background-color: #0056b3;
+}
+
+.date-filter-container3 {
+
+  gap: 10px;
+  margin-left: 23rem;
+  margin-bottom: 0rem;
+  margin-top: -2.5rem;
+}
+
+.date-filter-container3 label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.date-filter-container3 input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 180px; /* Adjust width of date inputs */
+}
+
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background-color: #0056b3;
+}
+
+.date-filter-container4 {
+  transform: translate(1%, -180%);
+  gap: 10px;
+  margin-left: 35rem;
+  margin-bottom: -4.3rem;
+  margin-top: 1.9rem;
+}
+
+.date-filter-container4 label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.date-filter-container4 input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 180px; /* Adjust width of date inputs */
+}
+
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background-color: #0056b3;
+}

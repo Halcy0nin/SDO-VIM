@@ -31,6 +31,16 @@ require base_path('views/partials/head.php') ?>
             </ul>
          </form>
       </div>
+
+      <div class="date-filter-container4">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" />
+
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" />
+
+    <button class="filter-button" id="filter-btn">Filter</button>
+  </div>
       
       <section class="school-name-container">
   <div class="right-group">

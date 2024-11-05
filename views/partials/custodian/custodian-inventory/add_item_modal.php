@@ -43,8 +43,9 @@
                         <?php text_input('Inactive Items', 'item_inactive', 'No. Of Inactive Items', $old['item_inactive'] ?? '') ?>
                     </span>
                 </div>
-                <div>
-                   <input type="date" name="date_acquired" value="$old['date_acquired']"/>
+                <div class="my-1 flex flex-col">
+                    <label class="ml-2 text-xs text-zinc-500 mb-1">Date Acquired</label>
+                    <input required type="date" name="date_acquired" value="$old['date_acquired']" class="w-fit p-2 outline-none rounded border-1 border-zinc-300 hover:border-zinc-400 active:border-[#434F72] focus:border-[#434F72] valid:border-[#434F72] shadow-inner" />
                 </div>
                 <div>
                     <?php text_input('Source of Funds', 'item_funds_source', 'Source Of Funds', $old['item_funds_source'] ?? '') ?>

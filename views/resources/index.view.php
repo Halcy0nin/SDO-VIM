@@ -23,6 +23,17 @@ require base_path('views/partials/head.php') ?>
          </button>
       </form>
    </section>
+
+   <div class="date-filter-container3">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" />
+
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" />
+
+    <button class="filter-button" id="filter-btn">Filter</button>
+  </div>
+
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
@@ -224,3 +235,18 @@ require base_path('views/partials/head.php') ?>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // JavaScript to handle button click event
+    document.getElementById('filter-btn').addEventListener('click', function () {
+      const startDate = document.getElementById('start-date').value;
+      const endDate = document.getElementById('end-date').value;
+
+      if (startDate && endDate) {
+        alert(`Filtering from ${startDate} to ${endDate}`);
+      } else {
+        alert('Please select both start and end dates.');
+      }
+    });
+  </script>
