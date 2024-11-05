@@ -104,8 +104,8 @@ th .header-content {
   width: 97%; /* Take full screen width */
   padding: 15px 20px;
   position: sticky;
-
   top: 10;
+  margin-bottom: -0rem;
   z-index: 10;
 }
 

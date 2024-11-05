@@ -31,24 +31,24 @@ require base_path('views/partials/head.php') ?>
          </form>
    </div>
 
-   <div class="date-filter-container2">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date" />
 
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date" />
-
-    <button class="filter-button" id="filter-btn">Filter</button>
-  </div>
 
    <section class="mx-12 flex flex-col">
-      <form class="search-container search" method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
+      <form class="search-container2 search" method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
          <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
          <button type="submit" class="search">
             <i class="bi bi-search"></i>
          </button>
       </form>
    </section>
+
+   <div class="date-filter-container2">
+      <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
+      <input type="date" id="start-date" />
+      <label for="end-date">to</label>
+      <input type="date" id="end-date" />
+      <button class="filter-button" id="filter-btn">Filter</button>
+  </div>
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">

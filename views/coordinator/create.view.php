@@ -10,7 +10,7 @@ require base_path('views/partials/head.php') ?>
    <section>
       <?php require base_path('views/partials/banner.php') ?> 
       <?php require base_path('views/partials/coordinator/dashboard_searchbar.php') ?> 
-
+   </section>
       <div class="dropdown1">
          <div class="select">
             <span class="selected">Filter</span>
@@ -32,14 +32,12 @@ require base_path('views/partials/head.php') ?>
          </form>
       </div>
 
-      <div class="date-filter-container4">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date" />
-
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date" />
-
-    <button class="filter-button" id="filter-btn">Filter</button>
+   <div class="date-filter-container4">
+      <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
+      <input type="date" id="start-date" />
+      <label for="end-date">to</label>
+      <input type="date" id="end-date" />
+      <button class="filter-button" id="filter-btn">Filter</button>
   </div>
       
       <section class="school-name-container">

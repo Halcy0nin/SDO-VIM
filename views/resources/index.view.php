@@ -25,13 +25,11 @@ require base_path('views/partials/head.php') ?>
    </section>
 
    <div class="date-filter-container3">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date" />
-
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date" />
-
-    <button class="filter-button" id="filter-btn">Filter</button>
+      <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
+      <input type="date" id="start-date" />
+      <label for="end-date">to</label>
+      <input type="date" id="end-date" />
+      <button class="filter-button" id="filter-btn">Filter</button>
   </div>
 
    <section class="mx-12 mb-12 inline-block grow rounded">
