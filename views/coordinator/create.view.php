@@ -19,28 +19,29 @@ require base_path('views/partials/head.php') ?>
          
          <form id="schoolFilterForm" method="POST" action="/coordinator">
             <input name="_method" value="PATCH" hidden />
-            <input id="schoolFilterValue" name="schoolFilterValue" value="All" type="hidden" /> <!-- Hidden input to store selected value -->
+            <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
             
             <ul class="menu">
-                  <li data-value="All">All Schools</li> <!-- Default option to show all schools -->
+                  <li data-value="All School">All Schools</li> <!-- Default option to show all schools -->
                   <?php foreach ($schoolDropdownContent as $school): ?>
                      <li data-value="<?= htmlspecialchars($school['school_name']); ?>">
                         <?= htmlspecialchars($school['school_name']); ?>
                      </li>
                   <?php endforeach; ?>
             </ul>
-         </form>
       </div>
 
       <div class="date-filter-container4">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date" />
+         <label for="start-date">Start Date:</label>
+         <input type="date" id="start-date" name="startDate" />
 
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date" />
+         <label for="end-date">End Date:</label>
+         <input type="date" id="end-date" name="endDate" required />
 
-    <button class="filter-button" id="filter-btn">Filter</button>
-  </div>
+         <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+      </form>
+      </div>
+
       
       <section class="school-name-container">
   <div class="right-group">
@@ -302,3 +303,8 @@ options.forEach(option => {
         });
     });
 </script>
+
+
+
+
+
