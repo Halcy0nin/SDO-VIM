@@ -11,6 +11,14 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/banner.php') ?> 
       <?php require base_path('views/partials/coordinator/dashboard_searchbar.php') ?> 
    </section>
+
+      <div class="school-name-container">
+         <div class="right-group">
+            <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
+            <h2 class="date">Data as of: <?php echo date("F Y"); ?></h2>
+         </div>
+      </div> 
+
       <div class="dropdown1">
          <div class="select">
             <span class="selected">Filter</span>
@@ -30,7 +38,7 @@ require base_path('views/partials/head.php') ?>
                   <?php endforeach; ?>
             </ul>
          </form>
-      </div>
+      </div> 
 
    <div class="date-filter-container4">
       <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
@@ -39,15 +47,7 @@ require base_path('views/partials/head.php') ?>
       <input type="date" id="end-date" />
       <button class="filter-button" id="filter-btn">Filter</button>
   </div>
-      
-      <section class="school-name-container">
-  <div class="right-group">
-    <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
-    <h2 class="date">Data as of: <?php echo date("F Y"); ?></h2>
-  </div>
-</section>    
-          
-   </section>
+   
    <section class="mx-6 px-12 flex gap-6">
       <?php dashboard_card('Total Equipments', $totalEquipment); ?>
       <?php dashboard_card('Working', $totalWorking, 'bi-patch-check-fill'); ?>
