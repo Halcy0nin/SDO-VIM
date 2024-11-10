@@ -4,7 +4,7 @@ require base_path('views/partials/head.php') ?>
 <?php require base_path('views/components/text-input.php') ?>
 
 <!-- Your HTML code goes here -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <main class="main-col">
    <section class="flex items-center pr-12 gap-3">
       <?php require base_path('views/partials/banner.php') ?>
@@ -22,11 +22,53 @@ require base_path('views/partials/head.php') ?>
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
             <thead>
-               <th>ID</th>
-               <th>Item Article</th>
-               <th>School</th>
-               <th>Date Acquired</th>
-               <th>Actions</th>
+               <tr>
+                  <th>
+                     <div class="header-content">
+                        ID
+                        <span class="sort-icons">
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                        </span>
+                     </div>
+                  </th>
+                  <th>
+                     <div class="header-content">
+                        Item Article
+                        <span class="sort-icons">
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                        </span>
+                     </div>
+                  </th>
+                  <th>
+                     <div class="header-content">
+                        School
+                        <span class="sort-icons">
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
+                        </span>
+                     </div>
+                  </th>
+                  <th>
+                     <div class="header-content">
+                        Status
+                        <span class="sort-icons">
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                        </span>
+                     </div>
+                  </th>
+                  <th>
+                     <div class="header-content">
+                        Date Acquired
+                        <span class="sort-icons">
+                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                        </span>
+                     </div>
+                  </th>
+               </tr>
             </thead>
             <tbody>
                <?php if (count($resources) > 0): ?>
@@ -60,19 +102,19 @@ require base_path('views/partials/head.php') ?>
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>
                            <a
-                              href="/coordinator/resources?page=1"
+                              href="/coordinator/resources/unassigned?page=1"
                               class="pagination-link">
                               <i class="bi bi-chevron-bar-left"></i>
                            </a>
                            <a
-                              href="/coordinator/resources?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
+                              href="/coordinator/resources/unassigned?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
                               <i class="bi bi-chevron-left"></i>
                            </a>
-                           <a href="/coordinator/resources?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
+                           <a href="/coordinator/resources/unassigned?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
                               class="pagination-link">
                               <i class="bi bi-chevron-right"></i>
                            </a>
-                           <a href="/coordinator/resources?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
+                           <a href="/coordinator/resources/unassigned?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
                               class="pagination-link">
                               <i class="bi bi-chevron-bar-right"></i>
                            </a>

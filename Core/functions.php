@@ -112,3 +112,10 @@ function toast($text = 'Toast!', $background = 'blue', $duration = 3000, $positi
         'position' => $position,
     ]);
 }
+
+function getNextOrder($currentOrder) {
+    return [
+        'asc' => $currentOrder === 'asc' ? 'desc' : 'asc',
+        'desc' => $currentOrder === 'desc' ? 'asc' : 'desc'
+    ];
+}

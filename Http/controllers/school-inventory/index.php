@@ -30,6 +30,32 @@ $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pa
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
+$sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'item_code';
+$sortOrder = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC'; // default to ASC
+
+$sortableColumns = [
+    'si.item_code',
+    'si.item_article',
+    'si.item_desc',
+    'si.date_acquired',
+    'si.date_updated',
+    'si.item_unit_value',
+    'si.item_total_value',
+    'si.item_quantity',
+    'si.item_funds_source',
+    'si.item_status',
+    'si.item_active',
+    'si.item_inactive',
+    'h.action AS history_action',
+    'h.modified_at AS history_modified',
+    'u.user_name AS history_by'
+
+];
+
+if (!array_key_exists($sortColumn, $sortableColumns)) {
+    $sortColumn = 'item_code';
+}
+
 $items = $db->paginate(
     '
     SELECT 
@@ -62,6 +88,7 @@ $items = $db->paginate(
     INNER JOIN users u on h.user_id = u.user_id
     WHERE 
         si.school_id = :id
+    ORDER BY {$sortableColumns[$sortColumn]} $sortOrder
     LIMIT :start,:end
     ',
     [
@@ -95,14 +122,14 @@ $notificationCountQuery = $db->query('
     FROM notifications
     WHERE viewed IS NULL
     AND  created_by != :user_id 
-',[
+', [
     'user_id' => get_uid(),
 ])->find();
 
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
-if ($notificationCount > 5){
+if ($notificationCount > 5) {
     $notificationCount = '5+';
 };
 

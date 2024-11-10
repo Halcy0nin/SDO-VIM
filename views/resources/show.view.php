@@ -21,6 +21,15 @@ require base_path('views/partials/head.php') ?>
          </button>
       </form>
    </section>
+
+   <div class="date-filter-container3">
+      <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
+      <input type="date" id="start-date" />
+      <label for="end-date">to</label>
+      <input type="date" id="end-date" />
+      <button class="filter-button" id="filter-btn">Filter</button>
+   </div>
+
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
@@ -71,9 +80,6 @@ require base_path('views/partials/head.php') ?>
                         </span>
                      </div>
                   </th>
-                  <th>
-                     Action
-                  </th>
                </tr>
             </thead>
             <tbody class="oveflow-y-scroll">
@@ -85,12 +91,6 @@ require base_path('views/partials/head.php') ?>
                         <td><?= htmlspecialchars($resource['school_name'] ?? 'Unassigned') ?></td>
                         <td><?= htmlspecialchars($statusMap[$resource['status']]) ?></td>
                         <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
-                        <td>
-                           <div class="h-full w-full flex items-center gap-2">
-                              <button class="view-btn">
-                                 <i class="bi bi-eye-fill"></i>
-                              </button>
-                        </td>
                      </tr>
                   <?php endforeach; ?>
                <?php else: ?>

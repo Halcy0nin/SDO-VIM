@@ -37,7 +37,22 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
-$resources = $db->paginate('
+$sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'date_acquired';
+$sortOrder = (isset($_GET['order']) && $_GET['order'] === 'asc') ? 'ASC' : 'DESC';
+
+$sortableColumns = [
+    'id' => 'si.item_code',
+    'item_article' => 'si.item_article',
+    'school' => 's.school_name',
+    'status' => 'si.item_status',
+    'date_acquired' => 'si.date_acquired'
+];
+
+if (!array_key_exists($sortColumn, $sortableColumns)) {
+    $sortColumn = 'date_acquired';
+}
+
+$query = "
 SELECT 
     si.item_code,
     si.item_article,
@@ -48,11 +63,16 @@ FROM
     school_inventory si
 LEFT JOIN 
     schools s ON s.school_id = si.school_id
-LIMIT :start,:end
-', [
+ORDER BY {$sortableColumns[$sortColumn]} $sortOrder
+LIMIT :start, :end
+";
+
+
+$resources = $db->paginate($query, [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
 ])->get();
+
 
 $statusMap = [
     1 => 'Working',

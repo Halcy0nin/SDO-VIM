@@ -64,6 +64,21 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
+$sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'item_code';
+$sortOrder = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC'; // default to ASC
+
+$sortableColumns = [
+    'id' => 'si.item_code',
+    'item_article' => 'si.item_article',
+    'school' => 's.school_name',
+    'status' => 'si.item_status',
+    'date_acquired' => 'si.date_acquired'
+];
+
+if (!array_key_exists($sortColumn, $sortableColumns)) {
+    $sortColumn = 'item_code';
+}
+
 $resources = $db->paginate('
 SELECT 
     si.item_code,
@@ -77,6 +92,7 @@ LEFT JOIN
     schools s ON s.school_id = si.school_id
 WHERE
     si.school_id = :id
+ORDER BY {$sortableColumns[$sortColumn]} $sortOrder
 LIMIT :start ,:end
 ', [
     'id' => $_SESSION['user']['school_id'] ?? null,

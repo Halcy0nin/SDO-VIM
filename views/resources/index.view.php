@@ -6,7 +6,6 @@ require base_path('views/partials/head.php') ?>
 <?php require base_path('views/components/radio-group.php') ?>
 
 <!-- Your HTML code goes here -->
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <main class="main-col">
    <section class="flex items-center pr-12 gap-3">
@@ -30,58 +29,87 @@ require base_path('views/partials/head.php') ?>
       <label for="end-date">to</label>
       <input type="date" id="end-date" />
       <button class="filter-button" id="filter-btn">Filter</button>
-  </div>
+   </div>
+
+   <?php $currentOrder = $_GET['order'] ?? 'asc';
+   $nextOrders = getNextOrder($currentOrder); ?>
 
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
             <thead>
                <tr>
+
                   <th>
                      <div class="header-content">
                         ID
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=id&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=id&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                   <th>
                      <div class="header-content">
                         Item Article
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=item_article&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=item_article&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                   <th>
                      <div class="header-content">
                         School
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=school&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=school&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                   <th>
                      <div class="header-content">
                         Status
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=status&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=status&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                   <th>
                      <div class="header-content">
                         Date Acquired
                         <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=date_acquired&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=date_acquired&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                </tr>
             </thead>
             <tbody class="oveflow-y-scroll">
@@ -235,16 +263,16 @@ require base_path('views/partials/head.php') ?>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-    // JavaScript to handle button click event
-    document.getElementById('filter-btn').addEventListener('click', function () {
+<script>
+   // JavaScript to handle button click event
+   document.getElementById('filter-btn').addEventListener('click', function() {
       const startDate = document.getElementById('start-date').value;
       const endDate = document.getElementById('end-date').value;
 
       if (startDate && endDate) {
-        alert(`Filtering from ${startDate} to ${endDate}`);
+         alert(`Filtering from ${startDate} to ${endDate}`);
       } else {
-        alert('Please select both start and end dates.');
+         alert('Please select both start and end dates.');
       }
-    });
-  </script>
+   });
+</script>

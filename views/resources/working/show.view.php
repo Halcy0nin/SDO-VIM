@@ -6,7 +6,7 @@ require base_path('views/partials/head.php') ?>
 <?php require base_path('views/components/radio-group.php') ?>
 
 <!-- Your HTML code goes here -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <main class="main-col">
     <section class="flex items-center pr-12 gap-3">
         <?php require base_path('views/partials/banner.php') ?>
@@ -26,11 +26,47 @@ require base_path('views/partials/head.php') ?>
             <table class="table table-striped m-0">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Item Article</th>
-                        <th>School</th>
-                        <th>Date Acquired</th>
-                        <th>Actions</th>
+                        <th>
+                            <div class="header-content">
+                                ID
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Item Article
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                School
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Status
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                                </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-content">
+                                Date Acquired
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                                    <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                                </span>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="oveflow-y-scroll">
