@@ -2,7 +2,6 @@
 require base_path('views/partials/head.php') ?>
 <?php require base_path('views/partials/sidebar.php') ?>
 
-
 <!-- Your HTML code goes here -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <main class="main-col">
@@ -61,19 +60,10 @@ require base_path('views/partials/head.php') ?>
                   </th>
                   <th>
                      <div class="header-content">
-                        Status
+                        Date Acquired
                         <span class="sort-icons">
                            <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
                            <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
-                        </span>
-                     </div>
-                  </th>
-                  <th>
-                     <div class="header-content">
-                        Date Acquired
-                        <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
                         </span>
                      </div>
                   </th>
@@ -100,6 +90,7 @@ require base_path('views/partials/head.php') ?>
                   </tr>
                <?php endif; ?>
             </tbody>
+            
             <tfoot class="overflow-hidden">
                <tr>
                   <td colspan="6" class="py-2 pr-4">
