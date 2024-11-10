@@ -97,6 +97,28 @@ th .header-content {
   color: white;
 }
 
+.sort-icons1 {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1; /* Ensure line-height does not add extra space */
+  row-gap: -15px; /* Reduce gap further */
+  margin-top: -45px;
+  margin-bottom: -45px;
+  margin-left: 0px;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s;
+}
+
+.sort-icons1 a {
+  margin: -5px -2px;
+  padding: 0; 
+  line-height: 1;
+}
+
+.header-content:hover .sort-icons1 {
+  opacity: 1; /* Show on hover */
+}
+
 .school-name-container {
   display: flex; /* Enable flexbox */
   justify-content: flex-end; /* Align content to the right side */

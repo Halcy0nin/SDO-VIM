@@ -34,16 +34,15 @@ require base_path('views/partials/head.php') ?>
    <?php $currentOrder = $_GET['order'] ?? 'asc';
    $nextOrders = getNextOrder($currentOrder); ?>
 
-   <section class="mx-12 mb-12 inline-block grow rounded">
+   <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
             <thead>
                <tr>
-
                   <th>
                      <div class="header-content">
                         ID
-                        <span class="sort-icons">
+                        <span class="sort-icons1">
                            <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=id&order=<?= $nextOrders['asc'] ?>">
                               <i class="fas fa-sort-up"></i>
                            </a>
@@ -57,7 +56,7 @@ require base_path('views/partials/head.php') ?>
                   <th>
                      <div class="header-content">
                         Item Article
-                        <span class="sort-icons">
+                        <span class="sort-icons1">
                            <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=item_article&order=<?= $nextOrders['asc'] ?>">
                               <i class="fas fa-sort-up"></i>
                            </a>
@@ -71,7 +70,7 @@ require base_path('views/partials/head.php') ?>
                   <th>
                      <div class="header-content">
                         School
-                        <span class="sort-icons">
+                        <span class="sort-icons1">
                            <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=school&order=<?= $nextOrders['asc'] ?>">
                               <i class="fas fa-sort-up"></i>
                            </a>
@@ -85,7 +84,7 @@ require base_path('views/partials/head.php') ?>
                   <th>
                      <div class="header-content">
                         Status
-                        <span class="sort-icons">
+                        <span class="sort-icons1">
                            <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=status&order=<?= $nextOrders['asc'] ?>">
                               <i class="fas fa-sort-up"></i>
                            </a>
@@ -99,7 +98,7 @@ require base_path('views/partials/head.php') ?>
                   <th>
                      <div class="header-content">
                         Date Acquired
-                        <span class="sort-icons">
+                        <span class="sort-icons1">
                            <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=date_acquired&order=<?= $nextOrders['asc'] ?>">
                               <i class="fas fa-sort-up"></i>
                            </a>
