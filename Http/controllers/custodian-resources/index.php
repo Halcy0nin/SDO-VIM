@@ -64,8 +64,8 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
-$sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'item_code';
-$sortOrder = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC'; // default to ASC
+$sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'date_acquired';
+$sortOrder = isset($_GET['order']) && $_GET['order'] === 'asc' ? 'ASC' : 'DESC'; // default to DESC
 
 $sortableColumns = [
     'id' => 'si.item_code',
@@ -76,10 +76,10 @@ $sortableColumns = [
 ];
 
 if (!array_key_exists($sortColumn, $sortableColumns)) {
-    $sortColumn = 'item_code';
+    $sortColumn = 'date_acquired';
 }
 
-$resources = $db->paginate('
+$query = "
 SELECT 
     si.item_code,
     si.item_article,
@@ -90,12 +90,12 @@ FROM
     school_inventory si
 LEFT JOIN 
     schools s ON s.school_id = si.school_id
-WHERE
-    si.school_id = :id
 ORDER BY {$sortableColumns[$sortColumn]} $sortOrder
-LIMIT :start ,:end
-', [
-    'id' => $_SESSION['user']['school_id'] ?? null,
+LIMIT :start, :end
+";
+
+
+$resources = $db->paginate($query, [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
 ])->get();

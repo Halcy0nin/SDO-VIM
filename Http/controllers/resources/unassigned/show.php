@@ -30,7 +30,7 @@ WHERE
         item_desc LIKE :search_desc OR
         s.school_name LIKE :search_school
     )
-',[
+', [
     'search_code' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
     'search_article' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
     'search_desc' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
@@ -48,6 +48,7 @@ if ($resources_count[0]['total'] !== 0) {
             si.item_code,
             si.item_article,
             s.school_name,
+            si.item_status AS status,
             si.date_acquired
         FROM 
             school_inventory si
@@ -56,7 +57,7 @@ if ($resources_count[0]['total'] !== 0) {
         WHERE
             si.school_id IS NULL AND
             (
-                item_code LIKE :search_code OR
+            item_code LIKE :search_code OR
             item_article LIKE :search_article OR
             item_desc LIKE :search_desc OR
             s.school_name LIKE :search_school
@@ -78,9 +79,9 @@ $statusMap = [
     3 => 'Condemned'
 ];
 
-view('resources/show.view.php', [
+view('resources/unassigned/show.view.php', [
     'statusMap' => $statusMap,
-    'heading' => 'Resources',
+    'heading' => 'Unassigned Resources',
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],

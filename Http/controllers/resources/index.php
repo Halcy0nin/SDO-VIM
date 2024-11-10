@@ -38,7 +38,7 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
 $sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'date_acquired';
-$sortOrder = (isset($_GET['order']) && $_GET['order'] === 'asc') ? 'ASC' : 'DESC';
+$sortOrder = isset($_GET['order']) && $_GET['order'] === 'asc' ? 'ASC' : 'DESC'; // default to DESC
 
 $sortableColumns = [
     'id' => 'si.item_code',
@@ -69,6 +69,7 @@ LIMIT :start, :end
 
 
 $resources = $db->paginate($query, [
+    'id' => $_SESSION['user']['school_id'] ?? null,
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
 ])->get();

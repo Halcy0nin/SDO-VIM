@@ -17,55 +17,93 @@ require base_path('views/partials/head.php') ?>
             <i class="bi bi-search"></i>
          </button>
       </form>
-      <div class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
-         <table class="table table-striped">
+
+      <div class="date-filter-container3">
+      <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
+      <input type="date" id="start-date" />
+      <label for="end-date">to</label>
+      <input type="date" id="end-date" />
+      <button class="filter-button" id="filter-btn">Filter</button>
+   </div>
+
+   <?php $currentOrder = $_GET['order'] ?? 'asc';
+   $nextOrders = getNextOrder($currentOrder); ?>
+
+   <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
+      <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
+         <table class="table table-striped m-0">
             <thead>
                <tr>
                   <th>
                      <div class="header-content">
                         ID
-                        <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                        <span class="sort-icons1">
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=id&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=id&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                   <th>
                      <div class="header-content">
                         Item Article
-                        <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                        <span class="sort-icons1">
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=item_article&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=item_article&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                   <th>
                      <div class="header-content">
                         School
-                        <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
+                        <span class="sort-icons1">
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=school&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=school&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                   <th>
                      <div class="header-content">
                         Status
-                        <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                        <span class="sort-icons1">
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=status&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=status&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                   <th>
                      <div class="header-content">
                         Date Acquired
-                        <span class="sort-icons">
-                           <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
-                           <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                        <span class="sort-icons1">
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=date_acquired&order=<?= $nextOrders['asc'] ?>">
+                              <i class="fas fa-sort-up"></i>
+                           </a>
+                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=date_acquired&order=<?= $nextOrders['desc'] ?>">
+                              <i class="fas fa-sort-down"></i>
+                           </a>
                         </span>
                      </div>
                   </th>
+
                </tr>
             </thead>
             <tbody>

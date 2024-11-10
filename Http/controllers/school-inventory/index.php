@@ -30,34 +30,34 @@ $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pa
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
-$sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'item_code';
-$sortOrder = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC'; // default to ASC
+$sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'date_acquired';
+$sortOrder = isset($_GET['order']) && $_GET['order'] === 'asc' ? 'ASC' : 'DESC'; // default to DESC
 
 $sortableColumns = [
-    'si.item_code',
-    'si.item_article',
-    'si.item_desc',
-    'si.date_acquired',
-    'si.date_updated',
-    'si.item_unit_value',
-    'si.item_total_value',
-    'si.item_quantity',
-    'si.item_funds_source',
-    'si.item_status',
-    'si.item_active',
-    'si.item_inactive',
-    'h.action AS history_action',
+    'item_code' => 'si.item_code',
+    'article' => 'si.item_article',
+    'description' => 'si.item_desc',
+    'date_acquired' => 'si.date_acquired',
+    'last_updated' => 'si.date_updated',
+    'unit_value' => 'si.item_unit_value',
+    'total_value' => 'si.item_total_value',
+    'qty' => 'si.item_quantity',
+    'source_of_funds' => 'si.item_funds_source',
+    'status' => 'si.item_status',
+    'active' => 'si.item_active',
+    'inactive' => 'si.item_inactive',
+    'action' => 'h.action AS history_action',
     'h.modified_at AS history_modified',
     'u.user_name AS history_by'
 
 ];
 
 if (!array_key_exists($sortColumn, $sortableColumns)) {
-    $sortColumn = 'item_code';
+    $sortColumn = 'date_acquired';
 }
 
-$items = $db->paginate(
-    '
+$query =
+    "
     SELECT 
         si.item_code,
         si.item_article,
@@ -90,13 +90,13 @@ $items = $db->paginate(
         si.school_id = :id
     ORDER BY {$sortableColumns[$sortColumn]} $sortOrder
     LIMIT :start,:end
-    ',
-    [
-        'id' => $params['id'] ?? null,
-        'start' => (int)$pagination['start'],
-        'end' => (int)$pagination['pages_limit'],
-    ]
-)->get();
+    ";
+    $items = $db->paginate($query, [
+            'id' => $params['id'] ?? null,
+            'start' => (int)$pagination['start'],
+            'end' => (int)$pagination['pages_limit'],
+        ]
+    )->get();
 
 $schoolName = $db->query('
 SELECT 

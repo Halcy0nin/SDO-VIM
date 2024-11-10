@@ -34,14 +34,14 @@ $notificationCountQuery = $db->query('
     FROM notifications
     WHERE viewed IS NULL
     AND  created_by != :user_id 
-',[
+', [
     'user_id' => get_uid(),
 ])->find();
 
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
-if ($notificationCount > 5){
+if ($notificationCount > 5) {
     $notificationCount = '5+';
 };
 
@@ -54,9 +54,19 @@ $pagination = [
     'start' => 0,
 ];
 
-$resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory si WHERE si.school_id IS NULL')->get();
+
+$resources_count = $db->query('
+SELECT 
+    COUNT(*) as total 
+FROM 
+    school_inventory si
+WHERE
+    si.school_id IS NULL;
+')->get();
+
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
+
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
 $resources = $db->paginate('
@@ -78,11 +88,17 @@ LIMIT :start,:end
     'end' => (int)$pagination['pages_limit'],
 ])->get();
 
+$statusMap = [
+    1 => 'Working',
+    2 => 'Need Repair',
+    3 => 'Condemned'
+];
+
 view('resources/unassigned/index.view.php', [
+    'statusMap' => $statusMap,
     'heading' => 'Unassigned Resources',
-    'notificationCount' => $notificationCount,
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
-    'pagination' => $pagination
+    'pagination' => $pagination,
 ]);
