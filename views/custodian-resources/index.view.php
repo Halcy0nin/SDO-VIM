@@ -19,135 +19,119 @@ require base_path('views/partials/head.php') ?>
       </form>
 
       <div class="date-filter-container3">
-      <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
-      <input type="date" id="start-date" />
-      <label for="end-date">to</label>
-      <input type="date" id="end-date" />
-      <button class="filter-button" id="filter-btn">Filter</button>
-   </div>
+         <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
+         <input type="date" id="start-date" />
+         <label for="end-date">to</label>
+         <input type="date" id="end-date" />
+         <button class="filter-button" id="filter-btn">Filter</button>
+      </div>
 
-   <?php $currentOrder = $_GET['order'] ?? 'asc';
-   $nextOrders = getNextOrder($currentOrder); ?>
+      <?php $currentOrder = $_GET['order'] ?? 'asc';
+      $nextOrders = getNextOrder($currentOrder); ?>
 
-   <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
-      <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
-         <table class="table table-striped m-0">
-            <thead>
-               <tr>
-                  <th>
-                     <div class="header-content">
-                        ID
-                        <span class="sort-icons1">
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=id&order=<?= $nextOrders['asc'] ?>">
-                              <i class="fas fa-sort-up"></i>
-                           </a>
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=id&order=<?= $nextOrders['desc'] ?>">
-                              <i class="fas fa-sort-down"></i>
-                           </a>
-                        </span>
-                     </div>
-                  </th>
-
-                  <th>
-                     <div class="header-content">
-                        Item Article
-                        <span class="sort-icons1">
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=item_article&order=<?= $nextOrders['asc'] ?>">
-                              <i class="fas fa-sort-up"></i>
-                           </a>
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=item_article&order=<?= $nextOrders['desc'] ?>">
-                              <i class="fas fa-sort-down"></i>
-                           </a>
-                        </span>
-                     </div>
-                  </th>
-
-                  <th>
-                     <div class="header-content">
-                        School
-                        <span class="sort-icons1">
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=school&order=<?= $nextOrders['asc'] ?>">
-                              <i class="fas fa-sort-up"></i>
-                           </a>
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=school&order=<?= $nextOrders['desc'] ?>">
-                              <i class="fas fa-sort-down"></i>
-                           </a>
-                        </span>
-                     </div>
-                  </th>
-
-                  <th>
-                     <div class="header-content">
-                        Status
-                        <span class="sort-icons1">
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=status&order=<?= $nextOrders['asc'] ?>">
-                              <i class="fas fa-sort-up"></i>
-                           </a>
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=status&order=<?= $nextOrders['desc'] ?>">
-                              <i class="fas fa-sort-down"></i>
-                           </a>
-                        </span>
-                     </div>
-                  </th>
-
-                  <th>
-                     <div class="header-content">
-                        Date Acquired
-                        <span class="sort-icons1">
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=date_acquired&order=<?= $nextOrders['asc'] ?>">
-                              <i class="fas fa-sort-up"></i>
-                           </a>
-                           <a href="/coordinator/resources?page=<?= $pagination['pages_current'] ?>&sort=date_acquired&order=<?= $nextOrders['desc'] ?>">
-                              <i class="fas fa-sort-down"></i>
-                           </a>
-                        </span>
-                     </div>
-                  </th>
-
-               </tr>
-            </thead>
-            <tbody>
-               <?php foreach ($resources as $resource): ?>
+      <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
+         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
+            <table class="table table-striped m-0">
+               <thead>
                   <tr>
+                     <th>
+                        <div class="header-content">
+                           ID
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                           </span>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="header-content">
+                           Item Article
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                           </span>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="header-content">
+                           School
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
+                           </span>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="header-content">
+                           Status
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                           </span>
+                        </div>
+                     </th>
+                     <th>
+                        <div class="header-content">
+                           Date Acquired
+                           <span class="sort-icons">
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                           </span>
+                        </div>
+                     </th>
+                     <th>
+                        Action
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <?php foreach ($resources as $resource): ?>
+                     <tr>
                      <td><?= htmlspecialchars($resource['item_code']) ?></td>
                      <td><?= htmlspecialchars($resource['item_article']) ?></td>
                      <td><?= htmlspecialchars($resource['school_name']) ?></td>
                      <td><?= htmlspecialchars($statusMap[$resource['status']]) ?></td>
                      <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
+                     <td>
+                        <div class="h-full w-full flex items-center gap-2">
+                           <button class="view-btn">
+                              <i class="bi bi-eye-fill"></i>
+                           </button>
+                     </td>
                   </tr>
-               <?php endforeach; ?>
-            </tbody>
-            <tfoot class="overflow-hidden">
-               <tr>
-                  <td colspan="6" class="py-2 pr-4">
-                     <div class="w-full flex flex-wrap items-center justify-end gap-2">
-                        <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
-                        <?php if ($pagination['pages_total'] > 1): ?>
-                           <a
-                              href="/custodian/custodian-resources?page=1"
-                              class="pagination-link">
-                              <i class="bi bi-chevron-bar-left"></i>
-                           </a>
-                           <a
-                              href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
-                              <i class="bi bi-chevron-left"></i>
-                           </a>
-                           <a href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
-                              class="pagination-link">
-                              <i class="bi bi-chevron-right"></i>
-                           </a>
-                           <a href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
-                              class="pagination-link">
-                              <i class="bi bi-chevron-bar-right"></i>
-                           </a>
-                        <?php endif; ?>
-                     </div>
-                  </td>
-               </tr>
-            </tfoot>
-         </table>
-      </div>
-   </section>
+                  <?php endforeach; ?>
+               </tbody>
+               <tfoot class="overflow-hidden">
+                  <tr>
+                     <td colspan="6" class="py-2 pr-4">
+                        <div class="w-full flex flex-wrap items-center justify-end gap-2">
+                           <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
+                           <?php if ($pagination['pages_total'] > 1): ?>
+                              <a
+                                 href="/custodian/custodian-resources?page=1"
+                                 class="pagination-link">
+                                 <i class="bi bi-chevron-bar-left"></i>
+                              </a>
+                              <a
+                                 href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
+                                 <i class="bi bi-chevron-left"></i>
+                              </a>
+                              <a href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
+                                 class="pagination-link">
+                                 <i class="bi bi-chevron-right"></i>
+                              </a>
+                              <a href="/custodian/custodian-resources?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
+                                 class="pagination-link">
+                                 <i class="bi bi-chevron-bar-right"></i>
+                              </a>
+                           <?php endif; ?>
+                        </div>
+                     </td>
+                  </tr>
+               </tfoot>
+            </table>
+         </div>
+      </section>
 </main>
 
 <?php require base_path('views/partials/footer.php') ?>

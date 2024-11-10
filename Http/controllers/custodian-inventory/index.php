@@ -38,14 +38,14 @@ $notificationCountQuery = $db->query('
         (user_id = :user_id AND (created_by != :user_id OR created_by IS NULL))
         OR is_public = 1
     );
-', [
+',[
     'user_id' => get_uid()
 ])->find();
 
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
-if ($notificationCount > 5) {
+if ($notificationCount > 5){
     $notificationCount = '5+';
 };
 
@@ -64,29 +64,6 @@ $pagination['pages_total'] = ceil($items_count[0]['total'] / $pagination['pages_
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
-
-$sortColumn = isset($_GET['sort']) ? $_GET['sort'] : 'date_updated';
-$sortOrder = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC';
-
-$sortableColumns = [
-    'item_code',
-    'article' => 'item_article',
-    'description' => 'item_desc',
-    'date_acquired',
-    'last_updated' =>'date_updated',
-    'unit_value' => 'item_unit_value',
-    'total_value' => 'item_total_value',
-    'qty' => 'item_quantity',
-    'source_of_funds' => 'item_funds_source',
-    'status' => 'item_status',
-    'active' => 'item_active',
-    'inactive' => 'item_inactive'
-
-];
-
-if (!array_key_exists($sortColumn, $sortableColumns)) {
-    $sortColumn = 'date_updated';
-}
 
 $items = $db->paginate('
 SELECT 
@@ -108,7 +85,6 @@ LEFT JOIN
     schools s ON s.school_id = si.school_id
 WHERE
     si.school_id = :id
-ORDER BY {$sortableColumns[$sortColumn]} $sortOrder
 LIMIT :start,:end
 ', [
     'id' => $_SESSION['user']['school_id'] ?? null,
@@ -116,15 +92,13 @@ LIMIT :start,:end
     'end' => (int)$pagination['pages_limit'],
 ])->get();
 
-$schoolName = $db->query(
-    '
+$schoolName = $db->query('
     SELECT s.school_name 
     FROM schools s 
     WHERE s.school_id = :id',
     [
         'id' => $_SESSION['user']['school_id'] ?? null
-    ]
-)->find();
+    ])->find();
 
 $schoolName = $schoolName['school_name'] ?? 'Unnamed School';
 
