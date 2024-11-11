@@ -54,7 +54,7 @@
                         <?php text_input('Active Items', 'item_active', 'No. Of Active Items', $old['item_active'] ?? '') ?>
                     </div>
                     <div class="w-1/2">
-                        <?php text_input('Inactive Items', 'item_inactive', 'No. Of Inactive Items', $old['item_inactive'] ?? 0) ?>
+                        <?php text_input('Inactive Items', 'item_inactive', 'No. Of Inactive Items', $old['item_inactive'] ?? '') ?>
                     </div>
                 </div>
                 <?php if (isset($errors['add_item']['item_active'])): ?>

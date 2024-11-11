@@ -78,60 +78,25 @@
                     <?php
                     select_input(
                         'Item Status',
-                       "item_status_{$item['item_code']}",
+                        'item_status',
                         'item_status',
                         [
                             1 => 'Working',
                             2 => 'Need Repair',
                             3 => 'Condemned'
                         ],
-                        $item['item_status'] ?? 1
+                        $old['item_status'] ?? 1
                     );
                     ?>
                 </div>
-
-                <span id="status_reason_container_<?php echo $item['item_code']; ?>" style="display: none;">
-                    <?php text_input('Reason', 'item_status_reason', 'Reason', $item['item_status_reason'] ?? '', 'text', false) ?>
-                </span>
-
-                <span id="repair_count_field_<?php echo $item['item_code']; ?>" style="display: none;">
-                    <?php text_input('No. of items that need repair', 'item_repair_count', 'No. Of Items', 0) ?>
-                </span>
-
-                <span id="condemned_count_field_<?php echo $item['item_code']; ?>" style="display: none;">
-                    <?php text_input('No. of items that are condemned', 'item_condemned_count', 'No. Of Items', 0) ?>
-                </span>
-
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                        // Dynamically select each modal based on its unique id
-                        const statusSelect = document.getElementById('item_status_<?php echo $item['item_code']; ?>');
-                        const statusReasonContainer = document.getElementById('status_reason_container_<?php echo $item['item_code']; ?>');
-                        const repairCountField = document.getElementById('repair_count_field_<?php echo $item['item_code']; ?>');
-                        const condemnedCountField = document.getElementById('condemned_count_field_<?php echo $item['item_code']; ?>');
-
-                        function updateStatusFields() {
-                            if (statusSelect.value === '2') {
-                                statusReasonContainer.style.display = 'block';
-                                repairCountField.style.display = 'block';
-                                condemnedCountField.style.display = 'none';
-                            } else if (statusSelect.value === '3') {
-                                statusReasonContainer.style.display = 'block';
-                                condemnedCountField.style.display = 'block';
-                                repairCountField.style.display = 'none';
-                            } else {
-                                statusReasonContainer.style.display = 'none';
-                                repairCountField.style.display = 'none';
-                                condemnedCountField.style.display = 'none';
-                            }
+                        if (<?php echo json_encode(array_key_exists($item['item_code'], $errors) && count($errors[$item['item_code']]) > 0) ?>) {
+                            var editItem = new bootstrap.Modal(document.getElementById('editItem<?php echo $item['item_code']; ?>'));
+                            editItem.show();
                         }
-
-                        updateStatusFields();
-
-                        statusSelect.addEventListener('change', updateStatusFields);
                     });
                 </script>
-
 
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>

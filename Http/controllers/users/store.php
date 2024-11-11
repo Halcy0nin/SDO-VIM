@@ -35,7 +35,7 @@ try {
         'user_name' => $_POST['user_name'],
         'password' => $_POST['password'],
         'password_confirm' => $_POST['password_confirm'],
-        'school_id' => !empty($_POST['school_id']) ? $_POST['school_id'] : null,
+        'school_id' => $_POST['school_id'] ?? '',
         'user_role' => $_POST['user_role'],
     ]);
 
@@ -57,7 +57,7 @@ try {
         'user_name' => $_POST['user_name'],
         'role' => $_POST['user_role'],
         'password' => $hashed_password,
-        'school_id' => !empty($_POST['school_id']) ? $_POST['school_id'] : null,
+        'school_id' => $_POST['school_id'] ?? null,
     ]);
 
     $messageUserName = $_POST['user_name'];

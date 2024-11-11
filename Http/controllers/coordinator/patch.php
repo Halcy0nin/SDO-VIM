@@ -2,208 +2,200 @@
 
 use Core\Database;
 use Core\App;
-use Core\Session;
 
 $db = App::resolve(Database::class);
 
-// Get school filter, date range, search term, and clear filter option
-$schoolFilterValue = $_POST['schoolFilterValue'] ?? 'All School';
-$schoolSearchValue = $_POST['schoolSearchValue'] ?? null; // Get search value
-$startDate = $_POST['startDate'] ?? null;
-$endDate = $_POST['endDate'] ?? null;
-$clearFilter = isset($_POST['clearFilter']);
-$searchTerm = trim($_POST['search'] ?? '');
-
-// Determine the school name to filter by (Priority: schoolSearchValue > schoolFilterValue)
-$schoolNameToFilter = !empty($schoolSearchValue) ? $schoolSearchValue : $schoolFilterValue;
-
-// Notification count query
+// Get notification count
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
     WHERE viewed IS NULL
-    AND created_by != :user_id 
-', [
+    AND  created_by != :user_id 
+',[
     'user_id' => get_uid(),
 ])->find();
 
-$notificationCount = $notificationCountQuery['total'] > 5 ? '5+' : $notificationCountQuery['total'];
+// Extract the total count
+$notificationCount = $notificationCountQuery['total'];
 
-// Initialize SQL conditions and parameters
-$params = [
-    'search_code' => '%' . strtolower($searchTerm) . '%',
-    'search_article' => '%' . strtolower($searchTerm) . '%',
-    'search_desc' => '%' . strtolower($searchTerm) . '%',
-    'search_school' => '%' . strtolower($searchTerm) . '%',
-];
-$conditions = [];
+if ($notificationCount > 5){
+    $notificationCount = '5+';
+};
 
-// Apply filter based on priority
+// Get school filter and search values
+$schoolFilterValue = $_POST['schoolFilterValue'] ?? null;
+$schoolSearchValue = $_POST['schoolSearchValue'] ?? null;
 
-// Check if school filter is applied
-if ($schoolNameToFilter !== 'All School') {
-    // If school filter is applied, reset search term condition
-    $conditions[] = "s.school_name = :schoolFilterValue";
+// Determine the school name to filter by
+$schoolNameToFilter = !empty($schoolSearchValue) ? $schoolSearchValue : $schoolFilterValue;
+
+// Prepare base SQL and parameters
+$baseQuery = 'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si';
+$params = [];
+
+// Add conditions based on the selected school
+if ($schoolNameToFilter !== 'All' && !empty($schoolNameToFilter)) {
+    $baseQuery .= ' JOIN schools AS s ON si.school_id = s.school_id WHERE s.school_name = :schoolFilterValue';
     $params['schoolFilterValue'] = $schoolNameToFilter;
-} elseif ($searchTerm) {
-    // If search term is provided, apply it and ignore the school filter
-    $conditions[] = "(s.school_name LIKE :searchTerm)";
-    $params['searchTerm'] = '%' . $searchTerm . '%';
 }
 
-if ($clearFilter) {
-    $startDate = null;
-    $endDate = null;
-}
+// Total Equipment
+$total_equipment_count_query = $db->query('
+    SELECT COUNT(si.item_code) AS total_count
+    FROM school_inventory AS si
+    JOIN schools AS s ON si.school_id = s.school_id' . 
+    (!empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? ' WHERE s.school_name = :schoolFilterValue' : '')
+, !empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? $params : []);
 
-// Apply date filter only if clearFilter was not clicked
-if (!$clearFilter) {
-    if ($startDate && $endDate) {
-        $conditions[] = "si.date_acquired BETWEEN :startDate AND :endDate";
-        $params['startDate'] = $startDate;
-        $params['endDate'] = $endDate;
-    } elseif ($endDate) {
-        $conditions[] = "si.date_acquired <= :endDate";
-        $params['endDate'] = $endDate;
-    }
-}
+$total_equipment_count = $total_equipment_count_query->find()['total_count'] ?? 0;
 
-// Combine search conditions
-$conditions[] = "(
-    si.item_code LIKE :search_code OR
-    si.item_article LIKE :search_article OR
-    si.item_desc LIKE :search_desc OR
-    s.school_name LIKE :search_school
-)";
+// Total Working Equipment
+$total_working_count_query = $db->query('
+    SELECT COUNT(si.item_code) AS total_count
+    FROM school_inventory AS si
+    JOIN schools AS s ON si.school_id = s.school_id' . 
+    (!empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? ' WHERE s.school_name = :schoolFilterValue AND item_status = 1' : ' WHERE item_status = 1')
+, !empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? $params : []);
 
-$combinedCondition = $conditions ? " WHERE " . implode(" AND ", $conditions) : "";
+// Retrieve total working count
+$total_working_count = $total_working_count_query->find()['total_count'] ?? 0;
 
-// Helper function to run count queries with optional conditions
-function runCountQuery($db, $baseQuery, $condition, $params) {
-    return $db->query($baseQuery . $condition, $params)->find()['total_count'] ?? 0;
-}
+// Total Need Repair Equipment
+$total_repair_count_query = $db->query('
+    SELECT COUNT(si.item_code) AS total_count
+    FROM school_inventory AS si
+    JOIN schools AS s ON si.school_id = s.school_id' . 
+    (!empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? ' WHERE s.school_name = :schoolFilterValue AND item_status = 2' : ' WHERE item_status = 2')
+, !empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? $params : []);
 
-// Count total equipment
-$total_equipment_count = runCountQuery(
-    $db,
-    'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id',
-    $combinedCondition,
-    $params
-);
+// Retrieve total repair count
+$total_repair_count = $total_repair_count_query->find()['total_count'] ?? 0;
 
-// Count total working equipment
-$total_working_count = runCountQuery(
-    $db,
-    'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 1',
-    $combinedCondition,
-    $params
-);
+// Total Condemned Equipment
+$total_condemned_count_query = $db->query('
+    SELECT COUNT(si.item_code) AS total_count
+    FROM school_inventory AS si
+    JOIN schools AS s ON si.school_id = s.school_id' . 
+    (!empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? ' WHERE s.school_name = :schoolFilterValue AND item_status = 3' : ' WHERE item_status = 3')
+, !empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? $params : []);
 
-// Count total need repair equipment
-$total_repair_count = runCountQuery(
-    $db,
-    'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 2',
-    $combinedCondition,
-    $params
-);
+// Retrieve total condemned count
+$total_condemned_count = $total_condemned_count_query->find()['total_count'] ?? 0;
 
-// Count total condemned equipment
-$total_condemned_count = runCountQuery(
-    $db,
-    'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 3',
-    $combinedCondition,
-    $params
-);
-
-// Item Article Counts (Top 5)
+// Item Article
 $itemArticleCountQuery = $db->query('
     SELECT si.item_article, COUNT(*) AS article_count
     FROM school_inventory AS si
     JOIN schools AS s ON si.school_id = s.school_id
-    WHERE si.item_article IS NOT NULL' . ($combinedCondition ? ' AND ' . implode(' AND ', $conditions) : '') . '
+    WHERE si.item_article IS NOT NULL' . (!empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? ' AND s.school_name = :schoolFilterValue' : '') . '
     GROUP BY si.item_article
     ORDER BY article_count DESC
     LIMIT 5',
-    $params
+    !empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? $params : []
 );
+
 $itemArticleCounts = $itemArticleCountQuery->get();
 
-$articleNames = array_column($itemArticleCounts, 'item_article');
-$articleCounts = array_column($itemArticleCounts, 'article_count');
+$articleNames = [];
+$articleCounts = [];
+
+foreach ($itemArticleCounts as $item) {
+    $articleNames[] = $item['item_article'];
+    $articleCounts[] = $item['article_count'];
+}
 
 $articleNamesJson = json_encode($articleNames);
 $articleCountsJson = json_encode($articleCounts);
 
-// Map item statuses
-$statusMap = [
+// Query to get the count of items by status
+$itemStatusCountQuery = $db->query('
+    SELECT si.item_status, COUNT(*) AS status_count
+    FROM school_inventory AS si
+    JOIN schools AS s ON si.school_id = s.school_id
+    WHERE si.item_status IN (1, 2, 3' . (!empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? ' AND s.school_name = :schoolFilterValue' : '') . ')
+    GROUP BY si.item_status',
+    !empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? $params : []
+);
+
+$itemStatusCounts = $itemStatusCountQuery->get();
+
+$statusLabels = [];
+$statusCounts = [];
+
+// Map numeric status to descriptive labels
+$statusMapping = [
     1 => 'Working',
     2 => 'Need Repair',
     3 => 'Condemned'
 ];
 
-// Status Labels and Counts for chart
-$itemStatusCountQuery = $db->query('
-    SELECT si.item_status, COUNT(*) AS status_count
-    FROM school_inventory AS si
-    JOIN schools AS s ON si.school_id = s.school_id' . ($combinedCondition ? ' AND ' . implode(' AND ', $conditions) : '') . '
-    GROUP BY si.item_status',
-    $params
-);
-$itemStatusCounts = $itemStatusCountQuery->get();
-
-$statusLabels = [];
-$statusCounts = [];
 foreach ($itemStatusCounts as $status) {
-    $statusLabels[] = $statusMap[$status['item_status']] ?? 'Unknown';
-    $statusCounts[] = $status['status_count'];
+    $statusLabels[] = $statusMapping[$status['item_status']];  
+    $statusCounts[] = $status['status_count']; 
 }
 
 $statusLabelsJson = json_encode($statusLabels);
 $statusCountsJson = json_encode($statusCounts);
 
-// Monthly Item Acquisitions (within or up to endDate)
+// Query to get the number of item_articles obtained per month
 $itemArticlePerMonthQuery = $db->query('
     SELECT 
         DATE_FORMAT(date_acquired, "%b") AS month,
         COUNT(item_article) AS item_count
     FROM school_inventory AS si
     JOIN schools AS s ON si.school_id = s.school_id
-    WHERE si.item_article IS NOT NULL' . ($combinedCondition ? ' AND ' . implode(' AND ', $conditions) : '') . '
-    GROUP BY month
-    ORDER BY MIN(date_acquired)',
-    $params
+    WHERE si.item_article IS NOT NULL' . (!empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? ' AND s.school_name = :schoolFilterValue' : '') . '
+    GROUP BY 
+        month
+    ORDER BY 
+        MIN(date_acquired)',
+    !empty($schoolNameToFilter) && $schoolNameToFilter !== 'All' ? $params : []
 );
+
 $itemArticlePerMonth = $itemArticlePerMonthQuery->get();
 
-$months = array_column($itemArticlePerMonth, 'month');
-$itemCounts = array_column($itemArticlePerMonth, 'item_count');
+$months = [];
+$itemCounts = [];
+
+foreach ($itemArticlePerMonth as $entry) {
+    $months[] = $entry['month'];
+    $itemCounts[] = $entry['item_count'];
+}
 
 $monthsJson = json_encode($months);
 $itemCountsJson = json_encode($itemCounts);
 
-// Populate school dropdown content
-$schoolDropdownContent = $db->query("SELECT school_name FROM schools")->get();
+// Get the list of schools for the dropdown
+$schoolDropdownContent = $db->query('
+    SELECT school_name FROM schools;
+')->get();
 
-// Render view with the data
+// Check if a specific school name is selected
+$schoolNameQuery = $db->query('
+SELECT school_name FROM schools
+WHERE school_name = :schoolFilterValue;',
+    [
+        'schoolFilterValue' => $schoolNameToFilter
+    ])->find();
+
+$schoolName = $schoolNameQuery['school_name'] ?? 'All Schools';
+
+// Render the view
 view('coordinator/create.view.php', [
     'heading' => 'Dashboard',
-    'schoolName' => $schoolNameToFilter, // Set the determined school name
+    'schoolName' => $schoolName,
     'notificationCount' => $notificationCount,
     'totalEquipment' => $total_equipment_count,
     'totalWorking' => $total_working_count,
     'totalRepair' => $total_repair_count,
     'totalCondemned' => $total_condemned_count,
-    'statusMap' => $statusMap,
+    'articleNames' => $articleNamesJson,
+    'articleCounts' => $articleCountsJson,
     'statusLabels' => $statusLabelsJson,
     'statusCounts' => $statusCountsJson,
     'months' => $monthsJson,
     'itemCountsPerMonth' => $itemCountsJson,
-    'search' => $searchTerm,
-    'articleNames' => $articleNamesJson,
-    'articleCounts' => $articleCountsJson,
-    'schoolDropdownContent' => $schoolDropdownContent,
-    'startDate' => $startDate,
-    'endDate' => $endDate,
+    'schoolDropdownContent' => $schoolDropdownContent
 ]);
 
 ?>

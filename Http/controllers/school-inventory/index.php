@@ -43,7 +43,6 @@ $items = $db->paginate(
         si.item_quantity,
         si.item_funds_source,
         si.item_status,
-        si.item_status_reason,
         si.item_active,
         si.item_inactive,
         h.action AS history_action,

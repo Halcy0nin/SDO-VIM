@@ -26,7 +26,6 @@ try {
         item_active = :item_active,
         item_inactive = :item_inactive,
         item_status = :item_status,
-        item_status_reason = :item_status_reason,
         updated_by = :updated_by
     WHERE item_code = :id_to_update;', [
         'updated_by' => $_SESSION['user']['user_id'] ?? 'Admin',
@@ -39,8 +38,7 @@ try {
         'item_quantity' => $_POST['item_quantity'],
         'item_funds_source' => $_POST['item_funds_source'],
         'item_active' => $_POST['item_active'],
-        'item_inactive' => $_POST['item_inactive'] + $_POST['item_repair_count'] + $_POST['item_condemned_count'],
-        'item_status_reason' => $_POST['item_status_reason'],
+        'item_inactive' => $_POST['item_inactive'],
         'item_status' => $_POST['item_status']
     ]);
 

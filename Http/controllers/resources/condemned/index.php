@@ -52,8 +52,6 @@ SELECT
     si.item_article,
     s.school_name,
     si.item_status AS status,
-    si.item_status_reason,
-    si.item_inactive,
     si.date_acquired
 FROM 
     school_inventory si
