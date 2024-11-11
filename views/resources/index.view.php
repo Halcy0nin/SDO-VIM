@@ -24,17 +24,25 @@ require base_path('views/partials/head.php') ?>
          </button>
    </section>
 
-   <div class="date-filter-container3">
-         <h1 style="font-weight: bold; color: #434F72">Inventory Date</h1>
-         <input value="<?= htmlspecialchars($startDate) ?>" type="date" id="start-date"  name="startDate" />
-
-         <label for="end-date">to</label>
-         <input value="<?= htmlspecialchars($endDate) ?>" type="date" id="end-date"  name="endDate" />
-
-         <button type="submit" class="filter-button" id="filter-btn">Filter</button>
-         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
-      </form>
-  </div>
+   <div class="dropdown-date1">
+            <div class="select">
+               <span class="selected">Date Range</span>
+               <div class="caret"></div>
+            </div>
+            
+            <form id="schoolFilterForm" method="POST" action="/coordinator">
+               <input name="_method" value="PATCH" hidden />
+               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
+               
+               <ul class="menu">
+                     <li data-value="All School">All Schools</li> <!-- Default option to show all schools -->
+                     <?php foreach ($schoolDropdownContent as $school): ?>
+                        <li data-value="<?= htmlspecialchars($school['school_name']); ?>">
+                           <?= htmlspecialchars($school['school_name']); ?>
+                        </li>
+                     <?php endforeach; ?>
+               </ul>
+   </div>
 
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
@@ -238,3 +246,38 @@ require base_path('views/partials/head.php') ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>  
+// Select both dropdown1 and dropdown-date
+const dropdowns = document.querySelectorAll('.dropdown1, .dropdown-date1');
+
+dropdowns.forEach(dropdown => {
+
+   const select = dropdown.querySelector('.select');
+   const caret = dropdown.querySelector('.caret');
+   const menu = dropdown.querySelector('.menu');
+   const options = dropdown.querySelectorAll('.menu li'); // Updated to query all list items
+   const selected = dropdown.querySelector('.selected');
+
+   // Toggle dropdown menu on select click
+   select.addEventListener('click', () => {
+      select.classList.toggle('select-clicked');
+      caret.classList.toggle('caret-rotate');
+      menu.classList.toggle('menu-open');
+   });
+
+   // Loop through each option in the menu
+   options.forEach(option => {
+      option.addEventListener('click', () => {
+         selected.innerText = option.innerText;
+         select.classList.remove('select-clicked');
+         caret.classList.remove('caret-rotate');
+         menu.classList.remove('menu-open');
+         options.forEach(option => {
+            option.classList.remove('active');
+         });
+         option.classList.add('active');
+      });   
+   });
+});
+</script>

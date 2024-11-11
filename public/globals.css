@@ -452,6 +452,32 @@ body {
   box-sizing: border-box;
 }
 
+.dropdown-date {
+  width: 10rem;
+  line-height: 0%;
+  position: relative;
+  margin-left: 35rem;
+  margin-top: -3.68rem;
+  margin-bottom: 1rem;
+}
+
+.dropdown-date * {
+  box-sizing: border-box;
+}
+
+.dropdown-date1 {
+  width: 10rem;
+  line-height: 0%;
+  position: relative;
+  margin-left: 23rem;
+  margin-top: -2.5rem;
+  margin-bottom: 0rem;
+}
+
+.dropdown-date1 * {
+  box-sizing: border-box;
+}
+
 .sort {
   width: 10rem;
   line-height: 0%;

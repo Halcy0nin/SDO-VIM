@@ -12,7 +12,7 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/coordinator/dashboard_searchbar.php') ?> 
    </section>
 
-   <section class="school-name-container">
+   <div class="school-name-container">
   <div class="right-group">
     <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
     <h2 class="date">
@@ -27,7 +27,7 @@ require base_path('views/partials/head.php') ?>
       ?>
    </h2>
   </div>
-</section>    
+</div>    
 
       <div class="dropdown1">
          <div class="select">
@@ -48,23 +48,28 @@ require base_path('views/partials/head.php') ?>
                   <?php endforeach; ?>
             </ul>
       </div>
+          
 
-      <div class="date-filter-container4">
-         <h1 style="font-weight: bold; color: #434F72">Inventory Date</h1>
-         <input value="<?= htmlspecialchars($startDate) ?>" type="date" id="start-date" name="startDate" />
-
-         <label for="end-date">to</label>
-         <input value="<?= htmlspecialchars($endDate) ?>" type="date" id="end-date" name="endDate" />
-
-         <button type="submit" class="filter-button" id="filter-btn">Filter</button>
-         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
-      </form>
+      <div class="dropdown-date">
+            <div class="select">
+               <span class="selected">Date Range</span>
+               <div class="caret"></div>
+            </div>
+            
+            <form id="schoolFilterForm" method="POST" action="/coordinator">
+               <input name="_method" value="PATCH" hidden />
+               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
+               
+               <ul class="menu">
+                     <li data-value="All School">All Schools</li> <!-- Default option to show all schools -->
+                     <?php foreach ($schoolDropdownContent as $school): ?>
+                        <li data-value="<?= htmlspecialchars($school['school_name']); ?>">
+                           <?= htmlspecialchars($school['school_name']); ?>
+                        </li>
+                     <?php endforeach; ?>
+               </ul>
       </div>
 
-      
-     
-          
-   </section>
    <section class="mx-6 px-12 flex gap-6">
       <?php dashboard_card('Total Equipments', $totalEquipment); ?>
       <?php dashboard_card('Working', $totalWorking, 'bi-patch-check-fill'); ?>
@@ -271,42 +276,39 @@ require base_path('views/partials/head.php') ?>
 <?php require base_path('views/partials/footer.php') ?>
 
 <script>  
-const dropdowns = document.querySelectorAll('.dropdown1');
+// Select both dropdown1 and dropdown-date
+const dropdowns = document.querySelectorAll('.dropdown1, .dropdown-date');
 
-dropdowns.forEach(dropdown1 => {
+dropdowns.forEach(dropdown => {
 
-   const select =dropdown1.querySelector('.select');
-   const caret =dropdown1.querySelector('.caret');
-   const menu =dropdown1.querySelector('.menu');
-   const options =dropdown1.querySelector('.menu li');
-   const selected =dropdown1.querySelector('.selected');
+   const select = dropdown.querySelector('.select');
+   const caret = dropdown.querySelector('.caret');
+   const menu = dropdown.querySelector('.menu');
+   const options = dropdown.querySelectorAll('.menu li'); // Updated to query all list items
+   const selected = dropdown.querySelector('.selected');
 
+   // Toggle dropdown menu on select click
    select.addEventListener('click', () => {
-   
       select.classList.toggle('select-clicked');
       caret.classList.toggle('caret-rotate');
       menu.classList.toggle('menu-open');
    });
 
-   
-
-options.forEach(option => {
-
-   option.addEventListener('click', () => {
-
-      selected.innerText = option.innerText;
-      select.classList.remove('select-clicked');
-      caret.classList.remove('caret-rotate');
-      menu.classList.remove('menu-open');
-      options.forEach(option => {
-         option.classList.remove('active');
-      });
-      option.classList.add('active');
-   });   
+   // Loop through each option in the menu
+   options.forEach(option => {
+      option.addEventListener('click', () => {
+         selected.innerText = option.innerText;
+         select.classList.remove('select-clicked');
+         caret.classList.remove('caret-rotate');
+         menu.classList.remove('menu-open');
+         options.forEach(option => {
+            option.classList.remove('active');
+         });
+         option.classList.add('active');
+      });   
+   });
 });
-});
-
-</script> 
+</script>
 
 <script>
     document.querySelectorAll('.menu li').forEach(function(item) {
@@ -317,7 +319,6 @@ options.forEach(option => {
         });
     });
 </script>
-
 
 
 

@@ -103,9 +103,8 @@ th .header-content {
   align-items: center; /* Align items vertically */
   width: 97%; /* Take full screen width */
   padding: 15px 20px;
-  top: 10;
   margin-top: -4rem;
-  z-index: 10;
+  z-index: -1;
 }
 
 .right-group {
