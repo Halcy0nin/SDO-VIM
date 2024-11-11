@@ -43,7 +43,7 @@ require base_path('views/partials/head.php') ?>
    </section>
 
    <div class="date-filter-container2">
-      <h1 style="font-weight: bold; color: #434F72">Inventory Date</h1>
+      <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
       <input type="date" id="start-date" />
       <label for="end-date">to</label>
       <input type="date" id="end-date" />

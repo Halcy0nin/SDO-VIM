@@ -12,22 +12,12 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/coordinator/dashboard_searchbar.php') ?> 
    </section>
 
-   <section class="school-name-container">
-  <div class="right-group">
-    <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
-    <h2 class="date">
-      <?php 
-         if ($startDate && $endDate) {
-               echo "Data from " . date("F j, Y", strtotime($startDate)) . " to " . date("F j, Y", strtotime($endDate));
-         } elseif (!$startDate && $endDate) {
-               echo "Data up to " . date("F j, Y", strtotime($endDate));
-         } else {
-               echo "Data as of " . date("F Y");
-         }
-      ?>
-   </h2>
-  </div>
-</section>    
+      <div class="school-name-container">
+         <div class="right-group">
+            <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
+            <h2 class="date">Data as of: <?php echo date("F Y"); ?></h2>
+         </div>
+      </div> 
 
       <div class="dropdown1">
          <div class="select">
@@ -50,10 +40,10 @@ require base_path('views/partials/head.php') ?>
       </div>
 
       <div class="date-filter-container4">
-         <h1 style="font-weight: bold; color: #434F72">Inventory Date</h1>
+         <label for="start-date">Start Date:</label>
          <input value="<?= htmlspecialchars($startDate) ?>" type="date" id="start-date" name="startDate" />
 
-         <label for="end-date">to</label>
+         <label for="end-date">End Date:</label>
          <input value="<?= htmlspecialchars($endDate) ?>" type="date" id="end-date" name="endDate" />
 
          <button type="submit" class="filter-button" id="filter-btn">Filter</button>
@@ -62,7 +52,22 @@ require base_path('views/partials/head.php') ?>
       </div>
 
       
-     
+      <section class="school-name-container">
+  <div class="right-group">
+    <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
+    <h2 class="date">
+      <?php 
+         if ($startDate && $endDate) {
+               echo "Data from " . date("F j, Y", strtotime($startDate)) . " to " . date("F j, Y", strtotime($endDate));
+         } elseif (!$startDate && $endDate) {
+               echo "Data up to " . date("F j, Y", strtotime($endDate));
+         } else {
+               echo "Data as of " . date("F Y");
+         }
+      ?>
+   </h2>
+  </div>
+</section>    
           
    </section>
    <section class="mx-6 px-12 flex gap-6">
