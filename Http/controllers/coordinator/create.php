@@ -148,7 +148,9 @@ view('coordinator/create.view.php', [
     'statusCounts' => $statusCountsJson,
     'months' => $monthsJson,
     'itemCountsPerMonth' => $itemCountsJson,
-    'schoolDropdownContent' => $schoolDropdownContent
+    'schoolDropdownContent' => $schoolDropdownContent,
+    'startDate' => null,
+    'endDate' => null
 ]);
 
 ?>

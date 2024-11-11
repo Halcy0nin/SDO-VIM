@@ -16,12 +16,23 @@ require base_path('views/partials/head.php') ?>
     <section class="mx-12 flex flex-col">
         <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>
         <form class="search-container search" method="POST" action="/coordinator/resources/working/s">
+        <input name="_method" value="PATCH" hidden />
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
-        </form>
     </section>
+    <div class="date-filter-container3">
+         <label for="start-date">Start Date:</label>
+         <input value="<?= htmlspecialchars($startDate) ?>" type="date" id="start-date"  name="startDate" />
+
+         <label for="end-date">End Date:</label>
+         <input value="<?= htmlspecialchars($endDate) ?>" type="date" id="end-date"  name="endDate" required />
+
+         <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
+  </div>
     <section class="mx-12 mb-12 inline-block grow rounded">
         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
             <table class="table table-striped m-0">

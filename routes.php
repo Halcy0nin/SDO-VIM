@@ -51,12 +51,12 @@ $router->patch('/coordinator', 'coordinator/patch.php')->only('coordinator');
 $router->post('/coordinator/searchinfo', 'coordinator/dashboard_search_input.php')->only('coordinator');
 
 $router->get('/coordinator/resources', 'resources/index.php')->only('coordinator');
-$router->post('/coordinator/resources/s', 'resources/show.php')->only('coordinator');
+$router->patch('/coordinator/resources/s', 'resources/show.php')->only('coordinator');
 
 $router->get('/coordinator/resources/unassigned', 'resources/unassigned/index.php')->only('coordinator');
 $router->post('/coordinator/resources/unassigned/s', 'resources/unassigned/show.php')->only('coordinator');
 $router->get('/coordinator/resources/working', 'resources/working/index.php')->only('coordinator');
-$router->post('/coordinator/resources/working/s', 'resources/working/show.php')->only('coordinator');
+$router->patch('/coordinator/resources/working/s', 'resources/working/show.php')->only('coordinator');
 $router->get('/coordinator/resources/repair', 'resources/repair/index.php')->only('coordinator');
 $router->post('/coordinator/resources/repair/s', 'resources/repair/show.php')->only('coordinator');
 $router->patch('/coordinator/resources/repair', 'resources/repair/patch.php')->only('coordinator');

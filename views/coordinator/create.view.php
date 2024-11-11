@@ -33,12 +33,13 @@ require base_path('views/partials/head.php') ?>
 
       <div class="date-filter-container4">
          <label for="start-date">Start Date:</label>
-         <input type="date" id="start-date" name="startDate" />
+         <input value="<?= htmlspecialchars($startDate) ?>" type="date" id="start-date" name="startDate" />
 
          <label for="end-date">End Date:</label>
-         <input type="date" id="end-date" name="endDate" required />
+         <input value="<?= htmlspecialchars($endDate) ?>" type="date" id="end-date" name="endDate" />
 
          <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
       </form>
       </div>
 
@@ -46,7 +47,17 @@ require base_path('views/partials/head.php') ?>
       <section class="school-name-container">
   <div class="right-group">
     <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
-    <h2 class="date">Data as of: <?php echo date("F Y"); ?></h2>
+    <h2 class="date">
+      <?php 
+         if ($startDate && $endDate) {
+               echo "Data from " . date("F j, Y", strtotime($startDate)) . " to " . date("F j, Y", strtotime($endDate));
+         } elseif (!$startDate && $endDate) {
+               echo "Data up to " . date("F j, Y", strtotime($endDate));
+         } else {
+               echo "Data as of " . date("F Y");
+         }
+      ?>
+   </h2>
   </div>
 </section>    
           
