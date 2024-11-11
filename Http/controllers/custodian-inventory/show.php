@@ -59,7 +59,8 @@ SELECT
     item_funds_source,
     item_status,
     item_active,
-    item_inactive
+    item_inactive,
+    item_status_reason
 FROM 
     school_inventory si
 LEFT JOIN 

@@ -36,7 +36,7 @@ if (in_array($file_ext, $allowed_ext)) {
                 $item_unit_value = !empty($row[2]) ? $row[2] : null;
                 $item_quantity = !empty($row[3]) ? $row[3] : null;
                 $item_active = !empty($row[4]) ? $row[4] : null;
-                $item_inactive = !empty($row[5]) ? $row[5] : null;
+                $item_inactive = !empty($row[5]) ? $row[5] : 0;
                 $date_acquired = !empty($row[6]) ? $row[6] : null;
                 $item_funds_source = !empty($row[7]) ? $row[7] : null;
 
