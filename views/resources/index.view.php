@@ -25,10 +25,10 @@ require base_path('views/partials/head.php') ?>
    </section>
 
    <div class="date-filter-container3">
-         <label for="start-date">Start Date:</label>
+         <h1 style="font-weight: bold; color: #434F72">Inventory Date</h1>
          <input value="<?= htmlspecialchars($startDate) ?>" type="date" id="start-date"  name="startDate" />
 
-         <label for="end-date">End Date:</label>
+         <label for="end-date">to</label>
          <input value="<?= htmlspecialchars($endDate) ?>" type="date" id="end-date"  name="endDate" />
 
          <button type="submit" class="filter-button" id="filter-btn">Filter</button>
