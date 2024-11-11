@@ -56,6 +56,8 @@ $resources = $db->query('
     si.item_article,
     s.school_name,
     si.item_status AS status,
+    si.item_status_reason,
+    si.item_inactive,
     si.date_acquired
     FROM school_inventory si
     JOIN schools s ON s.school_id = si.school_id

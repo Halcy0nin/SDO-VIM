@@ -12,13 +12,6 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/coordinator/dashboard_searchbar.php') ?> 
    </section>
 
-      <div class="school-name-container">
-         <div class="right-group">
-            <h2 class="school-name"><?= $schoolName ?? "All School" ?></h2>
-            <h2 class="date">Data as of: <?php echo date("F Y"); ?></h2>
-         </div>
-      </div> 
-
       <div class="dropdown1">
          <div class="select">
             <span class="selected">Filter</span>
@@ -27,10 +20,10 @@ require base_path('views/partials/head.php') ?>
          
          <form id="schoolFilterForm" method="POST" action="/coordinator">
             <input name="_method" value="PATCH" hidden />
-            <input id="schoolFilterValue" name="schoolFilterValue" value="All" type="hidden" /> <!-- Hidden input to store selected value -->
+            <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
             
             <ul class="menu">
-                  <li data-value="All">All Schools</li> <!-- Default option to show all schools -->
+                  <li data-value="All School">All Schools</li> <!-- Default option to show all schools -->
                   <?php foreach ($schoolDropdownContent as $school): ?>
                      <li data-value="<?= htmlspecialchars($school['school_name']); ?>">
                         <?= htmlspecialchars($school['school_name']); ?>
@@ -38,16 +31,23 @@ require base_path('views/partials/head.php') ?>
                   <?php endforeach; ?>
             </ul>
          </form>
-      </div> 
+      </div>
 
-   <div class="date-filter-container4">
+      <div class="date-filter-container4">
       <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
-      <input type="date" id="start-date" />
-      <label for="end-date">to</label>
-      <input type="date" id="end-date" />
-      <button class="filter-button" id="filter-btn">Filter</button>
+    <input type="date" id="start-date" />
+
+    <label for="end-date">to</label>
+    <input type="date" id="end-date" />
+    
+    <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
   </div>
-   
+      
+      
+          
+   </section>
    <section class="mx-6 px-12 flex gap-6">
       <?php dashboard_card('Total Equipments', $totalEquipment); ?>
       <?php dashboard_card('Working', $totalWorking, 'bi-patch-check-fill'); ?>
@@ -300,3 +300,8 @@ options.forEach(option => {
         });
     });
 </script>
+
+
+
+
+

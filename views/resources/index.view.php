@@ -17,19 +17,21 @@ require base_path('views/partials/head.php') ?>
    <section class="mx-12 flex flex-col">
       <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>
       <form class="search-container search" method="POST" action="/coordinator/resources/s">
+      <input name="_method" value="PATCH" hidden />
          <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
          <button type="submit" class="search">
             <i class="bi bi-search"></i>
          </button>
-      </form>
    </section>
 
    <div class="date-filter-container3">
-      <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
-      <input type="date" id="start-date" />
-      <label for="end-date">to</label>
-      <input type="date" id="end-date" />
-      <button class="filter-button" id="filter-btn">Filter</button>
+   <h1 style="font-weight: bold; color: #434F72">Publishing Date MM/DD/YYYY</h1>
+    <input type="date" id="start-date" />
+
+    <label for="end-date">to</label>
+    <input type="date" id="end-date" />
+
+    <button class="filter-button" id="filter-btn">Filter</button>
   </div>
 
    <section class="mx-12 mb-12 inline-block grow rounded">
@@ -234,17 +236,3 @@ require base_path('views/partials/head.php') ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    // JavaScript to handle button click event
-    document.getElementById('filter-btn').addEventListener('click', function () {
-      const startDate = document.getElementById('start-date').value;
-      const endDate = document.getElementById('end-date').value;
-
-      if (startDate && endDate) {
-        alert(`Filtering from ${startDate} to ${endDate}`);
-      } else {
-        alert('Please select both start and end dates.');
-      }
-    });
-  </script>
