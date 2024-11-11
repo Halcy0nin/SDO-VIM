@@ -102,9 +102,9 @@ th .header-content {
   justify-content: flex-end; /* Align content to the right side */
   align-items: center; /* Align items vertically */
   width: 97%; /* Take full screen width */
-  padding: 5px 20px;
-  position: sticky;
+  padding: 15px 20px;
   top: 10;
+  margin-top: -4rem;
   z-index: 10;
 }
 

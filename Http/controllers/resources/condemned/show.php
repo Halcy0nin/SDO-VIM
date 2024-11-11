@@ -6,6 +6,22 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
+$notificationCountQuery = $db->query('
+    SELECT COUNT(*) AS total
+    FROM notifications
+    WHERE viewed IS NULL
+    AND  created_by != :user_id 
+',[
+    'user_id' => get_uid(),
+])->find();
+
+// Extract the total count
+$notificationCount = $notificationCountQuery['total'];
+
+if ($notificationCount > 5){
+    $notificationCount = '5+';
+};
+
 $resources = [];
 
 $pagination = [
@@ -49,6 +65,8 @@ if ($resources_count[0]['total'] !== 0) {
         si.item_article,
         s.school_name,
         si.item_status AS status,
+        si.item_status_reason,
+        si.item_inactive,
         si.date_acquired
     FROM 
         school_inventory si
@@ -74,6 +92,7 @@ if ($resources_count[0]['total'] !== 0) {
 }
 
 view('resources/condemned/show.view.php', [
+    'notificationCount' => $notificationCount,
     'heading' => 'Condemned Resources',
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
