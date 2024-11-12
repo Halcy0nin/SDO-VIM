@@ -19,6 +19,7 @@ require base_path('views/partials/head.php') ?>
                <button type="submit" class="search">
                   <i class="bi bi-search"></i>
                </button>
+               </form>
       </section>
    </section>
 
@@ -28,8 +29,7 @@ require base_path('views/partials/head.php') ?>
                <div class="caret"></div>
             </div>
             
-            <form id="schoolFilterForm" method="POST" action="/coordinator">
-               <input name="_method" value="PATCH" hidden />
+
                <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
                
                <ul class="menu">
@@ -116,7 +116,6 @@ require base_path('views/partials/head.php') ?>
                   </tr>
                </tfoot>
             </table>
-         </form>
       </div>
    </section>
 </main>

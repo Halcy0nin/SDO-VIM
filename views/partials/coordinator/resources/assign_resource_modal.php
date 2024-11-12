@@ -10,7 +10,7 @@
         <div class="modal-content">
             <form action="/coordinator/resources/unassigned" method="POST" class="modal-body h-fit flex flex-col gap-2">
                 <input name="_method" value="PATCH" hidden />
-                <input type="hidden" name="id" value="<?php echo htmlspecialchars($resource['item_code']); ?>"/>
+                <input type="hidden" name="item_code" value="<?php echo htmlspecialchars($resource['item_code']); ?>"/>
                 <div class="modal-header mb-4">
                     <div class="flex gap-2 justify-center items-center text-green-600 text-xl">
                         <i class="bi bi-box-seam-fill sidebar-li-icon"></i>
