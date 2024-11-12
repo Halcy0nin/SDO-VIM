@@ -40,13 +40,25 @@ require base_path('views/partials/head.php') ?>
         </form>
     </section>
 
-    <div class="date-filter-container">
-      <h1 style="font-weight: bold; color: #434F72">Inventory Date</h1>
-      <input type="date" id="start-date" />
-      <label for="end-date">to</label>
-      <input type="date" id="end-date" />
-      <button class="filter-button" id="filter-btn">Filter</button>
-    </div>
+    <div class="dropdown-date3">
+            <div class="select">
+               <span class="selected">Date Range</span>
+               <div class="caret"></div>
+            </div>
+            
+            <form id="schoolFilterForm" method="POST" action="/coordinator">
+               <input name="_method" value="PATCH" hidden />
+               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
+               
+               <ul class="menu">
+                     <li data-value="All School">All Schools</li> <!-- Default option to show all schools -->
+                     <?php foreach ($schoolDropdownContent as $school): ?>
+                        <li data-value="<?= htmlspecialchars($school['school_name']); ?>">
+                           <?= htmlspecialchars($school['school_name']); ?>
+                        </li>
+                     <?php endforeach; ?>
+               </ul>
+      </div>
 
     <section class="mx-12 mb-12 inline-block grow rounded">
         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
@@ -271,42 +283,39 @@ require base_path('views/partials/head.php') ?>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 <script>  
-const dropdowns = document.querySelectorAll('.dropdown3');
+// Select both dropdown1 and dropdown-date
+const dropdowns = document.querySelectorAll('.dropdown3, .dropdown-date3');
 
-dropdowns.forEach(dropdown3 => {
+dropdowns.forEach(dropdown => {
 
-   const select =dropdown3.querySelector('.select');
-   const caret =dropdown3.querySelector('.caret');
-   const menu =dropdown3.querySelector('.menu');
-   const options =dropdown3.querySelector('.menu li');
-   const selected =dropdown3.querySelector('.selected');
+   const select = dropdown.querySelector('.select');
+   const caret = dropdown.querySelector('.caret');
+   const menu = dropdown.querySelector('.menu');
+   const options = dropdown.querySelectorAll('.menu li'); // Updated to query all list items
+   const selected = dropdown.querySelector('.selected');
 
+   // Toggle dropdown menu on select click
    select.addEventListener('click', () => {
-   
       select.classList.toggle('select-clicked');
       caret.classList.toggle('caret-rotate');
       menu.classList.toggle('menu-open');
    });
 
-   
-
-options.forEach(option => {
-
-   option.addEventListener('click', () => {
-
-      selected.innerText = option.innerText;
-      select.classList.remove('select-clicked');
-      caret.classList.remove('caret-rotate');
-      menu.classList.remove('menu-open');
-      options.forEach(option => {
-         option.classList.remove('active');
-      });
-      option.classList.add('active');
-   });   
+   // Loop through each option in the menu
+   options.forEach(option => {
+      option.addEventListener('click', () => {
+         selected.innerText = option.innerText;
+         select.classList.remove('select-clicked');
+         caret.classList.remove('caret-rotate');
+         menu.classList.remove('menu-open');
+         options.forEach(option => {
+            option.classList.remove('active');
+         });
+         option.classList.add('active');
+      });   
+   });
 });
-});
-
-</script> 
+</script>
 
 <script>
     document.querySelectorAll('.menu li').forEach(function(item) {

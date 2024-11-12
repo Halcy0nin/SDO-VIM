@@ -491,6 +491,19 @@ body {
   box-sizing: border-box;
 }
 
+.dropdown-date3 {
+  width: 10rem;
+  line-height: 0%;
+  position: relative;
+  margin-left: 34rem;
+  margin-top: -2.5rem;
+  margin-bottom: 0rem;
+}
+
+.dropdown-date3 * {
+  box-sizing: border-box;
+}
+
 .sort {
   width: 10rem;
   line-height: 0%;
@@ -714,4 +727,26 @@ body {
 
 .filter-button:hover {
   background-color: rgba(67, 79, 114, 0.8);
+}
+
+.move-button {
+  position: absolute; /* Position the button absolutely */
+  right: 4rem; /* Align it 20px from the right side */
+  top: 10rem; /* Adjust to your preference */
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  z-index: 1; /* Keep the button above other elements */
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #434F72;
+  color: #FFFFFF;
+  font-weight: bold;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.move-button:hover {
+  background-color: rgba(67, 79, 114, 0.8)
 }

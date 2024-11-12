@@ -1,6 +1,6 @@
 <!-- Modal Button -->
 
-<button class="flex items-center w-fit shrink-0 px-3 py-2 rounded shadow-md bg-blue-500  text-white gap-2 font-bold hover:bg-blue-600" data-bs-toggle="modal" data-bs-target="#assignResourceModal">
+<button class="move-button" data-bs-toggle="modal" data-bs-target="#assignResourceModal">
     <i class="bi bi-stack"></i>
     <p>Assign Resources</p>
 </button>

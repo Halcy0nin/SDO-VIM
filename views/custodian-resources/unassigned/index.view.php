@@ -23,8 +23,9 @@ require base_path('views/partials/head.php') ?>
             </div>
       </section>
    </section>
-      <div class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
-         <table class="table table-striped">
+   <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
+      <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
+            <table class="table table-striped m-0">
             <thead>
                <th>
                   <input type="checkbox" id="select-all-button" />

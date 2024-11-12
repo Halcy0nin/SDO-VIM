@@ -19,9 +19,6 @@ require base_path('views/partials/head.php') ?>
                <button type="submit" class="search">
                   <i class="bi bi-search"></i>
                </button>
-            <div id="assign_multi_resource" class="search-container" style="display:none">
-               <?php require base_path('views/partials/coordinator/resources/assign_multi_resource_modal.php') ?>
-            </div>
       </section>
    </section>
 
@@ -43,6 +40,10 @@ require base_path('views/partials/head.php') ?>
                         </li>
                      <?php endforeach; ?>
                </ul>
+   </div>
+
+   <div id="assign_multi_resource" style="display:none">
+      <?php require base_path('views/partials/coordinator/resources/assign_multi_resource_modal.php') ?>
    </div>
 
    <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
