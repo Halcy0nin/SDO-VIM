@@ -22,6 +22,7 @@ require base_path('views/partials/head.php') ?>
             </button>
         </form>
     </section>
+    
     <section class="mx-12 mb-12 inline-block grow rounded">
         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
             <table class="table table-striped m-0">
