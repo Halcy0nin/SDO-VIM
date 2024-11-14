@@ -163,6 +163,7 @@ $router->get('/custodian/custodian-resources', 'custodian-resources/index.php')-
 $router->post('/custodian/custodian-resources/s', 'custodian-resources/show.php')->only('custodian');
 
 $router->get('/custodian/custodian-resources/unassigned', 'custodian-resources/unassigned/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/unassigned/s', 'custodian-resources/unassigned/show.php')->only('custodian');
 $router->get('/custodian/custodian-resources/assigned', 'custodian-resources/assigned/index.php')->only('custodian');
 $router->get('/custodian/custodian-resources/working', 'custodian-resources/working/index.php')->only('custodian');
 $router->get('/custodian/custodian-resources/repair', 'custodian-resources/repair/index.php')->only('custodian');

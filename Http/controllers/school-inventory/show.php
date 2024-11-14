@@ -6,6 +6,18 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
+$notificationCountQuery = $db->query('
+    SELECT COUNT(*) AS total
+    FROM notifications
+    WHERE viewed IS NULL
+    AND  created_by != :user_id 
+',[
+    'user_id' => get_uid(),
+])->find();
+
+// Extract the total count
+$notificationCount = $notificationCountQuery['total'];
+
 $items = [];
 
 $pagination = [
@@ -110,6 +122,7 @@ $statusMap = [
 view('school-inventory/show.view.php', [
     'id' => $params['id'] ?? null,
     'heading' => $schoolName,
+    'notificationCount' => $notificationCount,
     'items' => $items,
     'statusMap' => $statusMap,
     'errors' => Session::get('errors') ?? [],

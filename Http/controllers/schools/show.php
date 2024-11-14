@@ -6,6 +6,22 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
+$notificationCountQuery = $db->query('
+    SELECT COUNT(*) AS total
+    FROM notifications
+    WHERE viewed IS NULL
+    AND  created_by != :user_id 
+',[
+    'user_id' => get_uid(),
+])->find();
+
+// Extract the total count
+$notificationCount = $notificationCountQuery['total'];
+
+if ($notificationCount > 5){
+    $notificationCount = '5+';
+};
+
 $schools = [];
 
 $pagination = [
@@ -106,6 +122,7 @@ if ($resources_count[0]['total'] !== 0) {
 view('schools/show.view.php', [
     'heading' => 'Schools',
     'schools' => $schools,
+    'notificationCount' => $notificationCount,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
     'pagination' => $pagination,

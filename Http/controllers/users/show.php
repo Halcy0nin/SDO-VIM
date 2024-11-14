@@ -6,6 +6,18 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
+$notificationCountQuery = $db->query('
+    SELECT COUNT(*) AS total
+    FROM notifications
+    WHERE viewed IS NULL
+    AND  created_by != :user_id 
+',[
+    'user_id' => get_uid(),
+])->find();
+
+// Extract the total count
+$notificationCount = $notificationCountQuery['total'];
+
 $users = [];
 
 $pagination = [
@@ -61,6 +73,7 @@ $users = $db->paginate("
 view('users/index.view.php', [
     'heading' => 'Users',
     'users' => $users,
+    'notificationCount' => $notificationCount,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
     'pagination' => $pagination,
