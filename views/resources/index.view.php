@@ -29,9 +29,6 @@ require base_path('views/partials/head.php') ?>
                <span class="selected">Date Range</span>
                <div class="caret"></div>
             </div>
-
-               <input id="dateFilter" name="dateFilter" />
-               
    </div>
 
    <section class="mx-12 mb-12 inline-block grow rounded">

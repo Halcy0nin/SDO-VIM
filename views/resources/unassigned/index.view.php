@@ -27,11 +27,7 @@ require base_path('views/partials/head.php') ?>
             <div class="select">
                <span class="selected">Date Range</span>
                <div class="caret"></div>
-            </div>
-            
-
-               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
-               
+            </div>      
 
    </div>
 
@@ -72,7 +68,7 @@ require base_path('views/partials/head.php') ?>
                      <?php endforeach; ?>
                   <?php else: ?>
                      <tr>
-                        <td colspan="5">
+                        <td colspan="6">
                            <div class="h-full w-full flex justify-center items-center py-4">
                               No Resources Found
                            </div>
@@ -190,5 +186,6 @@ dropdowns.forEach(dropdown => {
    });
 });
 </script>
+
 
 
