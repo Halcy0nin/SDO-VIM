@@ -99,6 +99,12 @@ $router->post('/coordinator/school-inventory', '/school-inventory/store.php')->o
 $router->patch('/coordinator/school-inventory', '/school-inventory/patch.php')->only('coordinator');
 //Delete Item
 $router->delete('/coordinator/school-inventory', '/school-inventory/destroy.php')->only('coordinator');
+//Export Inventory to PDF
+$router->post('/coordinator/school-inventory/exportpdf', '/school-inventory/export_school_inventory_pdf.php')->only('coordinator');
+//Export Inventory to XLS
+$router->post('/coordinator/school-inventory/exportxls', '/school-inventory/export_school_inventory_xls.php')->only('coordinator');
+//Export Inventory to CSV
+$router->post('/coordinator/school-inventory/exportcsv', '/school-inventory/export_school_inventory_csv.php')->only('coordinator');
 
 
 //Export School Data to XLS
@@ -116,6 +122,10 @@ $router->delete('/coordinator/users', 'users/destroy.php')->only('coordinator');
 $router->patch('/coordinator/users/changePassword', '/users/changePassword.php')->only('coordinator');
 //Export User Data to CSV
 $router->post('/coordinator/users/exportcsv', '/users/export_user_csv.php')->only('coordinator');
+//Export User Data to PDF
+$router->post('/coordinator/users/exportpdf', '/users/export_user_pdf.php')->only('coordinator');
+//Export User Data to XLS
+$router->post('/coordinator/users/exportxls', '/users/export_user_xls.php')->only('coordinator');
 //Import User
 $router->post('/coordinator/users/importcsv', '/users/import/store.php')->only('coordinator'); //upload
 

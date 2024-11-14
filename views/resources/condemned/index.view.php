@@ -26,19 +26,10 @@ require base_path('views/partials/head.php') ?>
                <span class="selected">Date Range</span>
                <div class="caret"></div>
             </div>
-            
-            <form id="schoolFilterForm" method="POST" action="/coordinator">
-               <input name="_method" value="PATCH" hidden />
+
                <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
                
-               <ul class="menu">
-                     <li data-value="All School">All Schools</li> <!-- Default option to show all schools -->
-                     <?php foreach ($schoolDropdownContent as $school): ?>
-                        <li data-value="<?= htmlspecialchars($school['school_name']); ?>">
-                           <?= htmlspecialchars($school['school_name']); ?>
-                        </li>
-                     <?php endforeach; ?>
-               </ul>
+              
    </div>
 
    <section class="mx-12 mb-12 inline-block grow rounded">

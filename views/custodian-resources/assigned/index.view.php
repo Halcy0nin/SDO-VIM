@@ -26,7 +26,7 @@ require base_path('views/partials/head.php') ?>
                      <td><?= htmlspecialchars($resource['item_code']) ?></td>
                      <td><?= htmlspecialchars($resource['item_article']) ?></td>
                      <td><?= htmlspecialchars($resource['school_name']) ?></td>
-                     <td><?= htmlspecialchars(formatTimestamp($resource['item_date_requested'])) ?></td>
+                     <td><?= htmlspecialchars($resource['item_date_requested'] ?? '') ?></td>
                      <td>
                         <div class="h-full w-full flex items-center gap-2">
                         <?php require base_path('views/partials/custodian/custodian-resources/assigned_approve_resource_modal.php') ?>

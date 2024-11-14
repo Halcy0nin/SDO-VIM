@@ -50,24 +50,16 @@ require base_path('views/partials/head.php') ?>
       </div>
           
 
-      <div class="dropdown-date">
-            <div class="select">
-               <span class="selected">Date Range</span>
-               <div class="caret"></div>
-            </div>
-            
-            <form id="schoolFilterForm" method="POST" action="/coordinator">
-               <input name="_method" value="PATCH" hidden />
-               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
-               
-               <ul class="menu">
-                     <li data-value="All School">All Schools</li> <!-- Default option to show all schools -->
-                     <?php foreach ($schoolDropdownContent as $school): ?>
-                        <li data-value="<?= htmlspecialchars($school['school_name']); ?>">
-                           <?= htmlspecialchars($school['school_name']); ?>
-                        </li>
-                     <?php endforeach; ?>
-               </ul>
+      <div class="date-filter-container4">
+         <h1 style="font-weight: bold; color: #434F72">Inventory Date</h1>
+         <input value="<?= htmlspecialchars($startDate) ?>" type="date" id="start-date" name="startDate" />
+
+         <label for="end-date">to</label>
+         <input value="<?= htmlspecialchars($endDate) ?>" type="date" id="end-date" name="endDate" />
+
+         <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
       </div>
 
    <section class="mx-6 px-12 flex gap-6">

@@ -8,6 +8,22 @@ $db = App::resolve(Database::class);
 
 $items = [];
 
+// Notification count query
+$notificationCountQuery = $db->query('
+    SELECT COUNT(*) AS total
+    FROM notifications
+    WHERE viewed IS NULL
+    AND created_by != :user_id 
+', [
+    'user_id' => get_uid(),
+])->find();
+
+$notificationCount = $notificationCountQuery['total'];
+if ($notificationCount > 5) {
+    $notificationCount = '5+';
+}
+
+
 $pagination = [
     'pages_limit' => 10,
     'pages_current' => isset($_GET['page']) ? (int)$_GET['page'] : 1,

@@ -53,7 +53,7 @@ class SchoolEditForm
             $this->errors[$attributes['_school_id']]['school_id'] = 'Please enter a valid 6-digit School ID.';
         }
 
-        if (!Validator::string($attributes['school_name'], 1, 32)) {
+        if (!Validator::string($attributes['school_name'], 1, 50)) {
             $this->errors[$attributes['_school_id']]['school_name'] = 'Please enter a valid School Name.';
         }
 

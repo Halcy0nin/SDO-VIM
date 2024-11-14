@@ -26,7 +26,7 @@ $items = $db->query('
     JOIN schools s ON si.school_id = s.school_id
     WHERE si.school_id = :id',
     [
-        'id' => $_SESSION['user']['school_id'] ?? null
+        'id' => $_POST['id'] ?? null
     ])->get();
 
 $html2pdf = new Html2Pdf('L', 'LEGAL', 'en', false, 'UTF-8', array(10, 10, 10, 10));

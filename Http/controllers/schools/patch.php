@@ -6,7 +6,6 @@ use Http\Forms\SchoolEditForm;
 
 $db = App::resolve(Database::class);
 
-try {
     $form = SchoolEditForm::validate($attributes = [
         '_school_id' => $_POST['id_to_update'],
         'school_id' => $_POST['school_id'],
@@ -65,23 +64,4 @@ try {
     // Redirect to the schools list
     redirect('/coordinator/schools');
 
-} catch (PDOException $e) {
-    // Log the error message for debugging
-    error_log($e->getMessage());
 
-    // Show an error toast message
-    toast('Failed to update the school. Please try again.');
-
-    // Redirect back to the schools list
-    redirect('/coordinator/schools');
-
-} catch (Exception $e) {
-    // Handle any other types of exceptions
-    error_log($e->getMessage());
-
-    // Show a general error toast message
-    toast('An unexpected error occurred. Please try again later.');
-
-    // Redirect back to the schools list
-    redirect('/coordinator/schools');
-}
