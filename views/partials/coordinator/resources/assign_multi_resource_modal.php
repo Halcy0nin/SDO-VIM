@@ -20,7 +20,14 @@
                 </div>
                 <div class="flex items-center gap-3" style="margin-left: 1rem;">
                     <span>
-                        <?php text_input('School ID', 'school_id', 'School ID', ''); ?>
+                        <select name="school_id" id="school_id" placeholder="Select School">
+                            <option value="" disabled selected>Select School</option>
+                            <?php foreach ($schoolDropdownContent as $school): ?>
+                                <option value="<?= htmlspecialchars($school['school_id']); ?>">
+                                    <?= htmlspecialchars($school['school_name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </span>
                 </div>
                 <div id="selectedItemsContainer"></div>

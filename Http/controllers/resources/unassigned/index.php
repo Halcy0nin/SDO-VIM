@@ -78,11 +78,16 @@ LIMIT :start,:end
     'end' => (int)$pagination['pages_limit'],
 ])->get();
 
+$schoolDropdownContent = $db->query('
+        SELECT school_name, school_id FROM schools;
+') ->get();
+
 view('resources/unassigned/index.view.php', [
     'heading' => 'Unassigned Resources',
     'notificationCount' => $notificationCount,
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
+    'schoolDropdownContent' => $schoolDropdownContent,
     'pagination' => $pagination
 ]);

@@ -103,6 +103,10 @@ $statusMap = [
     3 => 'Condemned'
 ];
 
+$schoolDropdownContent = $db->query('
+        SELECT school_name, school_id FROM schools;
+') ->get();
+
 // Render view with the data
 view('resources/unassigned/show.view.php', [
     'notificationCount' => $notificationCount,
@@ -114,5 +118,6 @@ view('resources/unassigned/show.view.php', [
     'pagination' => $pagination,
     'startDate' => $startDate,
     'endDate' => $endDate,
+    'schoolDropdownContent' => $schoolDropdownContent,
     'search' => $searchTerm
 ]);

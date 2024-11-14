@@ -28,7 +28,6 @@ require base_path('views/partials/head.php') ?>
                <div class="caret"></div>
             </div>
  
-               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
                
               
    </div>
@@ -56,9 +55,7 @@ require base_path('views/partials/head.php') ?>
                                 <td><?= htmlspecialchars($resource['item_inactive']) ?></td>
                                 <td>
                                     <div class="h-full w-full flex items-center gap-2">
-                                        <button class="view-btn">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </button>
+                                    <?php require base_path('views/partials/coordinator/resources/view_repair_modal.php') ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
