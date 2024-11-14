@@ -5,6 +5,18 @@ use Core\App;
 
 $db = App::resolve(Database::class);
 
+$notificationCountQuery = $db->query('
+    SELECT COUNT(*) AS total
+    FROM notifications
+    WHERE viewed IS NULL
+    AND  created_by != :user_id 
+',[
+    'user_id' => get_uid(),
+])->find();
+
+// Extract the total count
+$notificationCount = $notificationCountQuery['total'];
+
 $resources = [];
 
 $pagination = [
@@ -81,6 +93,7 @@ $statusMap = [
 view('custodian-resources/show.view.php', [
     'statusMap' => $statusMap,
     'heading' => 'Resources',
+    'notificationCount' => $notificationCount,
     'resources' => $resources,
     'pagination' => $pagination,
     'search' => $_POST['search']
