@@ -36,11 +36,11 @@ try {
     $db->query('INSERT INTO school_inventory (
         item_code, item_article, item_desc, date_acquired,
         item_unit_value, item_quantity, item_funds_source,
-        item_active, item_inactive, school_id, updated_by
+        item_active, item_inactive, school_id, updated_by, item_request_status, item_requested_by, item_date_requested
     ) VALUES (
         :item_code, :item_article, :item_desc, :date_acquired,
         :item_unit_value, :item_quantity, :item_funds_source,
-        :item_active, :item_inactive, :id, :updated_by
+        :item_active, :item_inactive, :id, :updated_by, 0, :updated_by, NOW()
     );', [
         'updated_by' => $_SESSION['user']['user_id'],
         'id' => $id ?? null,

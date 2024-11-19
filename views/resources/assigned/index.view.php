@@ -10,13 +10,14 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/banner.php') ?>
    </section>
    <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
-      <?php require base_path('views/partials/custodian/custodian-resources/tabs.php') ?>
+      <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>
       <div class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped">
             <thead>
                <th>ID</th>
                <th>Item Article</th>
                <th>Date Assigned</th>
+               <th>School Assigned</th>
                <th>Actions</th>
             </thead>
             <tbody>
@@ -24,10 +25,11 @@ require base_path('views/partials/head.php') ?>
                   <tr>
                      <td><?= htmlspecialchars($resource['item_code']) ?></td>
                      <td><?= htmlspecialchars($resource['item_article']) ?></td>
-                     <td><?= htmlspecialchars($resource['item_assigned_date'] ?? '') ?></td>
+                     <td><?= htmlspecialchars(formatTimestamp($resource['item_assigned_date']) ?? '') ?></td>
+                     <td><?= htmlspecialchars($resource['school_name']) ?></td>
                      <td>
                         <div class="h-full w-full flex items-center gap-2">
-                        <?php require base_path('views/partials/custodian/custodian-resources/assigned_approve_resource_modal.php') ?>
+                        <?php require base_path('views/partials/coordinator/resources/assigned_reject_resource_modal.php') ?>
                      </td>
                   </tr>
                <?php endforeach; ?>

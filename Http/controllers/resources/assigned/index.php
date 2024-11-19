@@ -51,24 +51,23 @@ if ($notificationCount > 5){
 $resources = [];
 
 $resources = $db->query('
-SELECT 
+    SELECT 
     si.item_code,
     si.item_article,
-    s.school_name,
     si.item_status AS status,
-    si.date_acquired
+    si.date_acquired,
+    si.item_assigned_date,
+    s.school_name
 FROM 
     school_inventory si
-LEFT JOIN 
-    schools s ON s.school_id = si.school_id
+JOIN 
+    schools s ON s.school_id = si.item_assigned_school
 WHERE 
-    si.school_id IS NULL
-AND 
-    si.item_assigned_status = 0;;
+    si.item_assigned_status = 1;
 ')->get();
 
-view('custodian-resources/unassigned/index.view.php', [
-    'heading' => 'Unassigned Resources',
+view('resources/assigned/index.view.php', [
+    'heading' => 'Assigned Resources',
     'notificationCount' => $notificationCount,
     'resources' => $resources,
 ]);

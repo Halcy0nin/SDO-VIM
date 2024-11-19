@@ -22,6 +22,8 @@ FROM
     school_inventory
 WHERE 
     school_id = :id
+AND
+    item_request_status = 1;
 ', [
     'id' => $params['id'] ?? null
 ])->get();

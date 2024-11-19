@@ -56,6 +56,7 @@ $router->patch('/coordinator/resources/s', 'resources/show.php')->only('coordina
 $router->get('/coordinator/resources/unassigned', 'resources/unassigned/index.php')->only('coordinator');
 $router->post('/coordinator/resources/unassigned/s', 'resources/unassigned/show.php')->only('coordinator');
 $router->get('/coordinator/resources/requests', 'resources/requests/index.php')->only('coordinator');
+$router->patch('/coordinator/resources/requests', 'resources/requests/patch.php')->only('coordinator');
 $router->post('/coordinator/resources/requests/s', 'resources/requests/show.php')->only('coordinator');
 $router->get('/coordinator/resources/working', 'resources/working/index.php')->only('coordinator');
 $router->patch('/coordinator/resources/working/s', 'resources/working/show.php')->only('coordinator');
@@ -64,6 +65,8 @@ $router->post('/coordinator/resources/repair/s', 'resources/repair/show.php')->o
 $router->patch('/coordinator/resources/repair', 'resources/repair/patch.php')->only('coordinator');
 $router->get('/coordinator/resources/condemned', 'resources/condemned/index.php')->only('coordinator');
 $router->post('/coordinator/resources/condemned/s', 'resources/condemned/show.php')->only('coordinator');
+$router->get('/coordinator/resources/assigned', 'resources/assigned/index.php')->only('coordinator');
+$router->patch('/coordinator/resources/assigned', 'resources/assigned/patch.php')->only('coordinator');
 
 //Assign resource to school
 $router->patch('/coordinator/resources/unassigned', '/resources/unassigned/patch.php')->only('coordinator');
@@ -165,6 +168,7 @@ $router->post('/custodian/custodian-resources/s', 'custodian-resources/show.php'
 $router->get('/custodian/custodian-resources/unassigned', 'custodian-resources/unassigned/index.php')->only('custodian');
 $router->post('/custodian/custodian-resources/unassigned/s', 'custodian-resources/unassigned/show.php')->only('custodian');
 $router->get('/custodian/custodian-resources/assigned', 'custodian-resources/assigned/index.php')->only('custodian');
+$router->patch('/custodian/custodian-resources/assigned', 'custodian-resources/assigned/patch.php')->only('custodian');
 $router->get('/custodian/custodian-resources/working', 'custodian-resources/working/index.php')->only('custodian');
 $router->get('/custodian/custodian-resources/repair', 'custodian-resources/repair/index.php')->only('custodian');
 $router->patch('/custodian/custodian-resources/repair', 'custodian-resources/repair/patch.php')->only('custodian');

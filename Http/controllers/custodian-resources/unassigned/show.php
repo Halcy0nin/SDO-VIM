@@ -99,6 +99,8 @@ $resources = $db->query("
     LEFT JOIN 
         schools s ON s.school_id = si.school_id
     $whereClause
+    AND 
+    si.item_assigned_status = 0
 ", $params)->get();
 
 // Render view with the data

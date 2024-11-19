@@ -72,6 +72,8 @@ LEFT JOIN
     schools s ON s.school_id = si.school_id
 WHERE 
     si.school_id IS NULL
+AND 
+    si.item_assigned_status = 0
 LIMIT :start,:end
 ', [
     'start' => (int)$pagination['start'],

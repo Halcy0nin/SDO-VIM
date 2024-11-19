@@ -39,6 +39,8 @@ WHERE
         item_article LIKE :search_article OR
         item_desc LIKE :search_desc
     )
+AND
+    item_request_status = 1;
 ', [
     'search_code' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
     'search_article' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',

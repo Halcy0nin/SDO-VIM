@@ -54,14 +54,12 @@ $resources = $db->query('
     SELECT 
     si.item_code,
     si.item_article,
-    s.school_name,
     si.item_status AS status,
     si.date_acquired,
-    si.item_date_requested
+    si.item_assigned_date
     FROM school_inventory si
-    JOIN schools s ON s.school_id = si.school_id
-    WHERE si.item_request_status = 0
-    AND si.school_id = :id;
+    WHERE si.item_assigned_status = 1
+    AND si.item_assigned_school = :id;
 ',
 [
     'id' => $_SESSION['user']['school_id'] ?? null

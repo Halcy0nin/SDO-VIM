@@ -50,16 +50,17 @@ $resources = $db->paginate('
 SELECT 
     si.item_code,
     si.item_article,
+    si.item_desc,
+    si.item_quantity,
+    si.item_total_value,
+    s.school_name,
     si.item_status AS status,
     si.item_requested_by,
-    si.item_date_requested,
-    s.school_name
-FROM 
-    school_inventory si
-JOIN 
-    schools s ON s.school_id = si.item_requested_by
-WHERE 
-    si.item_request_status = 0
+    si.date_acquired,
+    si.item_date_requested
+    FROM school_inventory si
+    JOIN schools s ON s.school_id = si.school_id
+    WHERE si.item_request_status = 0
 LIMIT :start, :end;
 ', [
     'start' => (int)$pagination['start'],

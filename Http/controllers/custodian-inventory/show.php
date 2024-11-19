@@ -47,6 +47,8 @@ WHERE
         item_funds_source LIKE :search_source OR
         item_status LIKE :search_status
     )
+AND
+    item_request_status = 1
 ', [
     'id' => $_SESSION['user']['school_id'] ?? null,
     'search_code' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
@@ -89,6 +91,10 @@ WHERE
         item_desc LIKE :search_desc OR
         item_status LIKE :search_status
     )
+AND
+    item_request_status = 1
+AND 
+    si.item_assigned_status = 2
 LIMIT :start,:end
 ', [
     'id' => $_SESSION['user']['school_id'] ?? null,

@@ -7,7 +7,7 @@
 <main class="modal fade " id="requestResourceModal<?php echo $resource['item_code']; ?>" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered w-1/2">
         <div class="modal-content">
-            <form action="#" method="POST" class="modal-body h-fit flex flex-col gap-2">
+            <form action="/custodian/custodian-resources/assigned" method="POST" class="modal-body h-fit flex flex-col gap-2">
                 <input name="_method" value="PATCH" hidden />
                 <input type="hidden" name="item_code" value="<?php echo htmlspecialchars($resource['item_code']); ?>"/>
                 <input type="hidden" name="school_id" value="<?php echo htmlspecialchars($_SESSION['user']['school_id']); ?>"/>
@@ -20,12 +20,13 @@
                 </div>
                 <div>
                     <h1>
-                        Are you sure you want to approve: <b><?php echo $resource['item_code']; ?></b> to be added to: <b><?php echo $resource['school_name']; ?></b>?
+                        Are you sure you want to approve: <b><?php echo $resource['item_code']; ?></b> to be added to this school?
                     </h1>
                 </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Approve</button>
+                    <button type="submit" name="reject_assigned_item" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Reject</button>
+                    <button type="submit" name="approve_assigned_item" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Approve</button>
                 </div>
             </form>
         </div>

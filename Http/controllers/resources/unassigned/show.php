@@ -90,6 +90,8 @@ $resources = $db->paginate("
     LEFT JOIN 
         schools s ON s.school_id = si.school_id
     $whereClause
+    AND 
+    si.item_assigned_status = 0
     LIMIT :start, :end
 ", array_merge($params, [
     'start' => (int)$pagination['start'],

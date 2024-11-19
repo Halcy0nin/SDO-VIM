@@ -39,41 +39,59 @@
 </main>
 
 <script>
-// Get elements
-const dropdown = document.querySelector('.custom-dropdown');
-const selected = document.getElementById('dropdown-selected');
-const optionsContainer = document.querySelector('.custom-dropdown-options');
-const options = document.querySelectorAll('.custom-option');
-const hiddenInput = document.getElementById('school_id');
+document.addEventListener('DOMContentLoaded', () => {
+    // Add event listener for all modals
+    document.querySelectorAll('.modal').forEach(modal => {
+        const dropdown = modal.querySelector('.custom-dropdown');
+        const selected = modal.querySelector('#dropdown-selected');
+        const optionsContainer = modal.querySelector('.custom-dropdown-options');
+        const options = modal.querySelectorAll('.custom-option');
+        const hiddenInput = modal.querySelector('#school_id');
 
-// Toggle dropdown visibility when clicking on selected area
-dropdown.addEventListener('click', (e) => {
-    // Prevent the click from propagating to the document click listener
-    e.stopPropagation();
-    dropdown.classList.toggle('active');
-    optionsContainer.style.display = dropdown.classList.contains('active') ? 'block' : 'none';
-});
+        if (dropdown) {
+            // Toggle dropdown visibility when clicking on the selected area
+            dropdown.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent event from bubbling
+                dropdown.classList.toggle('active');
+                optionsContainer.style.display = dropdown.classList.contains('active') ? 'block' : 'none';
+            });
 
-// Close the dropdown and update the selected option
-options.forEach(option => {
-    option.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent the dropdown from toggling again
-        const value = option.getAttribute('data-value');
-        const text = option.textContent;
+            // Handle option selection
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const value = option.getAttribute('data-value');
+                    const text = option.textContent;
 
-        selected.textContent = text;
-        hiddenInput.value = value;
+                    selected.textContent = text;
+                    hiddenInput.value = value;
 
-        // Close the dropdown after selecting an option
-        dropdown.classList.remove('active');
-        optionsContainer.style.display = 'none';
+                    // Close dropdown
+                    dropdown.classList.remove('active');
+                    optionsContainer.style.display = 'none';
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                dropdown.classList.remove('active');
+                optionsContainer.style.display = 'none';
+            });
+        }
+    });
+
+    // Reapply dropdown functionality on modal show
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('shown.bs.modal', () => {
+            const dropdown = modal.querySelector('.custom-dropdown');
+            if (dropdown) {
+                dropdown.classList.remove('active');
+                const optionsContainer = dropdown.querySelector('.custom-dropdown-options');
+                optionsContainer.style.display = 'none';
+            }
+        });
     });
 });
 
-// Close dropdown if clicking outside of it
-document.addEventListener('click', () => {
-    dropdown.classList.remove('active');
-    optionsContainer.style.display = 'none';
-});
 
 </script>
