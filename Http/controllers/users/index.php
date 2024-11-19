@@ -55,6 +55,8 @@ $users = $db->paginate("
     FROM users u
     LEFT JOIN schools s ON u.school_id = s.school_id
     LEFT JOIN school_contacts c ON u.school_id = c.school_id
+    WHERE
+        u.is_archived = 0
     LIMIT :start,:end
 ", [
     'start' => (int)$pagination['start'],

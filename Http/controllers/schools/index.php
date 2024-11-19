@@ -66,6 +66,8 @@ $schools = $db->paginate('
             WHERE r2.school_id = r1.school_id
         )
     ) r ON s.school_id = r.school_id
+     WHERE
+        is_archived = 0
     LIMIT :start,:end
 ', [
     'start' => (int)$pagination['start'],

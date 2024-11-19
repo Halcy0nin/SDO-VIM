@@ -58,6 +58,8 @@ $users = $db->paginate("
         c.contact_name LIKE :search_contact OR
         c.contact_no LIKE :search_no OR
         c.contact_email LIKE :search_email
+    AND
+        u.is_archived = 0
     LIMIT :start,:end
 ", [
     'search_id' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',

@@ -14,19 +14,19 @@
                 <div class="modal-header mb-4">
                     <div class="flex gap-2 justify-center items-center text-red-600 text-xl">
                         <i class="bi bi-trash-fill"></i>
-                        <h1 class="modal-title fs-5 font-bold" id="deleteSchoolModalLabel">Delete <?= $school['school_name'] ?? 'School' ?></h1>
+                        <h1 class="modal-title fs-5 font-bold" id="deleteSchoolModalLabel">Archive <?= $school['school_name'] ?? 'School' ?></h1>
                     </div>
                     <button type="button" class="btn-close hover:text-red-500" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="flex flex-col gap-2">
                     <h3 class="text-lg">
-                        Are you sure you want to delete <span class="font-bold text-[#434F72]"><?php echo $school['school_name'] ?></span>?
+                        Are you sure you want to archive <span class="font-bold text-[#434F72]"><?php echo $school['school_name'] ?></span>?
                     </h3>
                     <p>This action cannot be undone.</p>
                 </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn font-bold text-white bg-red-500 hover:bg-red-400">Delete School</button>
+                    <button type="submit" class="btn font-bold text-white bg-red-500 hover:bg-red-400">Archive School</button>
                 </div>
             </form>
         </div>

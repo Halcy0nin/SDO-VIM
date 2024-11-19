@@ -12,13 +12,15 @@ try {
     ])->findOrFail(); 
 
     // Perform the deletion
-    $db->query('DELETE FROM school_inventory WHERE item_code = :id_to_delete', [
+    $db->query('UPDATE school_inventory
+     SET is_archived = 1
+     WHERE item_code = :id_to_delete', [
         'id_to_delete' => $_POST['id_to_delete'],
     ]);
 
     $id = $_POST['id'];
 
-    toast('Successfully deleted item with code: ' . $item['item_code']);
+    toast('Successfully archived item with code: ' . $item['item_code']);
     redirect('/coordinator/school-inventory/' . $id);
 
 } catch (PDOException $e) {
@@ -26,7 +28,7 @@ try {
     error_log($e->getMessage());
 
     // Show an error toast message
-    toast('Failed to delete the item. Please try again.');
+    toast('Failed to archive the item. Please try again.');
 
     // Redirect back to the inventory page
     redirect('/coordinator/school-inventory/' . $id);
