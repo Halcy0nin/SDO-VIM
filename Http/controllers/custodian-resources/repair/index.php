@@ -50,26 +50,43 @@ if ($notificationCount > 5){
 
 $resources = [];
 
-$resources = $db->query('
-    SELECT 
+$pagination = [
+    'pages_limit' => 10,
+    'pages_current' => isset($_GET['page']) ? (int)$_GET['page'] : 1,
+    'pages_total' => 0,
+    'start' => 0,
+];
+
+$resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory si WHERE
+    si.school_id = :id', ['id' => $_SESSION['user']['school_id'] ?? null,])->get();
+$pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
+$pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
+
+$pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
+
+$resources = $db->paginate('
+SELECT 
     si.item_code,
     si.item_article,
     s.school_name,
-    si.item_status AS status,
-    si.item_status_reason,
-    si.item_inactive,
-    si.date_acquired
-    FROM school_inventory si
-    JOIN schools s ON s.school_id = si.school_id
-    WHERE si.item_status = 2
-    AND si.school_id = :id;
-',
-[
-    'id' => $_SESSION['user']['school_id'] ?? null
+    si.date_acquired,
+    si.item_inactive
+FROM 
+    school_inventory si
+LEFT JOIN 
+    schools s ON s.school_id = si.school_id
+WHERE
+    si.school_id = :id
+LIMIT :start ,:end
+', [
+    'id' => $_SESSION['user']['school_id'] ?? null,
+    'start' => (int)$pagination['start'],
+    'end' => (int)$pagination['pages_limit'],
 ])->get();
 
 view('custodian-resources/repair/index.view.php', [
     'heading' => 'For Repair Resources',
     'notificationCount' => $notificationCount,
     'resources' => $resources,
+    'pagination' => $pagination
 ]);
