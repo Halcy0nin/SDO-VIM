@@ -30,12 +30,12 @@ $db = App::resolve(Database::class);
 
 try {
     // Delete the user from the database
-    $db->query('DELETE FROM users WHERE user_id = :id_to_delete', [
+    $db->query('UPDATE users SET is_archived = 1 WHERE user_id = :id_to_delete', [
         'id_to_delete' => $_POST['id_to_delete'],
     ]);
 
     // Show a success message
-    toast('Account deletion done successfully!');
+    toast('Account archived successfully!');
 
     // Redirect to the users list
     redirect('/coordinator/users');
@@ -45,7 +45,7 @@ try {
     error_log($e->getMessage());
 
     // Show an error toast message
-    toast('Failed to delete account. Please try again.');
+    toast('Failed to archive account. Please try again.');
 
     // Redirect back to the users list
     redirect('/coordinator/users');

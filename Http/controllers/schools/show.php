@@ -104,6 +104,8 @@ if ($resources_count[0]['total'] !== 0) {
         sc.contact_name LIKE :search_contact OR
         sc.contact_email LIKE :search_email OR
         sc.contact_no LIKE :search_no
+    AND
+        is_archived = 0
     LIMIT :start,:end
 ', [
     'search_id' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',

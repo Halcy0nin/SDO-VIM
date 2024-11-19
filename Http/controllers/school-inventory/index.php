@@ -23,7 +23,9 @@ FROM
 WHERE 
     school_id = :id
 AND
-    item_request_status = 1;
+    item_request_status = 1
+AND 
+    is_archived = 0;
 ', [
     'id' => $params['id'] ?? null
 ])->get();
@@ -65,6 +67,8 @@ $items = $db->paginate(
     INNER JOIN users u on h.user_id = u.user_id
     WHERE 
         si.school_id = :id
+    AND 
+        is_archived = 0;
     LIMIT :start,:end
     ',
     [

@@ -30,19 +30,19 @@ $db = App::resolve(Database::class);
 
 try {
     // Attempt to delete the item from the inventory
-    $db->query('DELETE from school_inventory where item_code = :id_to_delete', [
+    $db->query('UPDATE school_inventory SET is_archived = 1 where item_code = :id_to_delete', [
         'id_to_delete' => $_POST['id_to_delete'],
     ]);
 
     // Show a success message after deletion
-    toast('Successfully deleted item with code: ' . $_POST['id_to_delete']);
+    toast('Successfully archived item with code: ' . $_POST['id_to_delete']);
 
 } catch (PDOException $e) {
     // Log the error message for debugging
     error_log($e->getMessage());
 
     // Show an error toast message
-    toast('Failed to delete the item. Please try again.');
+    toast('Failed to archive the item. Please try again.');
 
 } catch (Exception $e) {
     // Handle any other types of exceptions
