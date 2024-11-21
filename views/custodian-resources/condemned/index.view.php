@@ -29,6 +29,34 @@ require base_path('views/partials/head.php') ?>
                   </tr>
                <?php endforeach; ?>
             </tbody>
+            <tfoot class="overflow-hidden">
+               <tr>
+                  <td colspan="6" class="py-2 pr-4">
+                     <div class="w-full flex flex-wrap items-center justify-end gap-2">
+                        <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
+                        <?php if ($pagination['pages_total'] > 1): ?>
+                           <a
+                              href="/custodian/custodian-resources/condemned?page=1"
+                              class="pagination-link">
+                              <i class="bi bi-chevron-bar-left"></i>
+                           </a>
+                           <a
+                              href="/custodian/custodian-resources/condemned?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
+                              <i class="bi bi-chevron-left"></i>
+                           </a>
+                           <a href="/custodian/custodian-resources/condemned?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
+                              class="pagination-link">
+                              <i class="bi bi-chevron-right"></i>
+                           </a>
+                           <a href="/custodian/custodian-resources/condemned?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
+                              class="pagination-link">
+                              <i class="bi bi-chevron-bar-right"></i>
+                           </a>
+                        <?php endif; ?>
+                     </div>
+                  </td>
+               </tr>
+            </tfoot>
          </table>
       </div>
    </section>

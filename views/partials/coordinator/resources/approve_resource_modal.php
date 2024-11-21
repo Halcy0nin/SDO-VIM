@@ -18,21 +18,27 @@
                     <button type="button" class="btn-close hover:text-red-500" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div>
-                    <h1>
-                        Item Article: <?php echo  $resource['item_article']; ?>
-                    </h1>
-                    <h1>
-                        Item Description: <?php echo  $resource['item_desc']; ?>
-                    </h1>
-                    <h1>
-                        Quantity: <?php echo  $resource['item_quantity']; ?>
-                    </h1>
-                    <h1>
-                        Total Value: PHP <?php echo  $resource['item_total_value']; ?>
-                    </h1>      
-                    <h1>
-                        Are you sure you want to approve: <b><?php echo $resource['item_code']; ?></b> to be added to: <b><?php echo $resource['school_name']; ?></b>?
-                    </h1>
+                <h1 style="font-size: 1.1em; margin-bottom: 12px; color: #434F72; font-family: 'Roboto', sans-serif; font-weight: 700;">
+                    Item Article: 
+                    <span style="font-weight: 400; color: #000;"><?php echo $resource['item_article']; ?></span>
+                </h1>
+                <h1 style="font-size: 1.1em; margin-bottom: 12px; color: #434F72; font-family: 'Roboto', sans-serif; font-weight: 700;">
+                    Item Description: 
+                    <span style="font-weight: 400; color: #000;"><?php echo $resource['item_desc']; ?></span>
+                </h1>
+                <h1 style="font-size: 1.1em; margin-bottom: 12px; color: #434F72; font-family: 'Roboto', sans-serif; font-weight: 700;">
+                    Quantity: 
+                    <span style="font-weight: 400; color: #000;"><?php echo $resource['item_quantity']; ?></span>
+                </h1>
+                <h1 style="font-size: 1.1em; margin-bottom: 12px; color: #434F72; font-family: 'Roboto', sans-serif; font-weight: 700;">
+                    Total Value: PHP 
+                    <span style="font-weight: 400; color: #000;"><?php echo $resource['item_total_value']; ?></span>
+                </h1>
+                <h1 style="font-size: 1.1em; margin-top: 50px; color: #434F72; font-family: 'Roboto', sans-serif;">
+                    Are you sure you want to approve: 
+                    <b style="color: #2c3e50;"><?php echo $resource['item_code']; ?></b> to be added to: 
+                    <b style="color: #2c3e50;"><?php echo $resource['school_name']; ?></b>?
+                </h1>
                 </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
