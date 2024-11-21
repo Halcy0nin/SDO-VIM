@@ -18,18 +18,26 @@ require base_path('views/partials/head.php') ?>
          <button type="submit" class="search">
             <i class="bi bi-search"></i>
          </button>
-      </form>
    </section>
 
-   <div class="dropdown-date1">
-            <div class="select">
-               <span class="selected">Date Range</span>
-               <div class="caret"></div>
-            </div>
-
-               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
-               
-              
+   <div class="date-filter-container4">
+      <div class="dropdown-date1">
+         <div class="select">
+            <span class="selected">Date Range</span>
+            <div class="caret"></div>
+         </div>
+         <ul class="menu">
+            <?php foreach ($years as $year): ?>
+               <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
+                     <?= htmlspecialchars($year); ?>
+                  </li>
+            <?php endforeach; ?>
+         </ul>
+      </div>
+      <input type="hidden" name="yearFilter" id="yearFilter" value="">
+      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
    </div>
 
    <section class="mx-12 mb-12 inline-block grow rounded">
@@ -136,4 +144,12 @@ dropdowns.forEach(dropdown => {
       });   
    });
 });
+</script>
+
+<script>
+    // JavaScript function to set the value of the hidden input
+    function setYearFilter(year) {
+        document.getElementById('yearFilter').value = year;
+        document.querySelector('.selected').textContent = year;
+    }
 </script>

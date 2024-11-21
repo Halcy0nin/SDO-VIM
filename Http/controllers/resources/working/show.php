@@ -6,6 +6,30 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
+// Get input values
+$startDate = $_POST['yearFilter'] ?? null;
+$endDate = $_POST['yearFilter'] ?? null;
+$clearFilter = isset($_POST['clearFilter']);
+$searchTerm = trim($_POST['search'] ?? '');
+
+if ($clearFilter) {
+    $startDate = null;
+    $endDate = null;
+    $searchTerm = '';
+    $conditions = []; // Reset conditions
+    $params = []; // Reset parameters
+}
+
+// Handle year-only input for date filters
+if ($startDate && strlen($startDate) === 4) { // Year input
+    $startDate = $startDate . '-01-01'; // Set to January 1st of the year
+    $endDate = $endDate . '-12-31'; // Set to December 31st of the year
+} elseif ($startDate || $endDate) {
+    // Validate and ensure both are complete dates (YYYY-MM-DD format)
+    $startDate = $startDate ?: null;
+    $endDate = $endDate ?: null;
+}
+
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
@@ -33,16 +57,12 @@ $pagination = [
 // Initialize SQL conditions and parameters
 $conditions = [];
 $params = [
-    'search_code' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_article' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_desc' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_school' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+    'search_code' => '%' . strtolower($searchTerm) . '%',
+    'search_article' => '%' . strtolower($searchTerm) . '%',
+    'search_desc' => '%' . strtolower($searchTerm) . '%',
+    'search_school' => '%' . strtolower($searchTerm) . '%',
 ];
 
-// Get the date filter values
-$startDate = $_POST['startDate'] ?? null;
-$endDate = $_POST['endDate'] ?? null;
-$clearFilter = isset($_POST['clearFilter']);
 
 // Apply date filter only if clearFilter was not clicked
 if (!$clearFilter) {
@@ -79,6 +99,11 @@ $pagination['pages_total'] = ceil($totalResourcesQuery[0]['total'] / $pagination
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
+$currentYear = date('Y'); // Current year
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$years = range($currentYear, $earliestYear);
+
 // Fetch resources with pagination
 $resources = $db->paginate("
     SELECT 
@@ -110,11 +135,12 @@ view('resources/working/show.view.php', [
     'notificationCount' => $notificationCount,
     'statusMap' => $statusMap,
     'heading' => 'Working Resources',
+    'years' => $years,
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
     'pagination' => $pagination,
-    'startDate' => $startDate,
-    'endDate' => $endDate,
-    'search' => $_POST['search'] ?? ''
+    'startDate' => $_POST['yearFilter'] ?? '', // Keep original input for the view
+    'endDate' => $_POST['yearFilter'] ?? '',
+    'search' => $searchTerm
 ]);

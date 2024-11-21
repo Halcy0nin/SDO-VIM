@@ -68,7 +68,7 @@ $items = $db->paginate(
     WHERE 
         si.school_id = :id
     AND 
-        is_archived = 0;
+        si.is_archived = 0;
     LIMIT :start,:end
     ',
     [

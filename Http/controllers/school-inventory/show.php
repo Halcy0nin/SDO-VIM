@@ -91,7 +91,7 @@ $items = $db->paginate(
             si.item_desc LIKE :search_desc
         )
     AND 
-        is_archived = 0;
+        si.is_archived = 0;
     LIMIT :start,:end
     ',
     [

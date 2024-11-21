@@ -6,10 +6,29 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
-$startDate = $_POST['startDate'] ?? null;
-$endDate = $_POST['endDate'] ?? null;
+// Get input values
+$startDate = $_POST['yearFilter'] ?? null;
+$endDate = $_POST['yearFilter'] ?? null;
 $clearFilter = isset($_POST['clearFilter']);
 $searchTerm = trim($_POST['search'] ?? '');
+
+if ($clearFilter) {
+    $startDate = null;
+    $endDate = null;
+    $searchTerm = '';
+    $conditions = []; // Reset conditions
+    $params = []; // Reset parameters
+}
+
+// Handle year-only input for date filters
+if ($startDate && strlen($startDate) === 4) { // Year input
+    $startDate = $startDate . '-01-01'; // Set to January 1st of the year
+    $endDate = $endDate . '-12-31'; // Set to December 31st of the year
+} elseif ($startDate || $endDate) {
+    // Validate and ensure both are complete dates (YYYY-MM-DD format)
+    $startDate = $startDate ?: null;
+    $endDate = $endDate ?: null;
+}
 
 // Notification count query
 $notificationCountQuery = $db->query('
@@ -78,6 +97,11 @@ $pagination['pages_total'] = ceil($totalResourcesQuery[0]['total'] / $pagination
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
+$currentYear = date('Y'); // Current year
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->get();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$years = range($currentYear, $earliestYear);
+
 // Fetch resources with pagination
 $resources = $db->paginate("
     SELECT 
@@ -113,13 +137,14 @@ $schoolDropdownContent = $db->query('
 view('resources/unassigned/show.view.php', [
     'notificationCount' => $notificationCount,
     'statusMap' => $statusMap,
+    'years' => $years,
     'heading' => 'Unassigned Resources',
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
     'pagination' => $pagination,
-    'startDate' => $startDate,
-    'endDate' => $endDate,
+    'startDate' => $_POST['yearFilter'] ?? '', // Keep original input for the view
+    'endDate' => $_POST['yearFilter'] ?? '',
     'schoolDropdownContent' => $schoolDropdownContent,
     'search' => $searchTerm
 ]);

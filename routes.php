@@ -59,7 +59,7 @@ $router->get('/coordinator/resources/requests', 'resources/requests/index.php')-
 $router->patch('/coordinator/resources/requests', 'resources/requests/patch.php')->only('coordinator');
 $router->post('/coordinator/resources/requests/s', 'resources/requests/show.php')->only('coordinator');
 $router->get('/coordinator/resources/working', 'resources/working/index.php')->only('coordinator');
-$router->patch('/coordinator/resources/working/s', 'resources/working/show.php')->only('coordinator');
+$router->post('/coordinator/resources/working/s', 'resources/working/show.php')->only('coordinator');
 $router->get('/coordinator/resources/repair', 'resources/repair/index.php')->only('coordinator');
 $router->post('/coordinator/resources/repair/s', 'resources/repair/show.php')->only('coordinator');
 $router->patch('/coordinator/resources/repair', 'resources/repair/patch.php')->only('coordinator');

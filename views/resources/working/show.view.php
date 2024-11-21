@@ -16,21 +16,29 @@ require base_path('views/partials/head.php') ?>
     <section class="mx-12 flex flex-col">
         <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>
         <form class="search-container search" method="POST" action="/coordinator/resources/working/s">
-        <input name="_method" value="PATCH" hidden />
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
     </section>
-    <div class="dropdown-date1">
-            <div class="select">
-               <span class="selected">Date Range</span>
-               <div class="caret"></div>
-            </div>
-            
-               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
-               
-               
+    <div class="date-filter-container4">
+      <div class="dropdown-date1">
+         <div class="select">
+            <span class="selected">Date Range</span>
+            <div class="caret"></div>
+         </div>
+         <ul class="menu">
+            <?php foreach ($years as $year): ?>
+               <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
+                     <?= htmlspecialchars($year); ?>
+                  </li>
+            <?php endforeach; ?>
+         </ul>
+      </div>
+      <input type="hidden" name="yearFilter" id="yearFilter" value="">
+      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
    </div>
     <section class="mx-12 mb-12 inline-block grow rounded">
         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
@@ -49,7 +57,7 @@ require base_path('views/partials/head.php') ?>
                             <tr>
                                 <td><?= htmlspecialchars($resource['item_code']) ?></td>
                                 <td><?= htmlspecialchars($resource['item_article']) ?></td>
-                                <td><?= htmlspecialchars($resource['school_name']) ?></td>
+                                <td><?= htmlspecialchars($resource['school_name'] ?? 'Unassigned') ?></td>
                                 <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -137,4 +145,12 @@ dropdowns.forEach(dropdown => {
       });   
    });
 });
+</script>
+
+<script>
+    // JavaScript function to set the value of the hidden input
+    function setYearFilter(year) {
+        document.getElementById('yearFilter').value = year;
+        document.querySelector('.selected').textContent = year;
+    }
 </script>
