@@ -34,6 +34,11 @@ $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pa
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
+$currentYear = date('Y'); // Current year
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$years = range($currentYear, $earliestYear);
+
 $items = $db->paginate(
     '
     SELECT 
@@ -116,6 +121,7 @@ if ($notificationCount > 5){
 view('school-inventory/index.view.php', [
     'id' => $params['id'] ?? null,
     'notificationCount' => $notificationCount,
+    'years' => $years,
     'heading' => $schoolName,
     'items' => $items,
     'statusMap' => $statusMap,
