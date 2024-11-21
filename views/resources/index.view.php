@@ -107,7 +107,7 @@ require base_path('views/partials/head.php') ?>
             <tfoot class="overflow-hidden">
                <tr>
                   <td colspan="6" class="py-2 pr-4">
-                     <div class="w-full flex items-center justify-end gap-5">
+                     <div class="w-full flex flex-wrap items-center justify-end gap-2">
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>
                            <a
