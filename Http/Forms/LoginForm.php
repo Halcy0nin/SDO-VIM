@@ -51,10 +51,6 @@ class LoginForm
         if (!Validator::string($attributes['user_name'], 1)) {
             $this->errors['user_name'] = 'Please provide a valid user name.';
         }
-
-        if (!Validator::string($attributes['password'], 1)) {
-            $this->errors['password'] = 'Please provide a valid password.';
-        }
     }
 
     public static function validate($attributes)

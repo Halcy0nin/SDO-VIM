@@ -24,6 +24,7 @@ if (in_array($file_ext, $allowed_ext)) {
         $data = $spreadsheet->getActiveSheet()->toArray();
     } catch (\Exception $e) {
         error_throw(['import_users' => ['file' => 'Error reading file: ' . $e->getMessage()]]);
+        toast('Failed to Added User');
     }
 
     $rowCount = 0;
