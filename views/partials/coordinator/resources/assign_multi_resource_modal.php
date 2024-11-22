@@ -54,6 +54,7 @@ dropdown.addEventListener('click', (e) => {
     e.stopPropagation(); // Prevent clicks from bubbling up
     const isVisible = optionsContainer.style.display === 'block';
     optionsContainer.style.display = isVisible ? 'none' : 'block';
+
 });
 
 // Select an option from the dropdown
@@ -68,12 +69,14 @@ options.forEach(option => {
         hiddenInput.value = value;
 
         // Close the dropdown
+
         optionsContainer.style.display = 'none';
     });
 });
 
 // Close dropdown if clicking outside of it
 document.addEventListener('click', () => {
+
     optionsContainer.style.display = 'none';
 });
 

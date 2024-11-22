@@ -521,6 +521,8 @@ body {
   font-size: 1rem;
 }
 
+
+
 .custom-dropdown-options {
   position: absolute;
   top: 100%;
@@ -535,8 +537,14 @@ body {
   z-index: 10000;
 }
 
+
 .custom-dropdown-options.visible {
   display: block; /* Show when visible */
+}
+
+
+.custom-dropdown-options.show {
+  display: block;
 }
 
 .custom-option {
