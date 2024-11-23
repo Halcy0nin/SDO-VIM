@@ -15,21 +15,25 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/coordinator/school-inventory/export_school_inventory_modal.php') ?>
    </section>
 
+   <form method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
    <div class="dropdown2">
          <div class="select">
             <span class="selected">Filter</span>
             <div class="caret"></div>
          </div>
          
-            <input id="schoolFilterValue" name="schoolFilterValue" value="All" type="hidden" /> <!-- Hidden input to store selected value -->
+            <input id="statusFilterValue" name="statusFilterValue" value="<?= $statusFilterValue ?>" type="hidden" /> <!-- Hidden input to store selected value -->
             
             <ul class="menu">
-                  <li data-value="All">Status</li> <!-- Default option to show all schools -->
+                  <li data-value="All">Status</li> 
+                  <li data-value="1">Working</li>
+                  <li data-value="2">For Repair</li>
+                  <li data-value="3">Condemned</li>
             </ul>
    </div>
 
    <section class="mx-12 flex flex-col">
-      <form class="search-container2 search" method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
+      <div class="search-container2 search">
          <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
          <button type="submit" class="search">
             <i class="bi bi-search"></i>
@@ -353,6 +357,35 @@ dropdowns.forEach(dropdown => {
     }
     }
 </script>
+
+<script>
+    // JavaScript function to set the value of the hidden input for statusFilterValue
+    function setStatusFilter(value, text) {
+        // Update the hidden input value for statusFilterValue
+        const statusFilterInput = document.getElementById('statusFilterValue');
+        if (statusFilterInput) {
+            statusFilterInput.value = value; // Set the value to the data-value
+        }
+
+        // Update the display text specifically for statusFilterValue
+        const statusFilterDisplay = document.querySelector('.dropdown2 .selected');
+        if (statusFilterDisplay) {
+            statusFilterDisplay.textContent = text; // Set the text to the clicked item's inner text
+        }
+    }
+
+    // Event listener for dropdown items
+    document.querySelectorAll('.dropdown2 .menu li').forEach(item => {
+        item.addEventListener('click', function () {
+            const value = this.getAttribute('data-value'); // Get the data-value
+            const text = this.textContent; // Get the display text
+
+            // Call setStatusFilter with the selected value and text
+            setStatusFilter(value, text);
+        });
+    });
+</script>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
