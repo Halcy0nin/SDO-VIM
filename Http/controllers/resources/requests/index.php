@@ -46,6 +46,11 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
+$currentYear = date('Y'); // Current year
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$years = range($currentYear, $earliestYear);
+
 $resources = $db->paginate('
 SELECT 
     si.item_code,
@@ -70,6 +75,7 @@ LIMIT :start, :end;
 view('resources/requests/index.view.php', [
     'heading' => 'Resource Requests',
     'notificationCount' => $notificationCount,
+    'years' => $years,
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],

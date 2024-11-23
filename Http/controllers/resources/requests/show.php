@@ -30,6 +30,14 @@ if ($startDate && strlen($startDate) === 4) { // Year input
     $endDate = $endDate ?: null;
 }
 
+// Validate date format
+if ($startDate && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $startDate)) {
+    $startDate = null;
+}
+if ($endDate && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $endDate)) {
+    $endDate = null;
+}
+
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
@@ -46,8 +54,7 @@ if ($notificationCount > 5){
     $notificationCount = '5+';
 };
 
-$resources = [];
-
+// Pagination setup
 $pagination = [
     'pages_limit' => 10,
     'pages_current' => isset($_GET['page']) ? (int)$_GET['page'] : 1,
@@ -87,17 +94,24 @@ $conditions[] = "(
 // Build the final query with conditions
 $whereClause = 'WHERE ' . implode(' AND ', $conditions);
 
+$resources = [];
+
+$pagination = [
+    'pages_limit' => 10,
+    'pages_current' => isset($_GET['page']) ? (int)$_GET['page'] : 1,
+    'pages_total' => 0,
+    'start' => 0,
+];
+
 $resources_count = $db->query("
-SELECT 
-    COUNT(*) as total 
-FROM 
-    school_inventory si
-LEFT JOIN 
-    schools s ON s.school_id = si.school_id 
- $whereClause
- AND 
-    si.item_status = 2
+    SELECT COUNT(*) as total 
+    FROM school_inventory si
+    LEFT JOIN schools s ON s.school_id = si.school_id
+    $whereClause
+AND 
+    si.item_request_status = 0
 ", $params)->get();
+
 
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
@@ -109,34 +123,32 @@ $earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_yea
 $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
 
-if ($resources_count[0]['total'] !== 0) {
-    $resources = $db->paginate("
-    SELECT 
-        si.item_code,
-        si.item_article,
-        s.school_name,
-        si.item_status AS status,
-        si.item_status_reason,
-        si.item_inactive,
-        si.date_acquired
-    FROM 
-        school_inventory si
-    JOIN 
-        schools s ON s.school_id = si.school_id
+$resources = $db->paginate("
+SELECT 
+    si.item_code,
+    si.item_article,
+    si.item_desc,
+    si.item_quantity,
+    si.item_total_value,
+    s.school_name,
+    si.item_status AS status,
+    si.item_requested_by,
+    si.date_acquired,
+    si.item_date_requested
+    FROM school_inventory si
+    JOIN schools s ON s.school_id = si.school_id
     $whereClause
-    AND
-        si.item_status = 2 
-    LIMIT :start,:end
-    ", array_merge($params, [
-        'start' => (int)$pagination['start'],
-        'end' => (int)$pagination['pages_limit'],
-    ]))->get();
-}
+    AND si.item_request_status = 0
+LIMIT :start, :end;
+", array_merge($params, [
+    'start' => (int)$pagination['start'],
+    'end' => (int)$pagination['pages_limit'],
+]))->get();
 
-view('resources/repair/show.view.php', [
+view('resources/requests/index.view.php', [
+    'heading' => 'Resource Requests',
     'notificationCount' => $notificationCount,
     'years' => $years,
-    'heading' => 'For Repair Resources',
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],

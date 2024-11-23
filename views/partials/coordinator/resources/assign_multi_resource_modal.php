@@ -42,40 +42,38 @@
 </main>
 
 <script>
-// Get elements
+// Get dropdown elements
 const dropdown = document.querySelector('.custom-dropdown');
 const selected = document.getElementById('dropdown-selected');
 const optionsContainer = document.querySelector('.custom-dropdown-options');
 const options = document.querySelectorAll('.custom-option');
 const hiddenInput = document.getElementById('school_id');
 
-// Toggle dropdown visibility when clicking on selected area
+// Toggle dropdown visibility when clicking on the dropdown
 dropdown.addEventListener('click', (e) => {
-    // Prevent the click from propagating to the document click listener
-    e.stopPropagation();
-    dropdown.classList.toggle('active');
-    optionsContainer.style.display = dropdown.classList.contains('active') ? 'block' : 'none';
+    e.stopPropagation(); // Prevent clicks from bubbling up
+    const isVisible = optionsContainer.style.display === 'block';
+    optionsContainer.style.display = isVisible ? 'none' : 'block';
 });
 
-// Close the dropdown and update the selected option
+// Select an option from the dropdown
 options.forEach(option => {
     option.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent the dropdown from toggling again
+        e.stopPropagation(); // Prevent clicks from bubbling up
         const value = option.getAttribute('data-value');
         const text = option.textContent;
 
+        // Update selected display and hidden input value
         selected.textContent = text;
         hiddenInput.value = value;
 
-        // Close the dropdown after selecting an option
-        dropdown.classList.remove('active');
+        // Close the dropdown
         optionsContainer.style.display = 'none';
     });
 });
 
 // Close dropdown if clicking outside of it
 document.addEventListener('click', () => {
-    dropdown.classList.remove('active');
     optionsContainer.style.display = 'none';
 });
 

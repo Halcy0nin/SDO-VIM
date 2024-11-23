@@ -24,13 +24,26 @@ require base_path('views/partials/head.php') ?>
          </button>
    </section>
 
-   <div class="dropdown-date1">
-            <div class="select">
-               <span class="selected">Date Range</span>
-               <div class="caret"></div>
-            </div>
+   <div class="date-filter-container4">
+      <div class="dropdown-date1">
+         <div class="select">
+            <span class="selected">Date Range</span>
+            <div class="caret"></div>
+         </div>
+         <ul class="menu">
+            <?php foreach ($years as $year): ?>
+               <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
+                     <?= htmlspecialchars($year); ?>
+                  </li>
+            <?php endforeach; ?>
+         </ul>
+      </div>
+      <input type="hidden" name="yearFilter" id="yearFilter" value="">
+      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
    </div>
-
+   
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
@@ -107,7 +120,7 @@ require base_path('views/partials/head.php') ?>
             <tfoot class="overflow-hidden">
                <tr>
                   <td colspan="6" class="py-2 pr-4">
-                     <div class="w-full flex items-center justify-end gap-5">
+                     <div class="w-full flex flex-wrap items-center justify-end gap-2">
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>
                            <a
@@ -267,4 +280,12 @@ dropdowns.forEach(dropdown => {
       });   
    });
 });
+</script>
+
+<script>
+    // JavaScript function to set the value of the hidden input
+    function setYearFilter(year) {
+        document.getElementById('yearFilter').value = year;
+        document.querySelector('.selected').textContent = year;
+    }
 </script>

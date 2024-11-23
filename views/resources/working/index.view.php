@@ -14,22 +14,30 @@ require base_path('views/partials/head.php') ?>
    <section class="mx-12 flex flex-col">
       <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>
       <form class="search-container search" method="POST" action="/coordinator/resources/working/s">
-      <input name="_method" value="PATCH" hidden />
          <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
          <button type="submit" class="search">
             <i class="bi bi-search"></i>
          </button>
    </section>
 
-   <div class="dropdown-date1">
-            <div class="select">
-               <span class="selected">Date Range</span>
-               <div class="caret"></div>
-            </div>
-            
-               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
-               
-               
+   <div class="date-filter-container4">
+      <div class="dropdown-date1">
+         <div class="select">
+            <span class="selected">Date Range</span>
+            <div class="caret"></div>
+         </div>
+         <ul class="menu">
+            <?php foreach ($years as $year): ?>
+               <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
+                     <?= htmlspecialchars($year); ?>
+                  </li>
+            <?php endforeach; ?>
+         </ul>
+      </div>
+      <input type="hidden" name="yearFilter" id="yearFilter" value="">
+      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
    </div>
 
    <section class="mx-12 mb-12 inline-block grow rounded">
@@ -64,7 +72,7 @@ require base_path('views/partials/head.php') ?>
             <tfoot class="overflow-hidden">
                <tr>
                   <td colspan="6" class="py-2 pr-4">
-                     <div class="w-full flex items-center justify-end gap-2">
+                     <div class="w-full flex flex-wrap items-center justify-end gap-2">
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>
                            <a
@@ -129,4 +137,12 @@ dropdowns.forEach(dropdown => {
       });   
    });
 });
+</script>
+
+<script>
+    // JavaScript function to set the value of the hidden input
+    function setYearFilter(year) {
+        document.getElementById('yearFilter').value = year;
+        document.querySelector('.selected').textContent = year;
+    }
 </script>

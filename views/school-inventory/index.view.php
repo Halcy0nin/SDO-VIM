@@ -21,14 +21,11 @@ require base_path('views/partials/head.php') ?>
             <div class="caret"></div>
          </div>
          
-         <form id="schoolFilterForm" method="POST" action="/coordinator">
-            <input name="_method" value="PATCH" hidden />
             <input id="schoolFilterValue" name="schoolFilterValue" value="All" type="hidden" /> <!-- Hidden input to store selected value -->
             
             <ul class="menu">
                   <li data-value="All">Status</li> <!-- Default option to show all schools -->
             </ul>
-         </form>
    </div>
 
    <section class="mx-12 flex flex-col">
@@ -37,28 +34,28 @@ require base_path('views/partials/head.php') ?>
          <button type="submit" class="search">
             <i class="bi bi-search"></i>
          </button>
-      </form>
    </section>
 
-   <div class="dropdown-date2">
-            <div class="select">
-               <span class="selected">Date Range</span>
-               <div class="caret"></div>
-            </div>
-            
-            <form id="schoolFilterForm" method="POST" action="/coordinator">
-               <input name="_method" value="PATCH" hidden />
-               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
-               
-               <ul class="menu">
-                     <li data-value="All School">All Schools</li> <!-- Default option to show all schools -->
-                     <?php foreach ($schoolDropdownContent as $school): ?>
-                        <li data-value="<?= htmlspecialchars($school['school_name']); ?>">
-                           <?= htmlspecialchars($school['school_name']); ?>
-                        </li>
-                     <?php endforeach; ?>
-               </ul>
+   <div class="date-filter-container4">
+      <div class="dropdown-date2">
+         <div class="select">
+            <span class="selected">Date Range</span>
+            <div class="caret"></div>
+         </div>
+         <ul class="menu">
+            <?php foreach ($years as $year): ?>
+               <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
+                     <?= htmlspecialchars($year); ?>
+                  </li>
+            <?php endforeach; ?>
+         </ul>
       </div>
+      <input type="hidden" name="yearFilter" id="yearFilter" value="">
+      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
+   </div>
+   
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
@@ -309,31 +306,7 @@ dropdowns.forEach(dropdown => {
 });
 </script>
 
-<script>
-    document.querySelectorAll('.menu li').forEach(function(item) {
-        item.addEventListener('click', function() {
-            const selectedValue = this.getAttribute('data-value'); // Get the value from the clicked <li>
-            document.getElementById('schoolFilterValue').value = selectedValue; // Set the hidden input value
-            document.getElementById('schoolFilterForm').submit(); // Submit the form
-        });
-    });
-</script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    // JavaScript to handle button click event
-    document.getElementById('filter-btn').addEventListener('click', function () {
-      const startDate = document.getElementById('start-date').value;
-      const endDate = document.getElementById('end-date').value;
-
-      if (startDate && endDate) {
-        alert(`Filtering from ${startDate} to ${endDate}`);
-      } else {
-        alert('Please select both start and end dates.');
-      }
-    });
-  </script>
 
 <script>
    let sortOrder = 'asc'; // Initially set to ascending order
@@ -364,6 +337,22 @@ dropdowns.forEach(dropdown => {
    }
 </script>
 
+<script>
+    // JavaScript function to set the value of the hidden input
+    function setYearFilter(year) {
+      // Update the hidden input value for yearFilter
+    const yearFilterInput = document.getElementById('yearFilter');
+    if (yearFilterInput) {
+        yearFilterInput.value = year;
+    }
+
+    // Update the display text specifically for yearFilter
+    const yearFilterDisplay = document.querySelector('.yearFilter .selected');
+    if (yearFilterDisplay) {
+        yearFilterDisplay.textContent = year;
+    }
+    }
+</script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -535,6 +535,10 @@ body {
   z-index: 10000;
 }
 
+.custom-dropdown-options.visible {
+  display: block; /* Show when visible */
+}
+
 .custom-option {
   padding: 10px;
   font-size: 1rem;
