@@ -50,11 +50,19 @@ class UserAddForm
     {
         if (!Validator::string($attributes['user_name'], 1)) {
             $this->errors['add_user']['user_name'] = 'Please enter a valid user name.';
+        } elseif (!Validator::no_whitespace($attributes['user_name'])) {
+            $this->errors['add_user']['user_name'] = 'User Name should not contain any whitespace.';
         }
 
-        if (!Validator::string($attributes['password'], 1)) {
-            $this->errors['add_user']['password'] = 'Please enter a valid password.';
+        if (!Validator::string($attributes['password'], 8)) {
+            $this->errors['add_user']['password'] = 'Please enter a valid password with at least 8 characters.';
+        } elseif (!Validator::no_whitespace($attributes['password'])) {
+            $this->errors['add_user']['password'] = 'Password should not contain any whitespace.';
+        } elseif (!Validator::regex($attributes['password'], '/[!@#$%^&*(),.?":{}|<>]/')) {
+            $this->errors['add_user']['password'] = 'Password must include at least one special character.';
         }
+        
+
 
         if (!Validator::password_confirm($attributes['password'], $attributes['password_confirm'])) {
             $this->errors['add_user']['password'] = 'Your Password does not match.';
@@ -62,10 +70,14 @@ class UserAddForm
 
         if (!Validator::regex($attributes['school_id'], '/^(\d{6})?$/')) {
             $this->errors['add_user']['school_id'] = 'Please enter an existing valid ID.';
+        } elseif (!Validator::no_whitespace($attributes['school_id'])) {
+            $this->errors['add_user']['school_id'] = 'School ID should not contain any whitespace.';
         }
 
         if (!Validator::regex($attributes['user_role'], '/^1|2$/')) {
             $this->errors['add_user']['user_role'] = 'Please select a valid user role.';
+        } elseif (!Validator::no_whitespace($attributes['user_role'])) {
+            $this->errors['add_user']['user_role'] = 'User Role should not contain any whitespace.';
         }
     }
 

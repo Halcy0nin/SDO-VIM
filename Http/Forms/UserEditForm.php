@@ -51,11 +51,16 @@ class UserEditForm
 
         if (!Validator::string($attributes['user_name'], 1, 100)) {
             $this->errors[$attributes['user_id']]['user_name'] = 'Please enter a valid user name.';
+        } elseif (!Validator::no_whitespace($attributes['user_name'])) {
+            $this->errors[$attributes['user_id']]['user_name'] = 'User Name should not contain any whitespace.';
         }
-
+        
         if (!Validator::regex($attributes['school_id'], '/^(\d{6})?$/')) {
             $this->errors[$attributes['user_id']]['school_id'] = 'Please enter an existing valid ID.';
+        } elseif (!Validator::no_whitespace($attributes['school_id'])) {
+            $this->errors[$attributes['user_id']]['school_id'] = 'School ID should not contain any whitespace.';
         }
+        
     }
 
     public static function validate($attributes)
