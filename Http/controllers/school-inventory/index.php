@@ -127,5 +127,6 @@ view('school-inventory/index.view.php', [
     'statusMap' => $statusMap,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
+    'statusFilterValue' => $_POST['statusFilterValue'] ?? 'All',
     'pagination' => $pagination
 ]);
