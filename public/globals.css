@@ -531,12 +531,12 @@ body {
   border-radius: 8px;
   max-height: 150px;
   overflow-y: auto;
-  display: none;
+  display: none; /* Hide by default */
   z-index: 10000;
 }
 
-.custom-dropdown-options.visible {
-  display: block; /* Show when visible */
+.custom-dropdown-options.hidden {
+  display: none; /* Hides the dropdown options */
 }
 
 .custom-option {
@@ -560,9 +560,6 @@ body {
   font-size: 0.8rem;
 }
 
-.custom-dropdown.active .custom-dropdown-options {
-  display: block;
-}
 
 .sort {
   width: 10rem;

@@ -66,6 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     selected.textContent = text;
                     hiddenInput.value = value;
 
+
+
+
+
                     // Close dropdown
                     dropdown.classList.remove('active');
                     optionsContainer.style.display = 'none';
@@ -79,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
 
     // Reapply dropdown functionality on modal show
     document.querySelectorAll('.modal').forEach(modal => {

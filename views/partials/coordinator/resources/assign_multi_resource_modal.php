@@ -42,39 +42,6 @@
 </main>
 
 <script>
-// Get dropdown elements
-const dropdown = document.querySelector('.custom-dropdown');
-const selected = document.getElementById('dropdown-selected');
-const optionsContainer = document.querySelector('.custom-dropdown-options');
-const options = document.querySelectorAll('.custom-option');
-const hiddenInput = document.getElementById('school_id');
 
-// Toggle dropdown visibility when clicking on the dropdown
-dropdown.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent clicks from bubbling up
-    const isVisible = optionsContainer.style.display === 'block';
-    optionsContainer.style.display = isVisible ? 'none' : 'block';
-});
-
-// Select an option from the dropdown
-options.forEach(option => {
-    option.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent clicks from bubbling up
-        const value = option.getAttribute('data-value');
-        const text = option.textContent;
-
-        // Update selected display and hidden input value
-        selected.textContent = text;
-        hiddenInput.value = value;
-
-        // Close the dropdown
-        optionsContainer.style.display = 'none';
-    });
-});
-
-// Close dropdown if clicking outside of it
-document.addEventListener('click', () => {
-    optionsContainer.style.display = 'none';
-});
 
 </script>
