@@ -22,25 +22,26 @@ require base_path('views/partials/head.php') ?>
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
-        </form>
 
-        <div class="dropdown4">
+      
+    </section>
+    <div class="dropdown4">
          <div class="select">
             <span class="selected">Filter</span>
             <div class="caret"></div>
          </div>
-         
-         <form id="schoolFilterForm" method="POST" action="/coordinator">
-            <input name="_method" value="PATCH" hidden />
-            <input id="schoolFilterValue" name="schoolFilterValue" value="All" type="hidden" /> <!-- Hidden input to store selected value -->
+      
+         <input id="roleFilterValue" name="roleFilterValue" value="<?= $roleFilterValue ?>" type="hidden" />
             
             <ul class="menu">
-                  <li data-value="All">Roles</li> <!-- Default option to show all schools -->
+                  <li data-value="All">Roles</li>
+                  <li data-value="1">Coordinator</li>
+                  <li data-value="2">Custodian</li> <!-- Default option to show all schools -->
             </ul>
+            <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+            <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
          </form>
    </div>
-
-    </section>
     <section class="mx-12 mb-12 inline-block grow rounded">
         <?php require base_path('views/partials/coordinator/users/users_table.php') ?>
     </section>
@@ -114,4 +115,32 @@ options.forEach(option => {
 });
 
 </script> 
+
+<script>
+    // JavaScript function to set the value of the hidden input for roleFilterValue
+    function setroleFilter(value, text) {
+        // Update the hidden input value for roleFilterValue
+        const roleFilterInput = document.getElementById('roleFilterValue');
+        if (roleFilterInput) {
+            roleFilterInput.value = value; // Set the value to the data-value
+        }
+
+        // Update the display text specifically for roleFilterValue
+        const roleFilterDisplay = document.querySelector('.dropdown2 .selected');
+        if (roleFilterDisplay) {
+            roleFilterDisplay.textContent = text; // Set the text to the clicked item's inner text
+        }
+    }
+
+    // Event listener for dropdown items
+    document.querySelectorAll('.dropdown4 .menu li').forEach(item => {
+        item.addEventListener('click', function () {
+            const value = this.getAttribute('data-value'); // Get the data-value
+            const text = this.textContent; // Get the display text
+
+            // Call setroleFilter with the selected value and text
+            setroleFilter(value, text);
+        });
+    });
+</script>
 

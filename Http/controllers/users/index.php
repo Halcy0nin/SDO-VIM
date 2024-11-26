@@ -69,5 +69,6 @@ view('users/index.view.php', [
     'users' => $users,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
+    'roleFilterValue' => $_POST['roleFilterValue'] ?? 'All',
     'pagination' => $pagination
 ]);
