@@ -15,42 +15,49 @@ require base_path('views/partials/head.php') ?>
         <?php require base_path('views/partials/custodian/custodian-inventory/export_items_modal.php') ?>
     </section>
 
-    <div class="dropdown3">
+
+   <div class="dropdown3">
+   <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s">
          <div class="select">
             <span class="selected">Filter</span>
             <div class="caret"></div>
          </div>
          
-         <form id="schoolFilterForm" method="POST" action="/coordinator">
-            <input name="_method" value="PATCH" hidden />
-            <input id="schoolFilterValue" name="schoolFilterValue" value="All" type="hidden" /> <!-- Hidden input to store selected value -->
+            <input id="statusFilterValue" name="statusFilterValue" value="<?= $statusFilterValue ?>" type="hidden" /> <!-- Hidden input to store selected value -->
             
             <ul class="menu">
-                  <li data-value="All">Status</li> <!-- Default option to show all schools -->
+                  <li data-value="All">Status</li> 
+                  <li data-value="1">Working</li>
+                  <li data-value="2">For Repair</li>
+                  <li data-value="3">Condemned</li>
             </ul>
-         </form>
-      </div>
+   </div>
 
     <section class="mx-12 flex flex-col">
-        <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s">
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
-        </form>
     </section>
 
     <div class="dropdown-date3">
-            <div class="select">
-               <span class="selected">Date Range</span>
-               <div class="caret"></div>
-            </div>
-            
-            <form id="schoolFilterForm" method="POST" action="/coordinator">
-               <input name="_method" value="PATCH" hidden />
-               <input id="schoolFilterValue" name="schoolFilterValue" value="<?= htmlspecialchars($schoolName ?? 'All School') ?>" type="hidden" />
-               
-              
+    <div class="select">
+            <span class="selected">Date Range</span>
+            <div class="caret"></div>
+         </div>
+         <ul class="menu">
+            <?php foreach ($years as $year): ?>
+               <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
+                     <?= htmlspecialchars($year); ?>
+                  </li>
+            <?php endforeach; ?>
+         </ul>
+      </div>
+      <div class="date-filter-container4">
+      <input type="hidden" name="yearFilter" id="yearFilter" value="">
+      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
       </div>
 
     <section class="mx-12 mb-12 inline-block grow rounded">
@@ -322,16 +329,47 @@ dropdowns.forEach(dropdown => {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-    // JavaScript to handle button click event
-    document.getElementById('filter-btn').addEventListener('click', function () {
-      const startDate = document.getElementById('start-date').value;
-      const endDate = document.getElementById('end-date').value;
+<script>
+    // JavaScript function to set the value of the hidden input
+    function setYearFilter(year) {
+      // Update the hidden input value for yearFilter
+    const yearFilterInput = document.getElementById('yearFilter');
+    if (yearFilterInput) {
+        yearFilterInput.value = year;
+    }
 
-      if (startDate && endDate) {
-        alert(`Filtering from ${startDate} to ${endDate}`);
-      } else {
-        alert('Please select both start and end dates.');
-      }
+    // Update the display text specifically for yearFilter
+    const yearFilterDisplay = document.querySelector('.yearFilter .selected');
+    if (yearFilterDisplay) {
+        yearFilterDisplay.textContent = year;
+    }
+    }
+</script>
+
+<script>
+    // JavaScript function to set the value of the hidden input for statusFilterValue
+    function setStatusFilter(value, text) {
+        // Update the hidden input value for statusFilterValue
+        const statusFilterInput = document.getElementById('statusFilterValue');
+        if (statusFilterInput) {
+            statusFilterInput.value = value; // Set the value to the data-value
+        }
+
+        // Update the display text specifically for statusFilterValue
+        const statusFilterDisplay = document.querySelector('.dropdown2 .selected');
+        if (statusFilterDisplay) {
+            statusFilterDisplay.textContent = text; // Set the text to the clicked item's inner text
+        }
+    }
+
+    // Event listener for dropdown items
+    document.querySelectorAll('.dropdown3 .menu li').forEach(item => {
+        item.addEventListener('click', function () {
+            const value = this.getAttribute('data-value'); // Get the data-value
+            const text = this.textContent; // Get the display text
+
+            // Call setStatusFilter with the selected value and text
+            setStatusFilter(value, text);
+        });
     });
-  </script>
+</script>

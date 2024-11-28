@@ -65,6 +65,12 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
+// Get years for filter
+$currentYear = date('Y');
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? $currentYear;
+$years = range($currentYear, $earliestYear);
+
 $items = $db->paginate('
 SELECT 
         item_code,
@@ -130,11 +136,13 @@ $statusMap = [
 view('custodian-inventory/index.view.php', [
     'id' => $_SESSION['user']['school_id'] ?? null,
     'histories' => $histories,
+    'years' => $years,
     'notificationCount' => $notificationCount,
     'heading' => $schoolName,
     'items' => $items,
     'statusMap' => $statusMap,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
+    'statusFilterValue' => $_POST['statusFilterValue'] ?? 'All',
     'pagination' => $pagination
 ]);
