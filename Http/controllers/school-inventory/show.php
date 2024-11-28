@@ -174,6 +174,6 @@ view('school-inventory/show.view.php', [
     'pagination' => $pagination,
     'startDate' => $_POST['yearFilter'] ?? '',
     'endDate' => $_POST['yearFilter'] ?? '',
-    'statusFilterValue' => $_POST['statusFilterValue'] ?? 'All',
+    'statusFilterValue' => $statusFilterValue,
     'search' => $searchTerm,
 ]);
