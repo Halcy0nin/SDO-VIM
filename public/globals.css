@@ -504,6 +504,19 @@ body {
   box-sizing: border-box;
 }
 
+.dropdown-date4 {
+  width: 10rem;
+  line-height: 0%;
+  position: relative;
+  margin-left: 20rem;
+  margin-top: -2.3rem;
+  margin-bottom: 0rem;
+}
+
+.dropdown-date4 * {
+  box-sizing: border-box;
+}
+
 .custom-dropdown {
   position: relative;
   width: 100%;
@@ -767,6 +780,25 @@ body {
 }
 
 .date-filter-container4 input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 180px; /* Adjust width of date inputs */
+}
+
+.date-filter-container5 {
+  transform: translate(-6%, -180%);
+  gap: 10px;
+  margin-left: 35rem;
+  margin-bottom: -4.3rem;
+  margin-top: 1.9rem;
+}
+
+.date-filter-container5 label {
+  margin-right: 5px;
+}
+
+.date-filter-container5 input[type="date"] {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;

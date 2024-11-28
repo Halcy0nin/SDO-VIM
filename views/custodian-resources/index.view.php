@@ -17,6 +17,27 @@ require base_path('views/partials/head.php') ?>
             <i class="bi bi-search"></i>
          </button>
       </form>
+
+      
+         <div class="dropdown-date4">
+            <div class="select">
+               <span class="selected">Date Range</span>
+               <div class="caret"></div>
+            </div>
+            <ul class="menu">
+               <?php foreach ($years as $year): ?>
+                  <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
+                        <?= htmlspecialchars($year); ?>
+                     </li>
+               <?php endforeach; ?>
+            </ul>
+         </div>
+      <div class="date-filter-container5">
+         <input type="hidden" name="yearFilter" id="yearFilter" value="">
+         <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+         </form>
+      </div>
       <div class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped">
             <thead>
@@ -147,3 +168,46 @@ require base_path('views/partials/head.php') ?>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<script>  
+// Select both dropdown1 and dropdown-date
+const dropdowns = document.querySelectorAll('.dropdown1, .dropdown-date4');
+
+dropdowns.forEach(dropdown => {
+
+   const select = dropdown.querySelector('.select');
+   const caret = dropdown.querySelector('.caret');
+   const menu = dropdown.querySelector('.menu');
+   const options = dropdown.querySelectorAll('.menu li'); // Updated to query all list items
+   const selected = dropdown.querySelector('.selected');
+
+   // Toggle dropdown menu on select click
+   select.addEventListener('click', () => {
+      select.classList.toggle('select-clicked');
+      caret.classList.toggle('caret-rotate');
+      menu.classList.toggle('menu-open');
+   });
+
+   // Loop through each option in the menu
+   options.forEach(option => {
+      option.addEventListener('click', () => {
+         selected.innerText = option.innerText;
+         select.classList.remove('select-clicked');
+         caret.classList.remove('caret-rotate');
+         menu.classList.remove('menu-open');
+         options.forEach(option => {
+            option.classList.remove('active');
+         });
+         option.classList.add('active');
+      });   
+   });
+});
+</script>
+
+<script>
+    // JavaScript function to set the value of the hidden input
+    function setYearFilter(year) {
+        document.getElementById('yearFilter').value = year;
+        document.querySelector('.selected').textContent = year;
+    }
+</script>
