@@ -63,14 +63,23 @@ SELECT
 FROM 
     school_inventory si
 WHERE 
-    si.item_status = 2;
-')->get();
+    si.item_status = 2
+AND
+    si.school_id = :id;
+',[
+    'id' => $_SESSION['user']['school_id'] ?? null
+])->get();
 
 
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
+
+$currentYear = date('Y'); // Current year
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$years = range($currentYear, $earliestYear);
 
 $resources = $db->paginate('
 SELECT 
@@ -87,8 +96,11 @@ JOIN
     schools s ON s.school_id = si.school_id
 WHERE 
     si.item_status = 2
+AND
+    si.school_id = :id 
 LIMIT :start,:end
 ', [
+    'id' => $_SESSION['user']['school_id'] ?? null,
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
 ])->get();
@@ -96,6 +108,7 @@ LIMIT :start,:end
 view('custodian-resources/repair/index.view.php', [
     'heading' => 'For Repair Resources',
     'notificationCount' => $notificationCount,
+    'years' => $years,
     'resources' => $resources,
     'pagination' => $pagination
 ]);

@@ -28,6 +28,30 @@ use Core\App;
 
 $db = App::resolve(Database::class);
 
+// Get input values
+$startDate = $_POST['yearFilter'] ?? null;
+$endDate = $_POST['yearFilter'] ?? null;
+$clearFilter = isset($_POST['clearFilter']);
+$searchTerm = trim($_POST['search'] ?? '');
+
+if ($clearFilter) {
+    $startDate = null;
+    $endDate = null;
+    $searchTerm = '';
+    $conditions = []; // Reset conditions
+    $params = []; // Reset parameters
+}
+
+// Handle year-only input for date filters
+if ($startDate && strlen($startDate) === 4) { // Year input
+    $startDate = $startDate . '-01-01'; // Set to January 1st of the year
+    $endDate = $endDate . '-12-31'; // Set to December 31st of the year
+} elseif ($startDate || $endDate) {
+    // Validate and ensure both are complete dates (YYYY-MM-DD format)
+    $startDate = $startDate ?: null;
+    $endDate = $endDate ?: null;
+}
+
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
@@ -57,12 +81,49 @@ $pagination = [
     'start' => 0,
 ];
 
+// Initialize SQL conditions and parameters
+$conditions = [];
+$params = [
+    'search_code' => '%' . strtolower($searchTerm) . '%',
+    'search_article' => '%' . strtolower($searchTerm) . '%',
+    'search_desc' => '%' . strtolower($searchTerm) . '%',
+    'search_school' => '%' . strtolower($searchTerm) . '%',
+];
+
+// Apply date filter only if clearFilter was not clicked
+if (!$clearFilter) {
+    if ($startDate && $endDate) {
+        $conditions[] = "si.date_acquired BETWEEN :startDate AND :endDate";
+        $params['startDate'] = $startDate;
+        $params['endDate'] = $endDate;
+    } elseif ($endDate) {
+        $conditions[] = "si.date_acquired <= :endDate";
+        $params['endDate'] = $endDate;
+    }
+}
+
+// Combine search conditions
+$conditions[] = "(
+    si.item_code LIKE :search_code OR
+    si.item_article LIKE :search_article OR
+    si.item_desc LIKE :search_desc OR
+    s.school_name LIKE :search_school
+)";
+
+// Build the final query with conditions
+$whereClause = 'WHERE ' . implode(' AND ', $conditions);
+
 $resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory si WHERE si.school_id IS NULL')->get();
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
-$resources = $db->paginate('
+$currentYear = date('Y'); // Current year
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$years = range($currentYear, $earliestYear);
+
+$resources = $db->paginate("
 SELECT 
     si.item_code,
     si.item_article,
@@ -73,19 +134,24 @@ FROM
     school_inventory si
 LEFT JOIN 
     schools s ON s.school_id = si.school_id
-WHERE 
+$whereClause
+AND 
     si.school_id IS NULL
 AND 
     si.item_assigned_status = 0
 LIMIT :start,:end
-', [
+", array_merge($params, [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
-])->get();
+]))->get();
 
-view('custodian-resources/unassigned/index.view.php', [
+view('custodian-resources/unassigned/show.view.php', [
     'heading' => 'Unassigned Resources',
     'notificationCount' => $notificationCount,
+    'years' => $years,
     'resources' => $resources,
-    'pagination' => $pagination
+    'pagination' => $pagination,
+    'startDate' => $_POST['yearFilter'] ?? '', // Keep original input for the view
+    'endDate' => $_POST['yearFilter'] ?? '',
+    'search' => $searchTerm
 ]);

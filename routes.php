@@ -170,9 +170,12 @@ $router->post('/custodian/custodian-resources/unassigned/s', 'custodian-resource
 $router->get('/custodian/custodian-resources/assigned', 'custodian-resources/assigned/index.php')->only('custodian');
 $router->patch('/custodian/custodian-resources/assigned', 'custodian-resources/assigned/patch.php')->only('custodian');
 $router->get('/custodian/custodian-resources/working', 'custodian-resources/working/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/working/s', 'custodian-resources/working/show.php')->only('custodian');
 $router->get('/custodian/custodian-resources/repair', 'custodian-resources/repair/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/repair/s', 'custodian-resources/repair/show.php')->only('custodian');
 $router->patch('/custodian/custodian-resources/repair', 'custodian-resources/repair/patch.php')->only('custodian');
 $router->get('/custodian/custodian-resources/condemned', 'custodian-resources/condemned/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/condemned/s', 'custodian-resources/condemned/show.php')->only('custodian');
 
 //Assign Item to School
 $router->patch('/custodian/custodian-resources/unassigned', '/custodian-resources/unassigned/patch.php')->only('custodian');

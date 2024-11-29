@@ -28,6 +28,31 @@ use Core\App;
 
 $db = App::resolve(Database::class);
 
+
+// Get input values
+$startDate = $_POST['yearFilter'] ?? null;
+$endDate = $_POST['yearFilter'] ?? null;
+$clearFilter = isset($_POST['clearFilter']);
+$searchTerm = trim($_POST['search'] ?? '');
+
+if ($clearFilter) {
+    $startDate = null;
+    $endDate = null;
+    $searchTerm = '';
+    $conditions = []; // Reset conditions
+    $params = []; // Reset parameters
+}
+
+// Handle year-only input for date filters
+if ($startDate && strlen($startDate) === 4) { // Year input
+    $startDate = $startDate . '-01-01'; // Set to January 1st of the year
+    $endDate = $endDate . '-12-31'; // Set to December 31st of the year
+} elseif ($startDate || $endDate) {
+    // Validate and ensure both are complete dates (YYYY-MM-DD format)
+    $startDate = $startDate ?: null;
+    $endDate = $endDate ?: null;
+}
+
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
@@ -57,8 +82,52 @@ $pagination = [
     'start' => 0,
 ];
 
-$resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory si WHERE
-    si.school_id = :id', ['id' => $_SESSION['user']['school_id'] ?? null,])->get();
+
+// Initialize SQL conditions and parameters
+$conditions = [];
+$params = [
+    'search_code' => '%' . strtolower($searchTerm) . '%',
+    'search_article' => '%' . strtolower($searchTerm) . '%',
+    'search_desc' => '%' . strtolower($searchTerm) . '%'
+];
+
+// Apply date filter only if clearFilter was not clicked
+if (!$clearFilter) {
+    if ($startDate && $endDate) {
+        $conditions[] = "si.date_acquired BETWEEN :startDate AND :endDate";
+        $params['startDate'] = $startDate;
+        $params['endDate'] = $endDate;
+    } elseif ($endDate) {
+        $conditions[] = "si.date_acquired <= :endDate";
+        $params['endDate'] = $endDate;
+    }
+}
+
+// Combine search conditions
+$conditions[] = "(
+    si.item_code LIKE :search_code OR
+    si.item_article LIKE :search_article OR
+    si.item_desc LIKE :search_desc 
+)";
+
+// Build the final query with conditions
+$whereClause = 'WHERE ' . implode(' AND ', $conditions);
+
+$resources_count = $db->query("
+SELECT 
+    COUNT(*) as total 
+FROM 
+    school_inventory si
+$whereClause
+AND 
+    si.item_status = 3
+AND
+    si.school_id = :id ;
+",array_merge($params, [
+    'id' => $_SESSION['user']['school_id'] ?? null
+    ]))->get();
+
+
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 
@@ -69,37 +138,35 @@ $earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_yea
 $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
 
-$resources = $db->paginate('
+$resources = $db->paginate("
 SELECT 
     si.item_code,
     si.item_article,
     s.school_name,
     si.item_status AS status,
+    si.item_status_reason,
+    si.item_inactive,
     si.date_acquired
 FROM 
     school_inventory si
-LEFT JOIN 
+JOIN 
     schools s ON s.school_id = si.school_id
-WHERE
-    si.school_id = :id
-LIMIT :start ,:end
-', [
+$whereClause
+AND 
+    si.item_status = 3
+AND
+    si.school_id = :id 
+LIMIT :start,:end
+",array_merge($params,[
     'id' => $_SESSION['user']['school_id'] ?? null,
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
-])->get();
+]))->get();
 
-$statusMap = [
-    1 => 'Working',
-    2 => 'Need Repair',
-    3 => 'Condemned'
-];
-
-view('custodian-resources/index.view.php', [
-    'notificationCount' => $notificationCount,
-    'statusMap' => $statusMap,
+view('custodian-resources/condemned/show.view.php', [
+    'heading' => 'Condemned Resources',
     'years' => $years,
-    'heading' => 'Resources',
+    'notificationCount' => $notificationCount,
     'resources' => $resources,
     'pagination' => $pagination
 ]);
