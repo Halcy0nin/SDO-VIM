@@ -11,6 +11,32 @@ require base_path('views/partials/head.php') ?>
    </section>
    <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
       <?php require base_path('views/partials/custodian/custodian-resources/tabs.php') ?>
+      <div class="search-container search">
+         <form method="POST" action="/custodian/custodian-resources/assigned/s" > 
+         <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+         <button type="submit" class="search">
+            <i class="bi bi-search"></i>
+         </button>
+      </div>
+         <div class="dropdown-date4">
+            <div class="select">
+               <span class="selected">Date Range</span>
+               <div class="caret"></div>
+            </div>
+            <ul class="menu">
+               <?php foreach ($years as $year): ?>
+                  <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
+                        <?= htmlspecialchars($year); ?>
+                     </li>
+               <?php endforeach; ?>
+            </ul>
+         </div>
+      <div class="date-filter-container5">
+         <input type="hidden" name="yearFilter" id="yearFilter" value="">
+         <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+         </form>
+      </div>
       <div class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped">
             <thead>
@@ -38,3 +64,46 @@ require base_path('views/partials/head.php') ?>
 </main>
 
 <?php require base_path('views/partials/footer.php') ?>
+
+<script>  
+// Select both dropdown1 and dropdown-date
+const dropdowns = document.querySelectorAll('.dropdown1, .dropdown-date4');
+
+dropdowns.forEach(dropdown => {
+
+   const select = dropdown.querySelector('.select');
+   const caret = dropdown.querySelector('.caret');
+   const menu = dropdown.querySelector('.menu');
+   const options = dropdown.querySelectorAll('.menu li'); // Updated to query all list items
+   const selected = dropdown.querySelector('.selected');
+
+   // Toggle dropdown menu on select click
+   select.addEventListener('click', () => {
+      select.classList.toggle('select-clicked');
+      caret.classList.toggle('caret-rotate');
+      menu.classList.toggle('menu-open');
+   });
+
+   // Loop through each option in the menu
+   options.forEach(option => {
+      option.addEventListener('click', () => {
+         selected.innerText = option.innerText;
+         select.classList.remove('select-clicked');
+         caret.classList.remove('caret-rotate');
+         menu.classList.remove('menu-open');
+         options.forEach(option => {
+            option.classList.remove('active');
+         });
+         option.classList.add('active');
+      });   
+   });
+});
+</script>
+
+<script>
+    // JavaScript function to set the value of the hidden input
+    function setYearFilter(year) {
+        document.getElementById('yearFilter').value = year;
+        document.querySelector('.selected').textContent = year;
+    }
+</script>

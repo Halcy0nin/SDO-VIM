@@ -44,6 +44,11 @@ $notificationCountQuery = $db->query('
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
+$currentYear = date('Y'); // Current year
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(item_assigned_date)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$years = range($currentYear, $earliestYear);
+
 if ($notificationCount > 5){
     $notificationCount = '5+';
 };
@@ -68,6 +73,7 @@ WHERE
 
 view('resources/assigned/index.view.php', [
     'heading' => 'Assigned Resources',
+    'years' => $years,
     'notificationCount' => $notificationCount,
     'resources' => $resources,
 ]);

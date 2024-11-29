@@ -66,6 +66,7 @@ $router->patch('/coordinator/resources/repair', 'resources/repair/patch.php')->o
 $router->get('/coordinator/resources/condemned', 'resources/condemned/index.php')->only('coordinator');
 $router->post('/coordinator/resources/condemned/s', 'resources/condemned/show.php')->only('coordinator');
 $router->get('/coordinator/resources/assigned', 'resources/assigned/index.php')->only('coordinator');
+$router->post('/coordinator/resources/assigned/s', 'resources/assigned/show.php')->only('coordinator');
 $router->patch('/coordinator/resources/assigned', 'resources/assigned/patch.php')->only('coordinator');
 
 //Assign resource to school
@@ -168,6 +169,7 @@ $router->post('/custodian/custodian-resources/s', 'custodian-resources/show.php'
 $router->get('/custodian/custodian-resources/unassigned', 'custodian-resources/unassigned/index.php')->only('custodian');
 $router->post('/custodian/custodian-resources/unassigned/s', 'custodian-resources/unassigned/show.php')->only('custodian');
 $router->get('/custodian/custodian-resources/assigned', 'custodian-resources/assigned/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/assigned/s', 'custodian-resources/assigned/show.php')->only('custodian');
 $router->patch('/custodian/custodian-resources/assigned', 'custodian-resources/assigned/patch.php')->only('custodian');
 $router->get('/custodian/custodian-resources/working', 'custodian-resources/working/index.php')->only('custodian');
 $router->post('/custodian/custodian-resources/working/s', 'custodian-resources/working/show.php')->only('custodian');
