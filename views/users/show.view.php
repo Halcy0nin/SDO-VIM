@@ -22,7 +22,8 @@ require base_path('views/partials/head.php') ?>
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
-    </section>
+        </form>
+        
     <div class="dropdown4">
          <div class="select">
             <span class="selected">Filter</span>
@@ -36,12 +37,9 @@ require base_path('views/partials/head.php') ?>
                   <li data-value="1">Coordinator</li>
                   <li data-value="2">Custodian</li> <!-- Default option to show all schools -->
             </ul>
-            <button type="submit" class="filter-button" id="filter-btn">Filter</button>
-            <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
-         </form>
    </div>
    
-    <section class="mx-12 mb-12 inline-block grow rounded">
+    <section class="mx-14 mb-14 inline-block grow rounded">
         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
             <table class="table table-striped m-0">
                 <thead>

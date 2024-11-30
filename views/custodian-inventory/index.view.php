@@ -15,16 +15,20 @@ require base_path('views/partials/head.php') ?>
         <?php require base_path('views/partials/custodian/custodian-inventory/export_items_modal.php') ?>
     </section>
 
+    <section class="mx-12 flex flex-col">
+        <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s ">
+            <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+            <button type="submit" class="search">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
 
    <div class="dropdown3">
-   <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s">
          <div class="select">
             <span class="selected">Filter</span>
             <div class="caret"></div>
-         </div>
-         
-            <input id="statusFilterValue" name="statusFilterValue" value="<?= $statusFilterValue ?>" type="hidden" /> <!-- Hidden input to store selected value -->
-            
+         </div>   
+            <input id="statusFilterValue" name="statusFilterValue" value="<?= $statusFilterValue ?>" type="hidden" /> <!-- Hidden input to store selected value -->           
             <ul class="menu">
                   <li data-value="All">Status</li> 
                   <li data-value="1">Working</li>
@@ -33,18 +37,11 @@ require base_path('views/partials/head.php') ?>
             </ul>
    </div>
 
-    <section class="mx-12 flex flex-col">
-            <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
-            <button type="submit" class="search">
-                <i class="bi bi-search"></i>
-            </button>
-    </section>
-
     <div class="dropdown-date3">
-    <div class="select">
+        <div class="select">
             <span class="selected">Date Range</span>
             <div class="caret"></div>
-         </div>
+        </div>
          <ul class="menu">
             <?php foreach ($years as $year): ?>
                <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
@@ -52,16 +49,15 @@ require base_path('views/partials/head.php') ?>
                   </li>
             <?php endforeach; ?>
          </ul>
-      </div>
+    </div>
       <div class="date-filter-container4">
-      <input type="hidden" name="yearFilter" id="yearFilter" value="">
-      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
-      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
-      </form>
+        <input type="hidden" name="yearFilter" id="yearFilter" value="">
+        <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+        <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
       </div>
 
-    <section class="mx-12 mb-12 inline-block grow rounded">
-        <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
+    <section class="mx-14 mb-14 inline-block grow rounded">
+        <div class="table-responsive inline-block mt-5 bg-zinc-50 rounded border-[1px]">
             <table class="table table-striped m-0">
                 <thead>
                     <th style="width: 20ch;">

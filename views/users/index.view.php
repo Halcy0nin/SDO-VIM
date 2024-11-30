@@ -22,9 +22,8 @@ require base_path('views/partials/head.php') ?>
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
-
-      
-    </section>
+      </form>
+   
     <div class="dropdown4">
          <div class="select">
             <span class="selected">Filter</span>
@@ -32,17 +31,13 @@ require base_path('views/partials/head.php') ?>
          </div>
       
          <input id="roleFilterValue" name="roleFilterValue" value="<?= $roleFilterValue ?>" type="hidden" />
-            
             <ul class="menu">
                   <li data-value="All">Roles</li>
                   <li data-value="1">Coordinator</li>
                   <li data-value="2">Custodian</li> <!-- Default option to show all schools -->
-            </ul>
-            <button type="submit" class="filter-button" id="filter-btn">Filter</button>
-            <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
-         </form>
+            </ul>         
    </div>
-    <section class="mx-12 mb-12 inline-block grow rounded">
+    <section class="mx-14 mb-14 inline-block grow rounded">
         <?php require base_path('views/partials/coordinator/users/users_table.php') ?>
     </section>
 
@@ -82,38 +77,38 @@ require base_path('views/partials/head.php') ?>
 const dropdowns = document.querySelectorAll('.dropdown4');
 
 dropdowns.forEach(dropdown4 => {
+    const select = dropdown4.querySelector('.select');
+    const caret = dropdown4.querySelector('.caret');
+    const menu = dropdown4.querySelector('.menu');
+    const options = dropdown4.querySelectorAll('.menu li'); // Corrected to select all `li` elements
+    const selected = dropdown4.querySelector('.selected');
 
-   const select =dropdown4.querySelector('.select');
-   const caret =dropdown4.querySelector('.caret');
-   const menu =dropdown4.querySelector('.menu');
-   const options =dropdown4.querySelector('.menu li');
-   const selected =dropdown4.querySelector('.selected');
+    // Toggle dropdown menu visibility
+    select.addEventListener('click', () => {
+        select.classList.toggle('select-clicked');
+        caret.classList.toggle('caret-rotate');
+        menu.classList.toggle('menu-open');
+    });
 
-   select.addEventListener('click', () => {
-   
-      select.classList.toggle('select-clicked');
-      caret.classList.toggle('caret-rotate');
-      menu.classList.toggle('menu-open');
-   });
+    // Add click event listener to each option
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            selected.innerText = option.innerText; // Update displayed text
+            select.classList.remove('select-clicked');
+            caret.classList.remove('caret-rotate');
+            menu.classList.remove('menu-open');
+            options.forEach(opt => opt.classList.remove('active')); // Remove active class from all
+            option.classList.add('active'); // Add active class to clicked option
 
-   
-
-options.forEach(option => {
-
-   option.addEventListener('click', () => {
-
-      selected.innerText = option.innerText;
-      select.classList.remove('select-clicked');
-      caret.classList.remove('caret-rotate');
-      menu.classList.remove('menu-open');
-      options.forEach(option => {
-         option.classList.remove('active');
-      });
-      option.classList.add('active');
-   });   
+            // Update hidden input value
+            const value = option.getAttribute('data-value');
+            const roleFilterInput = document.getElementById('roleFilterValue');
+            if (roleFilterInput) {
+                roleFilterInput.value = value;
+            }
+        });
+    });
 });
-});
-
 </script> 
 
 <script>

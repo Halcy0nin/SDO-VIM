@@ -11,14 +11,16 @@ require base_path('views/partials/head.php') ?>
    </section>
    <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
       <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>
-      <div class="search-container search">
-         <form method="POST" action="/coordinator/resources/assigned/s" > 
-         <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
-         <button type="submit" class="search">
-            <i class="bi bi-search"></i>
-         </button>
-      </div>
-         <div class="dropdown-date4">
+      <section class="flex flex-row justify-between">
+         <form class="search-container search" method="POST" action="/coordinator/resources/assigned/s" >
+            <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+            <button type="submit" class="search">
+               <i class="bi bi-search"></i>
+            </button>
+         </div>
+      </section>
+      
+      <div class="dropdown-date4">
             <div class="select">
                <span class="selected">Date Range</span>
                <div class="caret"></div>
@@ -30,7 +32,7 @@ require base_path('views/partials/head.php') ?>
                      </li>
                <?php endforeach; ?>
             </ul>
-         </div>
+      </div>
       <div class="date-filter-container5">
          <input type="hidden" name="yearFilter" id="yearFilter" value="">
          <button type="submit" class="filter-button" id="filter-btn">Filter</button>
@@ -62,7 +64,7 @@ require base_path('views/partials/head.php') ?>
             </tbody>
          </table>
       </div>
-   </section>
+   </>
 </main>
 
 <?php require base_path('views/partials/footer.php') ?>

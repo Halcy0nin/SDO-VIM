@@ -50,7 +50,7 @@ require base_path('views/partials/head.php') ?>
       </div>
           
 
-      <div class="date-filter-container4">
+      <div class="date-filter-container6">
          <h1 style="font-weight: bold; color: #434F72">Inventory Date</h1>
          <input value="<?= htmlspecialchars($startDate) ?>" type="date" id="start-date" name="startDate" />
 

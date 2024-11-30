@@ -10,14 +10,13 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/banner.php') ?>
    </section>
    <section class="mx-12 flex flex-col">
-      <?php require base_path('views/partials/custodian/custodian-resources/tabs.php') ?>
-      <div class="search-container search">
-         <form method="POST" action="/custodian/custodian-resources/unassigned/s" > 
-         <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
-         <button type="submit" class="search">
-            <i class="bi bi-search"></i>
-         </button>
-      </div>
+   <?php require base_path('views/partials/custodian/custodian-resources/tabs.php') ?>
+         <form class="search-container search" method="POST" action="/custodian/custodian-resources/unassigned/s" > 
+            <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+            <button type="submit" class="search">
+               <i class="bi bi-search"></i>
+            </button>
+         </form>
          <div class="dropdown-date4">
             <div class="select">
                <span class="selected">Date Range</span>
