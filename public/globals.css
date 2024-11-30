@@ -509,7 +509,7 @@ body {
   line-height: 0%;
   position: relative;
   margin-left: 20rem;
-  margin-top: -2.3rem;
+  margin-top: -2.5rem;
   margin-bottom: 0rem;
 }
 
@@ -787,7 +787,7 @@ body {
 }
 
 .date-filter-container5 {
-  transform: translate(-6%, -180%);
+  transform: translate(-7%, -180%);
   gap: 10px;
   margin-left: 35rem;
   margin-bottom: -4.3rem;
