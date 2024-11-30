@@ -25,7 +25,11 @@ WHERE
 AND
     item_request_status = 1
 AND 
-    is_archived = 0;
+    is_archived = 0
+AND
+    item_request_status = 1
+AND 
+    item_assigned_status = 2;
 ', [
     'id' => $params['id'] ?? null
 ])->get();
@@ -74,6 +78,10 @@ $items = $db->paginate(
         si.school_id = :id
     AND 
         si.is_archived = 0;
+    AND
+        si.item_request_status = 1
+    AND 
+        si.item_assigned_status = 2
     LIMIT :start,:end
     ',
     [

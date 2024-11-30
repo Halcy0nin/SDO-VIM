@@ -123,6 +123,12 @@ $resources = $db->paginate("
     LEFT JOIN 
         schools s ON s.school_id = si.school_id
     $whereClause
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    si.is_archived = 0
     LIMIT :start, :end
 ", array_merge($params, [
     'start' => (int)$pagination['start'],

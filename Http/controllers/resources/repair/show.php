@@ -97,6 +97,8 @@ LEFT JOIN
  $whereClause
  AND 
     si.item_status = 2
+AND 
+    si.is_archived = 0
 ", $params)->get();
 
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
@@ -126,6 +128,12 @@ if ($resources_count[0]['total'] !== 0) {
     $whereClause
     AND
         si.item_status = 2 
+    AND
+    si.item_request_status = 1
+    AND 
+    si.item_assigned_status = 2
+    AND 
+    si.is_archived = 0
     LIMIT :start,:end
     ", array_merge($params, [
         'start' => (int)$pagination['start'],

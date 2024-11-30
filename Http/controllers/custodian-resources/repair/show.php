@@ -121,6 +121,12 @@ AND
     si.item_status = 2
 AND
     si.school_id = :id 
+AND
+    si.item_request_status = 1
+AND 
+    si.item_assigned_status = 2
+AND 
+    si.is_archived = 0
 ", array_merge($params, [
     'id' => $_SESSION['user']['school_id'] ?? null
     ]))->get();
@@ -154,6 +160,12 @@ AND
     si.item_status = 2
 AND
     si.school_id = :id 
+AND
+    si.item_request_status = 1
+AND 
+    si.item_assigned_status = 2
+AND 
+    si.is_archived = 0
 LIMIT :start,:end
 ", array_merge($params, [
     'id' => $_SESSION['user']['school_id'] ?? null,

@@ -82,6 +82,12 @@ LEFT JOIN
     schools s ON s.school_id = si.school_id
 WHERE
     si.school_id = :id
+AND
+    si.item_request_status = 1
+AND 
+    si.item_assigned_status = 2
+AND 
+    si.is_archived = 0
 LIMIT :start ,:end
 ', [
     'id' => $_SESSION['user']['school_id'] ?? null,

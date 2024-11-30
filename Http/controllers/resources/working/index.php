@@ -37,7 +37,9 @@ SELECT
 FROM 
     school_inventory si
 WHERE 
-    si.item_status = 1;
+    si.item_status = 1
+AND 
+    si.is_archived = 0;
 ')->get();
 
 
@@ -64,6 +66,12 @@ JOIN
     schools s ON s.school_id = si.school_id
 WHERE 
     si.item_status = 1
+AND
+    si.item_request_status = 1
+AND 
+    si.item_assigned_status = 2
+AND 
+    si.is_archived = 0
 LIMIT :start,:end
 ', [
     'start' => (int)$pagination['start'],

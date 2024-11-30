@@ -8,28 +8,55 @@ $db = App::resolve(Database::class);
 //Total Equipment
 $total_equipment_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
-    FROM school_inventory'
+    FROM school_inventory
+    WHERE
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    is_archived = 0'
 )->find();
 $total_equipment_count = $total_equipment_count_query['total_count'] ?? 0;
 
 //Total Working Equipment
 $total_working_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
-    FROM school_inventory WHERE item_status = 1'
+    FROM school_inventory 
+    WHERE item_status = 1
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    is_archived = 0'
 )->find();
 $total_working_count = $total_working_count_query['total_count'] ?? 0;
 
 //Total Need Repair Equipment
 $total_repair_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
-    FROM school_inventory WHERE item_status = 2'
+    FROM school_inventory 
+    WHERE item_status = 2
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    is_archived = 0'
 )->find();
 $total_repair_count = $total_repair_count_query['total_count'] ?? 0;
 
 //Total Condemned Equipment
 $total_condemned_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
-    FROM school_inventory WHERE item_status = 3'
+    FROM school_inventory 
+    WHERE item_status = 3
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    is_archived = 0'
 )->find();
 $total_condemned_count = $total_condemned_count_query['total_count'] ?? 0;
 
@@ -39,6 +66,12 @@ $itemArticleCountQuery = $db->query('
     SELECT item_article, COUNT(*) as article_count
     FROM school_inventory
     WHERE item_article IS NOT NULL
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    is_archived = 0
     GROUP BY item_article
     ORDER BY article_count DESC
     LIMIT 5
@@ -62,6 +95,12 @@ $itemStatusCountQuery = $db->query('
     SELECT item_status, COUNT(*) as status_count
     FROM school_inventory
     WHERE item_status IN (1, 2, 3)
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    is_archived = 0
     GROUP BY item_status
 ');
 
@@ -94,6 +133,12 @@ $itemArticlePerMonthQuery = $db->query('
         school_inventory
     WHERE 
         item_article IS NOT NULL
+    AND
+        item_request_status = 1
+    AND 
+        item_assigned_status = 2
+    AND 
+    is_archived = 0
     GROUP BY 
         month
     ORDER BY 

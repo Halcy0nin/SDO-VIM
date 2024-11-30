@@ -12,7 +12,13 @@ $schoolId = $_SESSION['user']['school_id'] ?? null;
 $total_equipment_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
     FROM school_inventory
-    WHERE school_id = :id',
+    WHERE school_id = :id
+    AND
+        item_request_status = 1
+    AND 
+        item_assigned_status = 2
+    AND 
+        is_archived = 0',
     ['id' => $schoolId]
 )->find();
 $total_equipment_count = $total_equipment_count_query['total_count'] ?? 0;
@@ -22,7 +28,13 @@ $total_working_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
     FROM school_inventory
     WHERE item_status = 1
-    AND school_id = :id',
+    AND school_id = :id
+    AND
+        item_request_status = 1
+    AND 
+        item_assigned_status = 2
+    AND 
+        is_archived = 0',
     ['id' => $schoolId]
 )->find();
 $total_working_count = $total_working_count_query['total_count'] ?? 0;
@@ -32,7 +44,13 @@ $total_repair_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
     FROM school_inventory
     WHERE item_status = 2
-    AND school_id = :id',
+    AND school_id = :id
+    AND
+        item_request_status = 1
+    AND 
+        item_assigned_status = 2
+    AND 
+        is_archived = 0',
     ['id' => $schoolId]
 )->find();
 $total_repair_count = $total_repair_count_query['total_count'] ?? 0;
@@ -42,7 +60,13 @@ $total_condemned_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
     FROM school_inventory
     WHERE item_status = 3
-    AND school_id = :id',
+    AND school_id = :id
+    AND
+        item_request_status = 1
+    AND 
+        item_assigned_status = 2
+    AND 
+        is_archived = 0',
     ['id' => $schoolId]
 )->find();
 $total_condemned_count = $total_condemned_count_query['total_count'] ?? 0;
@@ -53,6 +77,12 @@ $itemArticleCountQuery = $db->query('
     FROM school_inventory
     WHERE item_article IS NOT NULL
     AND school_id = :id
+    AND
+        item_request_status = 1
+    AND 
+        item_assigned_status = 2
+    AND 
+        is_archived = 0
     GROUP BY item_article
     ORDER BY article_count DESC
     LIMIT 5',
@@ -112,6 +142,12 @@ $itemArticlePerMonthQuery = $db->query('
     WHERE 
         item_article IS NOT NULL
     AND school_id = :id
+    AND
+        item_request_status = 1
+    AND 
+        item_assigned_status = 2
+    AND 
+        is_archived = 0
     GROUP BY 
         month
     ORDER BY 

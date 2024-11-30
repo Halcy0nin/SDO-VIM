@@ -86,8 +86,14 @@ function runCountQuery($db, $baseQuery, $condition, $params) {
 // Count total equipment
 $total_equipment_count = runCountQuery(
     $db,
-    'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id',
-    $combinedCondition,
+    "SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id ",
+    "$combinedCondition 
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    si.is_archived = 0",
     $params
 );
 
@@ -95,7 +101,13 @@ $total_equipment_count = runCountQuery(
 $total_working_count = runCountQuery(
     $db,
     'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 1',
-    $combinedCondition,
+    "$combinedCondition 
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    si.is_archived = 0",
     $params
 );
 
@@ -103,7 +115,13 @@ $total_working_count = runCountQuery(
 $total_repair_count = runCountQuery(
     $db,
     'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 2',
-    $combinedCondition,
+    "$combinedCondition 
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    si.is_archived = 0",
     $params
 );
 
@@ -111,7 +129,13 @@ $total_repair_count = runCountQuery(
 $total_condemned_count = runCountQuery(
     $db,
     'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 3',
-    $combinedCondition,
+    "$combinedCondition 
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    si.is_archived = 0",
     $params
 );
 
@@ -121,6 +145,12 @@ $itemArticleCountQuery = $db->query('
     FROM school_inventory AS si
     JOIN schools AS s ON si.school_id = s.school_id
     WHERE si.item_article IS NOT NULL' . ($combinedCondition ? ' AND ' . implode(' AND ', $conditions) : '') . '
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    si.is_archived = 0
     GROUP BY si.item_article
     ORDER BY article_count DESC
     LIMIT 5',
@@ -169,6 +199,12 @@ $itemArticlePerMonthQuery = $db->query('
     FROM school_inventory AS si
     JOIN schools AS s ON si.school_id = s.school_id
     WHERE si.item_article IS NOT NULL' . ($combinedCondition ? ' AND ' . implode(' AND ', $conditions) : '') . '
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    si.is_archived = 0
     GROUP BY month
     ORDER BY MIN(date_acquired)',
     $params
