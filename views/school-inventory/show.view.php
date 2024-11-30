@@ -16,6 +16,16 @@ require base_path('views/partials/head.php') ?>
    </section>
 
    <form method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
+   
+   <section class="mx-12 flex flex-col">
+      <div class="search-container2 search">
+         <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+         <button type="submit" class="search">
+            <i class="bi bi-search"></i>
+         </button>
+   </section>
+
+   
    <div class="dropdown2">
          <div class="select">
             <span class="selected">Filter</span>
@@ -31,16 +41,6 @@ require base_path('views/partials/head.php') ?>
                   <li data-value="3">Condemned</li>
             </ul>
    </div>
-
-   <section class="mx-12 flex flex-col">
-      <form class="search-container2 search" method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
-         <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
-         <button type="submit" class="search">
-            <i class="bi bi-search"></i>
-         </button>
-   </section>
-
-   <div class="date-filter-container4">
       <div class="dropdown-date2">
          <div class="select">
             <span class="selected">Date Range</span>
@@ -54,6 +54,7 @@ require base_path('views/partials/head.php') ?>
             <?php endforeach; ?>
          </ul>
       </div>
+      <div class="date-filter-container8">
       <input type="hidden" name="yearFilter" id="yearFilter" value="">
       <button type="submit" class="filter-button" id="filter-btn">Filter</button>
       <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>

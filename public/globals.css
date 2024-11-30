@@ -414,9 +414,9 @@ body {
   width: 10rem;
   line-height: 0%;
   position: relative;
-  margin-left: 23.5rem;
-  margin-top: 1rem;
-  margin-bottom: -3.5rem;
+  margin-left: 23rem;
+  margin-top: -2.5rem;
+  margin-bottom: 0rem;
 
 }
 
@@ -483,7 +483,7 @@ body {
   line-height: 0%;
   position: relative;
   margin-left: 34rem;
-  margin-top: -2.4rem;
+  margin-top: -2.6rem;
   margin-bottom: 0rem;
 }
 
@@ -837,6 +837,25 @@ body {
 }
 
 .date-filter-container7 input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 180px; /* Adjust width of date inputs */
+}
+
+.date-filter-container8 {
+  transform: translate(14%, -180%);
+  gap: 10px;
+  margin-left: 35rem;
+  margin-bottom: -4.3rem;
+  margin-top: 1.9rem;
+}
+
+.date-filter-container8 label {
+  margin-right: 5px;
+}
+
+.date-filter-container8 input[type="date"] {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
