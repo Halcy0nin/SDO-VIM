@@ -74,7 +74,7 @@ try {
     toast('Failed to add user. Please try again.');
 
     // Redirect back to the user creation form
-    redirect('/coordinator/users/create');
+    redirect('/coordinator/users');
 
 } catch (Exception $e) {
     // Handle any other types of exceptions
@@ -84,5 +84,5 @@ try {
     toast('An unexpected error occurred. Please try again later.');
 
     // Redirect back to the user creation form
-    redirect('/coordinator/users/create');
+    redirect('/coordinator/users');
 }

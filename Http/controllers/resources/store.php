@@ -64,5 +64,5 @@ try {
     toast('Failed to add resource. Please try again.');
 
     // Redirect back to the previous page or the form
-    redirect('/coordinator/resources/unassigned');
+    redirect('/coordinator/resources/resources');
 }
