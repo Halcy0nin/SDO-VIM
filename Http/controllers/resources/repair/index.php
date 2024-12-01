@@ -1,26 +1,26 @@
 <?php
-
 use Core\Database;
 use Core\App;
 use Core\Session;
 
 $db = App::resolve(Database::class);
 
+// Fetch notification count
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
     WHERE viewed IS NULL
-    AND  created_by != :user_id 
-',[
+    AND created_by != :user_id 
+', [
     'user_id' => get_uid(),
 ])->find();
 
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
-if ($notificationCount > 5){
+if ($notificationCount > 5) {
     $notificationCount = '5+';
-};
+}
 
 $resources = [];
 
@@ -31,15 +31,13 @@ $pagination = [
     'start' => 0,
 ];
 
+// Fetch the total number of repair requests
 $resources_count = $db->query('
 SELECT 
-    COUNT(*) as total 
+    COUNT(*) AS total 
 FROM 
-    school_inventory si
-WHERE 
-    si.item_status = 2;
+    repair_requests
 ')->get();
-
 
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
@@ -47,37 +45,35 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
 $currentYear = date('Y'); // Current year
-$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
-$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(request_date)) AS earliest_year FROM repair_requests')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? $currentYear;
 $years = range($currentYear, $earliestYear);
 
+// Fetch repair request data with item_article
 $resources = $db->paginate('
 SELECT 
-    si.item_code,
-    si.item_article,
+    rr.id,
+    rr.item_code,
     s.school_name,
-    si.item_status AS status,
-    si.item_status_reason,
-    si.item_inactive,
-    si.date_acquired
+    rr.request_date,
+    rr.description,
+    si.item_article,
+    rr.item_count
 FROM 
-    school_inventory si
+    repair_requests rr
 JOIN 
-    schools s ON s.school_id = si.school_id
-WHERE 
-    si.item_status = 2
-AND
-    si.item_request_status = 1
-AND 
-    si.item_assigned_status = 2
-AND 
-    si.is_archived = 0
-LIMIT :start,:end
+    schools s ON s.school_id = rr.school_id
+JOIN 
+    school_inventory si ON si.item_code = rr.item_code
+WHERE
+    rr.is_active = 1
+LIMIT :start, :end
 ', [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
 ])->get();
 
+// Render the view
 view('resources/repair/index.view.php', [
     'heading' => 'For Repair Resources',
     'years' => $years,

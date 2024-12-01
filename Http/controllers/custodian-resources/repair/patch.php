@@ -13,13 +13,20 @@ try {
     ])->findOrFail();
 
     // Prepare and execute the update query
-    $db->query('UPDATE school_inventory SET
+    $db->query("UPDATE school_inventory SET
         item_status = 1,
-        item_status_reason = null,
+        item_inactive = item_inactive - :item_repair_count,
         updated_by = :updated_by
-    WHERE item_code = :id_to_update;', [
+    WHERE item_code = :id_to_update;", [
         'updated_by' => $_SESSION['user']['user_id'] ?? 'Admin',
+        'item_repair_count' => $_POST['item_repair_count'],
         'id_to_update' => $_POST['id_to_update'] ?? null
+    ]);
+
+    $db->query('UPDATE repair_requests SET
+        is_active = 0
+    WHERE id = :request_to_update;', [
+        'request_to_update' => $_POST['request_to_update'] ?? null
     ]);
 
     toast('Successfully repaired item with item code: ' . $old_item['item_code']);

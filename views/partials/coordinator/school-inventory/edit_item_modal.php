@@ -12,6 +12,7 @@
                 <input name="_method" value="PATCH" hidden />
                 <input name="id_to_update" value="<?php echo $item["item_code"]; ?>" hidden />
                 <input type="hidden" name="id" value="<?php echo $id; ?>" />
+                <input type="hidden" name="school_id" value="<?php echo $item["school_id"];; ?>" />
                 <div class="modal-header mb-4">
                     <div class="flex gap-2 justify-center items-center text-green-600 text-xl">
                         <i class="bi bi-person-fill-add"></i>

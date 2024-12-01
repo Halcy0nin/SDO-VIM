@@ -10,6 +10,8 @@
             <form action="/custodian/custodian-resources/repair" method="POST" class="modal-body h-fit flex flex-col gap-2">
                 <input name="_method" value="PATCH" hidden />
                 <input name="id_to_update" value="<?php echo $resource["item_code"]; ?>" hidden />
+                <input name="request_to_update" value="<?php echo $resource["id"]; ?>" hidden />
+                <input name="item_repair_count" value="<?php echo $resource["item_count"]; ?>" hidden />
                 <div class="modal-header mb-4">
                     <div class="flex gap-2 justify-center items-center text-green-600 text-xl">
                         <i class="bi bi-tools"></i>
@@ -19,7 +21,7 @@
                 </div>
                 <div>
                   <b>Repair Description:</b><br>
-                  <?= htmlspecialchars($resource['item_status_reason']) ?>
+                  <?= htmlspecialchars($resource['description']) ?>
                 </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>

@@ -117,6 +117,7 @@ $items = $db->paginate("
         si.item_status_reason,
         si.item_active,
         si.item_inactive,
+        si.school_id,
         h.action AS history_action,
         h.modified_at AS history_modified,
         u.user_name AS history_by

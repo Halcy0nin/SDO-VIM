@@ -93,6 +93,7 @@ $items = $db->paginate("
     SELECT 
         item_code,
         item_article,
+        si.school_id,
         item_desc,
         date_acquired,
         date_updated,

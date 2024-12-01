@@ -107,33 +107,29 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
 $currentYear = date('Y'); // Current year
-$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(request_date)) AS earliest_year FROM repair_requests')->find();
 $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
 
 if ($resources_count[0]['total'] !== 0) {
     $resources = $db->paginate("
-    SELECT 
-        si.item_code,
-        si.item_article,
-        s.school_name,
-        si.item_status AS status,
-        si.item_status_reason,
-        si.item_inactive,
-        si.date_acquired
-    FROM 
-        school_inventory si
-    JOIN 
-        schools s ON s.school_id = si.school_id
+   SELECT 
+    rr.id,
+    rr.item_code,
+    s.school_name,
+    rr.request_date,
+    rr.description,
+    si.item_article,
+    rr.item_count
+FROM 
+    repair_requests rr
+JOIN 
+    schools s ON s.school_id = rr.school_id
+JOIN 
+    school_inventory si ON si.item_code = rr.item_code
     $whereClause
-    AND
-        si.item_status = 2 
-    AND
-    si.item_request_status = 1
-    AND 
-    si.item_assigned_status = 2
-    AND 
-    si.is_archived = 0
+AND
+    rr.is_active = 1
     LIMIT :start,:end
     ", array_merge($params, [
         'start' => (int)$pagination['start'],
@@ -141,7 +137,7 @@ if ($resources_count[0]['total'] !== 0) {
     ]))->get();
 }
 
-view('resources/repair/show.view.php', [
+view('resources/repair/index.view.php', [
     'notificationCount' => $notificationCount,
     'years' => $years,
     'heading' => 'For Repair Resources',

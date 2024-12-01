@@ -6,15 +6,19 @@ use Core\App;
 $db = App::resolve(Database::class);
 
 try {
+    // Prepare necessary variables
     $id = $_POST['id'];
     $item_code = $id . '-' . generateSKU($_POST['item_article'], $_POST['item_desc'], $_POST['item_funds_source']);
+    $school_id = $_POST['school_id'];
+    $description = $_POST['item_status_reason']; // Use item_status_reason as the repair description
+    $item_repair_count = $_POST['item_repair_count'];
 
     // Fetch the old values before updating
     $old_item = $db->query('SELECT * FROM school_inventory WHERE item_code = :id_to_update', [
         'id_to_update' => $_POST['id_to_update']
     ])->findOrFail();
 
-    // Prepare and execute the update query
+    // Prepare and execute the update query for school_inventory
     $db->query('UPDATE school_inventory SET
         item_code = :item_code,
         item_article = :item_article,
@@ -26,7 +30,6 @@ try {
         item_active = :item_active,
         item_inactive = :item_inactive,
         item_status = :item_status,
-        item_status_reason = :item_status_reason,
         updated_by = :updated_by
     WHERE item_code = :id_to_update;', [
         'updated_by' => $_SESSION['user']['user_id'] ?? 'Admin',
@@ -40,11 +43,22 @@ try {
         'item_funds_source' => $_POST['item_funds_source'],
         'item_active' => $_POST['item_active'],
         'item_inactive' => $_POST['item_inactive'] + $_POST['item_repair_count'] + $_POST['item_condemned_count'],
-        'item_status_reason' => $_POST['item_status_reason'],
         'item_status' => $_POST['item_status']
     ]);
 
-    toast('Successfully updated item with item code: ' . $old_item['item_code']);
+    // Insert a new repair request into the repair_requests table
+    if ($_POST['item_status'] == '2') { // Check if the status is 'Need Repair'
+        $db->query('INSERT INTO 
+        repair_requests (item_code, school_id, request_date, description, item_count) 
+        VALUES (:item_code, :school_id, NOW(), :description, :item_repair_count)', [
+            'item_code' => $item_code,
+            'school_id' => $school_id,
+            'description' => $description,
+            'item_repair_count' =>  $item_repair_count
+        ]);
+    }
+
+    toast('Successfully updated item and added repair request for item code: ' . $old_item['item_code']);
 
     redirect('/coordinator/school-inventory/' . $id);
 
@@ -53,7 +67,7 @@ try {
     error_log($e->getMessage());
 
     // Show an error toast message
-    toast('Failed to update the item. Please try again.');
+    toast('Failed to update the item or add repair request. Please try again.');
 
     // Redirect back to the inventory page
     redirect('/coordinator/school-inventory/' . $id);
@@ -68,3 +82,4 @@ try {
     // Redirect back to the inventory page
     redirect('/coordinator/school-inventory/' . $id);
 }
+

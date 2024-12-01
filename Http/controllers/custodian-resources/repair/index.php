@@ -89,28 +89,24 @@ $years = range($currentYear, $earliestYear);
 
 $resources = $db->paginate('
 SELECT 
-    si.item_code,
-    si.item_article,
+    rr.id,
+    rr.item_code,
     s.school_name,
-    si.item_status AS status,
-    si.item_status_reason,
-    si.item_inactive,
-    si.date_acquired
+    rr.request_date,
+    rr.description,
+    si.item_article,
+    rr.item_count
 FROM 
-    school_inventory si
+    repair_requests rr
 JOIN 
-    schools s ON s.school_id = si.school_id
-WHERE 
-    si.item_status = 2
+    schools s ON s.school_id = rr.school_id
+JOIN 
+    school_inventory si ON si.item_code = rr.item_code
+WHERE
+    rr.is_active = 1
 AND
     si.school_id = :id 
-AND
-    si.item_request_status = 1
-AND 
-    si.item_assigned_status = 2
-AND 
-    si.is_archived = 0
-LIMIT :start,:end
+LIMIT :start, :end
 ', [
     'id' => $_SESSION['user']['school_id'] ?? null,
     'start' => (int)$pagination['start'],

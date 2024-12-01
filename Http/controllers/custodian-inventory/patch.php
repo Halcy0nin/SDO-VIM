@@ -9,7 +9,7 @@ try {
     $id = $_POST['id'];
     $item_code = $id . '-' . generateSKU($_POST['item_article'], $_POST['item_desc'], $_POST['item_funds_source']);
 
-    // Prepare and execute the update query
+    // Prepare and execute the update query for `school_inventory`
     $db->query('UPDATE school_inventory SET
         item_code = :item_code,
         item_article = :item_article,
@@ -21,7 +21,6 @@ try {
         item_active = :item_active,
         item_inactive = :item_inactive,
         item_status = :item_status,
-        item_status_reason = :item_status_reason,
         updated_by = :updated_by
     WHERE item_code = :id_to_update;', [
         'updated_by' => $_SESSION['user']['user_id'],
@@ -35,9 +34,30 @@ try {
         'item_funds_source' => $_POST['item_funds_source'],
         'item_active' => $_POST['item_active'],
         'item_inactive' => $_POST['item_inactive'] + $_POST['item_repair_count'] + $_POST['item_condemned_count'],
-        'item_status_reason' => $_POST['item_status_reason'],
         'item_status' => $_POST['item_status']
     ]);
+
+    // Insert into `repair_requests` if item_status = 2 (needs repair)
+    if ($_POST['item_status'] == 2) {
+        $db->query('INSERT INTO repair_requests (
+            item_code, 
+            school_id, 
+            request_date, 
+            item_count,
+            description
+        ) VALUES (
+            :item_code, 
+            :school_id, 
+            NOW(), 
+            :item_repair_count,
+            :description
+        );', [
+            'item_code' => $item_code,
+            'school_id' => $_POST['school_id'],
+            'description' => $_POST['item_status_reason'],
+            'item_repair_count' => $_POST['item_repair_count'], // Use the reason as the repair description
+        ]);
+    }
 
     // Show a success message
     toast('Successfully updated item with code: ' . $item_code);

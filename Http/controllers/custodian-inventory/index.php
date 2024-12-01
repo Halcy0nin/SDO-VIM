@@ -74,6 +74,7 @@ $years = range($currentYear, $earliestYear);
 $items = $db->paginate('
 SELECT 
         item_code,
+        si.school_id,
         item_article,
         item_desc,
         date_acquired,
