@@ -17,12 +17,13 @@ require base_path('views/partials/head.php') ?>
 
     <section class="mx-12 flex flex-col">
         <div class="search-container1 search">
-        <form method="POST" action="/custodian/custodian-inventory/s">
+        <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s">
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
         </div>
+    </section>
 
         <div class="dropdown3">
          <div class="select">
@@ -52,16 +53,16 @@ require base_path('views/partials/head.php') ?>
             <?php endforeach; ?>
          </ul>
       </div>
-      <div class="date-filter-container4">
+      <div class="date-filter-container10">
       <input type="hidden" name="yearFilter" id="yearFilter" value="">
       <button type="submit" class="filter-button" id="filter-btn">Filter</button>
       <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
       </form>
    </div>
 
-    <section class="mx-14 mb-14 inline-block grow rounded">
-        <div class="table-responsive inline-block mt-5 bg-zinc-50 rounded border-[1px]">
-            <table class="table table-striped m-0">
+   <section class="mx-12 mb-12 inline-block grow rounded">
+      <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
+         <table class="table table-striped m-0">
                 <thead>
                     <th style="width: 20ch;">
                         <div class="header-content">

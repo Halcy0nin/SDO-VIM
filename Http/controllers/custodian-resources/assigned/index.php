@@ -55,7 +55,27 @@ $years = range($currentYear, $earliestYear);
 
 $resources = [];
 
-$resources = $db->query('
+$pagination = [
+    'pages_limit' => 10,
+    'pages_current' => isset($_GET['page']) ? (int)$_GET['page'] : 1,
+    'pages_total' => 0,
+    'start' => 0,
+];
+
+$resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory')->get();
+$pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
+$pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
+
+$pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
+
+$currentYear = date('Y'); // Current year
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
+$years = range($currentYear, $earliestYear);
+
+
+
+$resources = $db->paginate('
     SELECT 
     si.item_code,
     si.item_article,
@@ -75,4 +95,5 @@ view('custodian-resources/assigned/index.view.php', [
     'years' => $years,
     'notificationCount' => $notificationCount,
     'resources' => $resources,
+    'pagination' => $pagination
 ]);
