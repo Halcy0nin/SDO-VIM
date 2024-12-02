@@ -20,7 +20,7 @@ require base_path('views/partials/head.php') ?>
          </div>
       </section>
       
-      <div class="dropdown-date4">
+      <div class="dropdown-date5">
             <div class="select">
                <span class="selected">Date Range</span>
                <div class="caret"></div>
@@ -33,7 +33,7 @@ require base_path('views/partials/head.php') ?>
                <?php endforeach; ?>
             </ul>
       </div>
-      <div class="date-filter-container5">
+      <div class="date-filter-container9">
          <input type="hidden" name="yearFilter" id="yearFilter" value="">
          <button type="submit" class="filter-button" id="filter-btn">Filter</button>
          <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
@@ -62,16 +62,43 @@ require base_path('views/partials/head.php') ?>
                   </tr>
                <?php endforeach; ?>
             </tbody>
+            <tfoot class="overflow-hidden">
+               <tr>
+                  <td colspan="6" class="py-2 pr-4">
+                     <div class="w-full flex flex-wrap items-center justify-end gap-2">
+                        <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
+                        <?php if ($pagination['pages_total'] > 1): ?>
+                           <a
+                              href="/coordinator/resources/assigned?page=1"
+                              class="pagination-link">
+                              <i class="bi bi-chevron-bar-left"></i>
+                           </a>
+                           <a
+                              href="/coordinator/resources/assigned?page=<?= htmlspecialchars($pagination['pages_current'] <= 1 ? 1 : $pagination['pages_current'] - 1) ?>" class="pagination-link">
+                              <i class="bi bi-chevron-left"></i>
+                           </a>
+                           <a href="/coordinator/resources/assigned?page=<?= htmlspecialchars($pagination['pages_current'] >= $pagination['pages_total'] ? $pagination['pages_total'] : $pagination['pages_current'] + 1) ?>"
+                              class="pagination-link">
+                              <i class="bi bi-chevron-right"></i>
+                           </a>
+                           <a href="/coordinator/resources/assigned?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
+                              class="pagination-link">
+                              <i class="bi bi-chevron-bar-right"></i>
+                           </a>
+                        <?php endif; ?>
+                     </div>
+                  </td>
+               </tr>
+            </tfoot>
          </table>
       </div>
-   </>
 </main>
 
 <?php require base_path('views/partials/footer.php') ?>
 
 <script>  
 // Select both dropdown1 and dropdown-date
-const dropdowns = document.querySelectorAll('.dropdown1, .dropdown-date4');
+const dropdowns = document.querySelectorAll('.dropdown1, .dropdown-date5');
 
 dropdowns.forEach(dropdown => {
 
