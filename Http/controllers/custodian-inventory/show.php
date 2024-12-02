@@ -103,8 +103,7 @@ $items = $db->paginate("
         item_funds_source,
         item_status,
         item_active,
-        item_inactive,
-        item_status_reason
+        item_inactive
     FROM 
         school_inventory si
     LEFT JOIN 

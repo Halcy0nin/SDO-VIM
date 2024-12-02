@@ -14,9 +14,10 @@ require base_path('views/partials/head.php') ?>
         <?php require base_path('views/partials/custodian/custodian-inventory/add_item_modal.php') ?>
         <?php require base_path('views/partials/custodian/custodian-inventory/export_items_modal.php') ?>
     </section>
-
+    
+    <form method="POST" action="/custodian/custodian-inventory/s">
     <section class="mx-12 flex flex-col">
-        <div class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s ">
+        <div class="search-container1 search">
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>

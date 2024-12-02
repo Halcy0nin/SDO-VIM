@@ -15,20 +15,23 @@ require base_path('views/partials/head.php') ?>
         <?php require base_path('views/partials/custodian/custodian-inventory/export_items_modal.php') ?>
     </section>
 
+    <form method="POST" action="/custodian/custodian-inventory/s">
     <section class="mx-12 flex flex-col">
-        <form class="search-container1 search" method="POST" action="/custodian/custodian-inventory/s ">
+        <div class="search-container1 search">
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
-        </form>
+        </div>
 
-   <div class="dropdown3">
+        <div class="dropdown3">
          <div class="select">
             <span class="selected">Filter</span>
             <div class="caret"></div>
-         </div>   
-            <input id="statusFilterValue" name="statusFilterValue" value="<?= $statusFilterValue ?>" type="hidden" /> <!-- Hidden input to store selected value -->           
+         </div>
+         
+            <input id="statusFilterValue" name="statusFilterValue" value="<?= $statusFilterValue ?>" type="hidden" /> <!-- Hidden input to store selected value -->
+            
             <ul class="menu">
                   <li data-value="All">Status</li> 
                   <li data-value="1">Working</li>
@@ -36,12 +39,11 @@ require base_path('views/partials/head.php') ?>
                   <li data-value="3">Condemned</li>
             </ul>
    </div>
-
-    <div class="dropdown-date3">
-        <div class="select">
+      <div class="dropdown-date3">
+         <div class="select">
             <span class="selected">Date Range</span>
             <div class="caret"></div>
-        </div>
+         </div>
          <ul class="menu">
             <?php foreach ($years as $year): ?>
                <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
@@ -49,12 +51,13 @@ require base_path('views/partials/head.php') ?>
                   </li>
             <?php endforeach; ?>
          </ul>
-    </div>
-      <div class="date-filter-container4">
-        <input type="hidden" name="yearFilter" id="yearFilter" value="">
-        <button type="submit" class="filter-button" id="filter-btn">Filter</button>
-        <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
       </div>
+      <div class="date-filter-container4">
+      <input type="hidden" name="yearFilter" id="yearFilter" value="">
+      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </form>
+   </div>
 
     <section class="mx-14 mb-14 inline-block grow rounded">
         <div class="table-responsive inline-block mt-5 bg-zinc-50 rounded border-[1px]">
