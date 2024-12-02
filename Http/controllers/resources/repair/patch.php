@@ -16,6 +16,7 @@ try {
     $db->query("UPDATE school_inventory SET
         item_status = 1,
         item_inactive = item_inactive - :item_repair_count,
+        item_active = item_active + :item_repair_count,
         updated_by = :updated_by
     WHERE item_code = :id_to_update;", [
         'updated_by' => $_SESSION['user']['user_id'] ?? 'Admin',

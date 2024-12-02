@@ -41,7 +41,7 @@ try {
         'item_unit_value' => $_POST['item_unit_value'],
         'item_quantity' => $_POST['item_quantity'],
         'item_funds_source' => $_POST['item_funds_source'],
-        'item_active' => $_POST['item_active'],
+        'item_active' => $_POST['item_active'] - $_POST['item_repair_count'] - $_POST['item_condemned_count'],
         'item_inactive' => $_POST['item_inactive'] + $_POST['item_repair_count'] + $_POST['item_condemned_count'],
         'item_status' => $_POST['item_status']
     ]);
