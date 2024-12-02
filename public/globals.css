@@ -442,7 +442,7 @@ body {
   width: 10rem;
   line-height: 0%;
   position: relative;
-  margin-left: 20rem;
+  margin-left: 23rem;
   margin-top: -2.4rem;
   margin-bottom: 0rem;
 
@@ -508,7 +508,7 @@ body {
   width: 10rem;
   line-height: 0%;
   position: relative;
-  margin-left: 23rem;
+  margin-left: 20rem;
   margin-top: -2.5rem;
   margin-bottom: 0rem;
 }
@@ -872,6 +872,34 @@ body {
 }
 
 .filter-button:hover {
+  background-color: rgba(67, 79, 114, 0.8);
+}
+
+.filter-button1 {
+  background-color: #434F72;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-left: 9rem;
+}
+
+.filter-button1:hover {
+  background-color: rgba(67, 79, 114, 0.8);
+}
+
+.filter-button2 {
+  background-color: #434F72;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.filter-button2:hover {
   background-color: rgba(67, 79, 114, 0.8);
 }
 

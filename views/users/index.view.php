@@ -22,8 +22,7 @@ require base_path('views/partials/head.php') ?>
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
-      </form>
-   
+    </section>
     <div class="dropdown4">
          <div class="select">
             <span class="selected">Filter</span>
@@ -31,13 +30,25 @@ require base_path('views/partials/head.php') ?>
          </div>
       
          <input id="roleFilterValue" name="roleFilterValue" value="<?= $roleFilterValue ?>" type="hidden" />
+            
             <ul class="menu">
                   <li data-value="All">Roles</li>
                   <li data-value="1">Coordinator</li>
                   <li data-value="2">Custodian</li> <!-- Default option to show all schools -->
-            </ul>         
+            </ul>
+        </div>
+        <div class="date-filter-container7">
+        <input type="hidden" name="yearFilter" id="yearFilter" value="">
+        <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+        <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+
+      </form>
    </div>
-    <section class="mx-14 mb-14 inline-block grow rounded">
+
+   </div>
+
+
+    <section class="mx-12 mb-12 inline-block grow rounded">
         <?php require base_path('views/partials/coordinator/users/users_table.php') ?>
     </section>
 
@@ -108,7 +119,20 @@ dropdowns.forEach(dropdown4 => {
             }
         });
     });
+
+
+
+
+
+
+
+
+
+
+
 });
+
+
 </script> 
 
 <script>
@@ -138,4 +162,3 @@ dropdowns.forEach(dropdown4 => {
         });
     });
 </script>
-
