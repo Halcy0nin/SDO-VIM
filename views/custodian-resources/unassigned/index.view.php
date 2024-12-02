@@ -16,7 +16,7 @@ require base_path('views/partials/head.php') ?>
             <button type="submit" class="search">
                <i class="bi bi-search"></i>
             </button>
-         </form>
+      </section>
          
          <div class="dropdown-date4">
             <div class="select">

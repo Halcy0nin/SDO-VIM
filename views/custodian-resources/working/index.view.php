@@ -9,14 +9,14 @@ require base_path('views/partials/head.php') ?>
    <section class="flex items-center pr-12 gap-3">
       <?php require base_path('views/partials/banner.php') ?>
    </section>
-   <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
+   <section class="mx-12 flex flex-col">
       <?php require base_path('views/partials/custodian/custodian-resources/tabs.php') ?>
          <form class="search-container search" method="POST" action="/custodian/custodian-resources/working/s" > 
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                <i class="bi bi-search"></i>
             </button>
-         </form>
+   </section>
          
          <div class="dropdown-date4">
             <div class="select">
@@ -37,8 +37,9 @@ require base_path('views/partials/head.php') ?>
          <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
          </form>
       </div>
-      <div class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
-         <table class="table table-striped">
+      <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
+      <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
+            <table class="table table-striped m-0">
             <thead>
                <th>ID</th>
                <th>Item Article</th>
