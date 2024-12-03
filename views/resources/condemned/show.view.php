@@ -45,23 +45,23 @@ require base_path('views/partials/head.php') ?>
             <table class="table table-striped m-0">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Item Article</th>
-                        <th>School</th>
-                        <th>Date Acquired</th>
-                        <th>No. Of Items</th>
-                        <th>Actions</th>
+                    <th>ID</th>
+                    <th>Item Article</th>
+                    <th>School</th>
+                    <th>Date Requested</th>
+                    <th>No. Of Items</th>
+                    <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody class="oveflow-y-scroll">
                     <?php if (count($resources) > 0): ?>
                         <?php foreach ($resources as $resource): ?>
                             <tr>
-                                <td><?= htmlspecialchars($resource['item_code']) ?></td>
-                                <td><?= htmlspecialchars($resource['item_article']) ?></td>
-                                <td><?= htmlspecialchars($resource['school_name']) ?></td>
-                                <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
-                                <td><?= htmlspecialchars($resource['item_inactive']) ?></td>
+                            <td><?= htmlspecialchars($resource['item_code']) ?></td>
+                            <td><?= htmlspecialchars($resource['item_article']) ?></td>
+                            <td><?= htmlspecialchars($resource['school_name']) ?></td>
+                            <td><?= htmlspecialchars(formatTimestamp($resource['request_date'])) ?></td>
+                            <td><?= htmlspecialchars($resource['item_count']) ?></td>
                                 <td>
                                     <div class="h-full w-full flex items-center gap-2">
                                     <?php require base_path('views/partials/coordinator/resources/view_condemned_modal.php') ?>

@@ -59,6 +59,27 @@ try {
         ]);
     }
 
+    if ($_POST['item_status'] == 3) {
+        $db->query('INSERT INTO condemned_requests (
+            item_code, 
+            school_id, 
+            request_date, 
+            item_count,
+            description
+        ) VALUES (
+            :item_code, 
+            :school_id, 
+            NOW(), 
+            :item_condemned_count,
+            :description
+        );', [
+            'item_code' => $item_code,
+            'school_id' => $_POST['school_id'],
+            'description' => $_POST['item_status_reason'],
+            'item_condemned_count' => $_POST['item_condemned_count'], // Use the reason as the repair description
+        ]);
+    }
+    
     // Show a success message
     toast('Successfully updated item with code: ' . $item_code);
 

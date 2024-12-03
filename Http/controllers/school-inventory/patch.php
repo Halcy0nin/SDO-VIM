@@ -58,7 +58,18 @@ try {
         ]);
     }
 
-    toast('Successfully updated item and added repair request for item code: ' . $old_item['item_code']);
+    if ($_POST['item_status'] == '3') { // Check if the status is 'Condemned'
+        $db->query('INSERT INTO 
+        condemned_requests (item_code, school_id, request_date, description, item_count) 
+        VALUES (:item_code, :school_id, NOW(), :description, :item_condemned_count)', [
+            'item_code' => $item_code,
+            'school_id' => $school_id,
+            'description' => $description,
+            'item_condemned_count' =>  $_POST['item_condemned_count']
+        ]);
+    }
+
+    toast('Successfully updated item with item code: ' . $old_item['item_code']);
 
     redirect('/coordinator/school-inventory/' . $id);
 

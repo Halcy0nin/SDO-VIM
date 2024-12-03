@@ -43,7 +43,9 @@ require base_path('views/partials/head.php') ?>
                <th>ID</th>
                <th>Item Article</th>
                <th>School</th>
-               <th>Date Acquired</th>
+               <th>Date Requested</th>
+               <th>No. Of Items</th>
+               <th>Actions</th>
             </thead>
             <tbody>
                <?php foreach ($resources as $resource): ?>
@@ -51,7 +53,12 @@ require base_path('views/partials/head.php') ?>
                      <td><?= htmlspecialchars($resource['item_code']) ?></td>
                      <td><?= htmlspecialchars($resource['item_article']) ?></td>
                      <td><?= htmlspecialchars($resource['school_name']) ?></td>
-                     <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
+                     <td><?= htmlspecialchars(formatTimestamp($resource['request_date'])) ?></td>
+                     <td><?= htmlspecialchars($resource['item_count']) ?></td>
+                     <td>
+                        <div class="h-full w-full flex items-center gap-2">
+                        <?php require base_path('views/partials/coordinator/resources/view_condemned_modal.php') ?>
+                     </td>
                   </tr>
                <?php endforeach; ?>
             </tbody>
