@@ -924,3 +924,25 @@ body {
 .move-button:hover {
   background-color: rgba(67, 79, 114, 0.8)
 }
+
+.dropdown-menu {
+  padding: 0rem 0rem; /* Ensure consistent padding */
+  max-width:12rem;
+}
+
+.dropdown-menu:hover {
+  color: #fff; /* Text color */
+}
+
+.dropdown-item {
+  padding: 0.5rem 0.5rem; /* Ensure consistent padding */
+  border: none; /* Remove unwanted borders */
+  max-width: 100%;
+  line-height: 1rem;
+}
+.dropdown-item:hover {
+  color: #fff; /* Text color */
+  background-color: #434F72 ;
+  max-width: 100%;
+}
+
