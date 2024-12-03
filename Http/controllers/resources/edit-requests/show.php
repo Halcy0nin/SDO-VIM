@@ -6,6 +6,31 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
+
+// Get input values
+$startDate = $_POST['yearFilter'] ?? null;
+$endDate = $_POST['yearFilter'] ?? null;
+$clearFilter = isset($_POST['clearFilter']);
+$searchTerm = trim($_POST['search'] ?? '');
+
+if ($clearFilter) {
+    $startDate = null;
+    $endDate = null;
+    $searchTerm = '';
+    $conditions = []; // Reset conditions
+    $params = []; // Reset parameters
+}
+
+// Handle year-only input for date filters
+if ($startDate && strlen($startDate) === 4) { // Year input
+    $startDate = $startDate . '-01-01'; // Set to January 1st of the year
+    $endDate = $endDate . '-12-31'; // Set to December 31st of the year
+} elseif ($startDate || $endDate) {
+    // Validate and ensure both are complete dates (YYYY-MM-DD format)
+    $startDate = $startDate ?: null;
+    $endDate = $endDate ?: null;
+}
+
 // Fetch notification count for the current user
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
@@ -30,18 +55,51 @@ $pagination = [
     'start' => 0,
 ];
 
+// Initialize SQL conditions and parameters
+$conditions = [];
+$params = [
+    'search_code' => '%' . strtolower($searchTerm) . '%',
+    'search_article' => '%' . strtolower($searchTerm) . '%',
+    'search_desc' => '%' . strtolower($searchTerm) . '%'
+];
+
+// Apply date filter only if clearFilter was not clicked
+if (!$clearFilter) {
+    if ($startDate && $endDate) {
+        $conditions[] = "ir.request_date BETWEEN :startDate AND :endDate";
+        $params['startDate'] = $startDate;
+        $params['endDate'] = $endDate;
+    } elseif ($endDate) {
+        $conditions[] = "ir.request_date <= :endDate";
+        $params['endDate'] = $endDate;
+    }
+}
+
+// Combine search conditions
+$conditions[] = "(
+    ir.item_code LIKE :search_code OR
+    ir.item_article LIKE :search_article OR
+    ir.item_desc LIKE :search_desc
+)";
+
+// Build the final query with conditions
+$whereClause = 'WHERE ' . implode(' AND ', $conditions);
+
 // Count total item requests
-$itemRequestsCountQuery = $db->query('
+$itemRequestsCountQuery = $db->query("
     SELECT COUNT(*) AS total
     FROM item_requests ir
-')->find();
+    $whereClause
+    AND
+    is_active = 1
+", $params)->find();
 
 $pagination['pages_total'] = ceil($itemRequestsCountQuery['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
 // Fetch item requests with pagination
-$itemRequests = $db->paginate('
+$itemRequests = $db->paginate("
      SELECT 
         ir.id,
         ir.item_code,
@@ -57,13 +115,14 @@ $itemRequests = $db->paginate('
         ir.item_funds_source
     FROM item_requests ir
     JOIN schools s ON s.school_id = ir.school_id
-    WHERE ir.is_active = 1
+    $whereClause
+    AND ir.is_active = 1
     ORDER BY ir.request_date DESC
     LIMIT :start, :end;
-', [
+", array_merge($params, [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
-])->get();
+]))->get();
 
 $oldValues = $db->query('
     SELECT si.*
@@ -75,7 +134,6 @@ $currentYear = date('Y'); // Current year
 $earliestYearQuery = $db->query('SELECT MIN(YEAR(request_date)) AS earliest_year FROM item_requests')->find();
 $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
-
 
 // Render the view
 view('resources/edit-requests/index.view.php', [

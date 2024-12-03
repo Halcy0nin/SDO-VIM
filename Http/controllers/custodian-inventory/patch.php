@@ -5,6 +5,8 @@ use Core\App;
 
 $db = App::resolve(Database::class);
 
+try {
+
     $id = $_POST['id'];
     $item_code = $_POST['id_to_update'];
 
@@ -80,8 +82,29 @@ $db = App::resolve(Database::class);
     }
 
     // Show a success message
-    toast('Successfully updated item with code: ' . $item_code);
+    toast('Successfully issued edits for item with code: ' . $item_code);
 
     // Redirect to the inventory page
     redirect('/custodian/custodian-inventory');
 
+
+} catch (PDOException $e) {
+    // Log the error message for debugging
+    error_log($e->getMessage());
+
+    // Show an error toast message
+    toast('Failed to update the item. Please try again.');
+
+    // Redirect back to the inventory page
+    redirect('/custodian/custodian-inventory');
+
+} catch (Exception $e) {
+    // Handle any other types of exceptions
+    error_log($e->getMessage());
+
+    // Show a general error toast message
+    toast('An unexpected error occurred. Please try again later.');
+
+    // Redirect back to the inventory page
+    redirect('/custodian/custodian-inventory');
+}

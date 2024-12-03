@@ -13,7 +13,7 @@ require base_path('views/partials/head.php') ?>
    </section>
    <section class="mx-12 flex flex-col">
       <?php require base_path('views/partials/coordinator/resources/tabs.php') ?>
-      <form class="search-container search" method="POST" action="/coordinator/resources/requests/s">
+      <form class="search-container search" method="POST" action="/coordinator/resources/edit-requests/s">
          <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
          <button type="submit" class="search">
             <i class="bi bi-search"></i>
