@@ -857,9 +857,9 @@ body {
 }
 
 .date-filter-container8 {
-  transform: translate(14%, -180%);
+  transform: translate(0%, -180%);
   gap: 10px;
-  margin-left: 35rem;
+  margin-left: 45rem;
   margin-bottom: -4.3rem;
   margin-top: 1.9rem;
 }
@@ -895,9 +895,9 @@ body {
 }
 
 .date-filter-container10 {
-  transform: translate(14%, -180%);
+  transform: translate(0%, -180%);
   gap: 10px;
-  margin-left: 41rem;
+  margin-left: 45rem;
   margin-bottom: -4.3rem;
   margin-top: 1.9rem;
 }

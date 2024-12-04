@@ -26,7 +26,6 @@ require base_path('views/partials/head.php') ?>
          </button>
    </section>
 
-   
    <div class="dropdown2">
          <div class="select">
             <span class="selected">Filter</span>
@@ -55,10 +54,11 @@ require base_path('views/partials/head.php') ?>
             <?php endforeach; ?>
          </ul>
       </div>
-      <div class="date-filter-container8">
+      <div class="date-filter-container8"> 
       <input type="hidden" name="yearFilter" id="yearFilter" value="">
       <button type="submit" class="filter-button" id="filter-btn">Filter</button>
       <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </div>
       </form>
    </div>
    

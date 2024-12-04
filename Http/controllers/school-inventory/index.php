@@ -120,6 +120,11 @@ if ($notificationCount > 5){
     $notificationCount = '5+';
 };
 
+$currentYear = date('Y');
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYear = $earliestYearQuery['earliest_year'] ?? $currentYear;
+$years = range($currentYear, $earliestYear);
+
 view('school-inventory/index.view.php', [
     'id' => $params['id'] ?? null,
     'notificationCount' => $notificationCount,

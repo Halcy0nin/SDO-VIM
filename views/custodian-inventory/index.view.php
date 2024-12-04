@@ -58,6 +58,7 @@ require base_path('views/partials/head.php') ?>
       <input type="hidden" name="yearFilter" id="yearFilter" value="">
       <button type="submit" class="filter-button" id="filter-btn">Filter</button>
       <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+      </div>
       </form>
    </div>
 
