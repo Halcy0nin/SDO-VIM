@@ -23,13 +23,24 @@
             Assigned
         </a>
     </li>
-    <li class="nav-item">
-        <a
-            class="nav-link <?php echo $_SERVER['REQUEST_URI'] === '/coordinator/resources/requests' ? 'active' : '' ?>"
-            aria-current="<?php echo $_SERVER['REQUEST_URI'] === '/coordinator/resources/requests' ? 'page' : '' ?>"
-            href="/coordinator/resources/requests">
+    <li class="nav-item dropdown">
+        <a 
+            class="nav-link dropdown-toggle <?php echo $_SERVER['REQUEST_URI'] === '/coordinator/resources/requests' ? 'active' : '' ?>" 
+            href="#" 
+            id="requestsDropdown" 
+            role="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
             Requests
         </a>
+        <ul class="dropdown-menu" aria-labelledby="requestsDropdown">
+            <li>
+                <a class="dropdown-item <?php echo $_SERVER['REQUEST_URI'] === '/coordinator/resources/requests' ? '' : '' ?>" href="/coordinator/resources/requests">Add Item Requests</a>
+            </li>
+            <li>
+                <a class="dropdown-item <?php echo $_SERVER['REQUEST_URI'] === '/coordinator/resources/edit-requests' ? '' : '' ?>" href="/coordinator/resources/edit-requests">Edit Item Request</a>
+            </li>
+        </ul>
     </li>
     <li class="nav-item">
         <a
