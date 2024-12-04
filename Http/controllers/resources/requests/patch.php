@@ -15,7 +15,8 @@ try {
         foreach ($selectedItems as $item_code) {
             // Update the item_request_status for each selected item
             $db->query('UPDATE school_inventory 
-                        SET item_request_status = 1
+                        SET item_request_status = 1,
+                        item_assigned_status = 2
                         WHERE item_code = :id;', [
                 'id' => $item_code,
             ]);
@@ -26,7 +27,8 @@ try {
     } elseif ($item_code) { // If no selected items but a single item_code is present
         // Update the item_request_status for the single item
         $db->query('UPDATE school_inventory 
-                    SET item_request_status = 1
+                    SET item_request_status = 1,
+                    item_assigned_status = 2
                     WHERE item_code = :id;', [
             'id' => $item_code,
         ]);

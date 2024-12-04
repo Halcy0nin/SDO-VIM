@@ -77,7 +77,7 @@ $items = $db->paginate(
     WHERE 
         si.school_id = :id
     AND 
-        si.is_archived = 0;
+        si.is_archived = 0
     AND
         si.item_request_status = 1
     AND 
