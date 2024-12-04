@@ -21,7 +21,8 @@ try {
                 $db->query('UPDATE school_inventory 
                             SET school_id = :school_id, 
                                 item_code = :new_item_code,
-                                item_assigned_status = 1, 
+                                item_assigned_status = 2, 
+                                item_request_status = 1,
                                 updated_by = :updated_by
                             WHERE item_code = :id;', [
                     'id' => $item_code,
@@ -40,7 +41,8 @@ try {
             $db->query('UPDATE school_inventory 
                         SET school_id = :school_id, 
                             item_code = :new_item_code,
-                            item_assigned_status = 1, 
+                            item_assigned_status = 2, 
+                            item_request_status = 1, 
                             updated_by = :updated_by
                         WHERE item_code = :id;', [
                 'id' => $item_code,
