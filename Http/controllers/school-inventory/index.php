@@ -26,22 +26,15 @@ AND
     item_request_status = 1
 AND 
     is_archived = 0
-AND
-    item_request_status = 1
 AND 
     item_assigned_status = 2;
 ', [
     'id' => $params['id'] ?? null
 ])->get();
 
-$pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
+$pagination['pages_total'] = max(1, ceil($resources_count[0]['total'] / $pagination['pages_limit']));
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
-
-$currentYear = date('Y'); // Current year
-$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
-$earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
-$years = range($currentYear, $earliestYear);
 
 $items = $db->paginate(
     '
@@ -65,31 +58,32 @@ $items = $db->paginate(
     FROM 
         school_inventory si
     LEFT JOIN (
-     	SELECT h1.*
+        SELECT h1.*
         FROM school_inventory_history h1
         WHERE h1.modified_at = (
-        	SELECT MAX(h2.modified_at)
+            SELECT MAX(h2.modified_at)
             FROM school_inventory_history h2
             WHERE h1.item_code = h2.item_code
-            )
-        ) h ON si.item_code = h.item_code
+        )
+    ) h ON si.item_code = h.item_code
     INNER JOIN users u on h.user_id = u.user_id
     WHERE 
         si.school_id = :id
     AND 
-        si.is_archived = 0;
+        si.is_archived = 0
     AND
         si.item_request_status = 1
     AND 
         si.item_assigned_status = 2
-    LIMIT :start,:end
+    LIMIT :start, :limit
     ',
     [
         'id' => $params['id'] ?? null,
         'start' => (int)$pagination['start'],
-        'end' => (int)$pagination['pages_limit'],
+        'limit' => (int)$pagination['pages_limit'],
     ]
 )->get();
+
 
 $schoolName = $db->query('
 SELECT 
