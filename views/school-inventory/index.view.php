@@ -12,6 +12,7 @@ require base_path('views/partials/head.php') ?>
    <section class="flex items-center pr-12 gap-3">
       <?php require base_path('views/partials/banner.php') ?>
       <?php require base_path('views/partials/coordinator/school-inventory/add_item_modal.php') ?>
+      <?php require base_path('views/partials/coordinator/school-inventory/import_school_inventory_modal.php') ?>
       <?php require base_path('views/partials/coordinator/school-inventory/export_school_inventory_modal.php') ?>
    </section>
 
