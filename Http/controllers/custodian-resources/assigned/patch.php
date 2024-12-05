@@ -80,7 +80,7 @@ try {
 
             toast('Successfully unassigned item: ' . $item_code);
         } else {
-            toast('No items were selected for unassignment.');
+            toast('No items were selected for unassigned.');
         }
     }
 
