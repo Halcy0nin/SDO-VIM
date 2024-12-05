@@ -112,7 +112,8 @@ $router->post('/coordinator/school-inventory/exportpdf', '/school-inventory/expo
 $router->post('/coordinator/school-inventory/exportxls', '/school-inventory/export_school_inventory_xls.php')->only('coordinator');
 //Export Inventory to CSV
 $router->post('/coordinator/school-inventory/exportcsv', '/school-inventory/export_school_inventory_csv.php')->only('coordinator');
-
+//Import Item
+$router->post('/coordinator/school-inventory/importcsv', '/school-inventory/import/store.php')->only('coordinator'); //upload
 
 //Export School Data to XLS
 $router->post('/coordinator/schools/exportxls', '/schools/export_school_xls.php')->only('coordinator');
