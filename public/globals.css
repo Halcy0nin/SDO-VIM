@@ -478,6 +478,14 @@ body {
   box-sizing: border-box;
 }
 
+.dropdown-date1 .menu {
+  max-height: 15rem;
+  overflow-y: auto; /* Enable scrolling for the dropdown */
+  width: 100%; /* Match the width of the dropdown */
+  z-index: 1000; /* Ensure the dropdown appears above other elements */
+}
+
+
 .dropdown-date2 {
   width: 10rem;
   line-height: 0%;
@@ -489,6 +497,13 @@ body {
 
 .dropdown-date2 * {
   box-sizing: border-box;
+}
+
+.dropdown-date2 .menu {
+  max-height: 15rem;
+  overflow-y: auto; /* Enable scrolling for the dropdown */
+  width: 100%; /* Match the width of the dropdown */
+  z-index: 1000; /* Ensure the dropdown appears above other elements */
 }
 
 .dropdown-date3 {
@@ -504,6 +519,13 @@ body {
   box-sizing: border-box;
 }
 
+.dropdown-date3 .menu {
+  max-height: 15rem;
+  overflow-y: auto; /* Enable scrolling for the dropdown */
+  width: 100%; /* Match the width of the dropdown */
+  z-index: 1000; /* Ensure the dropdown appears above other elements */
+}
+
 .dropdown-date4 {
   width: 10rem;
   line-height: 0%;
@@ -517,6 +539,13 @@ body {
   box-sizing: border-box;
 }
 
+.dropdown-date4 .menu {
+  max-height: 15rem;
+  overflow-y: auto; /* Enable scrolling for the dropdown */
+  width: 100%; /* Match the width of the dropdown */
+  z-index: 1000; /* Ensure the dropdown appears above other elements */
+}
+
 .dropdown-date5 {
   width: 10rem;
   line-height: 0%;
@@ -528,6 +557,13 @@ body {
 
 .dropdown-date5 * {
   box-sizing: border-box;
+}
+
+.dropdown-date5 .menu {
+  max-height: 15rem;
+  overflow-y: auto; /* Enable scrolling for the dropdown */
+  width: 100%; /* Match the width of the dropdown */
+  z-index: 1000; /* Ensure the dropdown appears above other elements */
 }
 
 .custom-dropdown {

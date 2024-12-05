@@ -35,15 +35,15 @@ $html2pdf = new Html2Pdf('L', 'LEGAL', 'en', false, 'UTF-8', array(10, 10, 10, 1
 $date = date('m/d/Y h:i:s a', time());
 
 $html = '
-<page backtop="30mm" backbottom="30mm"> 
+<page backtop="50mm" backbottom="30mm"> 
     <page_header> 
        <img src="../public/export-headers/sdo_header.png" style="width:60%;height:25%;" />             
     </page_header>
-<h1 style="margin:70;" >Schools Data</h1>
+<h1 style="margin:70; margin-top:0px;" >Schools Data</h1>
 <h4 style="margin:-40;">Generated on: ' . $date . '</h4>'; 
 
 $html .= '
-<table class="table table-striped" style="width: 100%; word-wrap: break-word; overflow-wrap: break-word; border-collapse: collapse; margin:20;">
+<table class="table table-striped" style="width: 100%; word-wrap: break-word; overflow-wrap: break-word; border-collapse: collapse; margin-left:2rem; margin-top: 2rem;">
     <thead>
         <tr>
             <th style="text-align: center; width: 0%; height: 7%; border: 2px solid black;">ID</th>
@@ -70,7 +70,7 @@ foreach ($schools as $school) {
             <td style="text-align: center; width: 11%; border: 2px solid black;">' . htmlspecialchars($school['district']) . '</td>
             <td style="text-align: center; width: 12%; border: 2px solid black;">' . htmlspecialchars($school['contact_name']) . '</td>
             <td style="text-align: center; width: 10%; border: 2px solid black;">' . htmlspecialchars($school['contact_no']) . '</td>
-            <td style="text-align: center; width: 14%; border: 2px solid black;">' . htmlspecialchars($school['contact_email']) . '</td>
+            <td style="text-align: center; width: 18%; border: 2px solid black;">' . htmlspecialchars($school['contact_email']) . '</td>
             <td style="text-align: center; width: 10%; border: 2px solid black;">' . htmlspecialchars(formatTimestamp($school['date_added'])) . '</td>
         </tr>';
 }

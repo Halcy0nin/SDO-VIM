@@ -35,11 +35,11 @@ $date = date('m/d/Y h:i:s a', time());
 
 // Start building the HTML content
 $html = '
-<page backtop="30mm" backbottom="30mm"> 
+<page backtop="50mm" backbottom="30mm"> 
     <page_header> 
        <img src="../public/export-headers/sdo_header.png" style="width:60%;height:25%;" />             
     </page_header>
-    <h1 style="margin:70;"> ' . ($items[0]['school_name'] ?? 'School') . ' Inventory Data </h1>
+    <h1 style="margin:70; margin-top:0px;"> ' . ($items[0]['school_name'] ?? 'School') . ' Inventory Data </h1>
     <h4 style="margin: 0px; margin-top: -40px; margin-left: -40px;">Generated on: ' . $date . '</h4>
     <table class="table table-striped" style="width: 97%; word-wrap: break-word; overflow-wrap: break-word; border-collapse: collapse; margin: -15px; margin-top: 10px;">
         <thead>
