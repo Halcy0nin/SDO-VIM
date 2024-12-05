@@ -46,11 +46,11 @@ if (in_array($file_ext, $allowed_ext)) {
                 $db->query('INSERT INTO school_inventory (
                     item_code, item_article, item_desc, date_acquired,
                     item_unit_value, item_quantity, item_funds_source,
-                    item_active, item_inactive, updated_by
+                    item_active, item_inactive, updated_by, item_assigned_status
                 ) VALUES (
                     :item_code, :item_article, :item_desc, :date_acquired,
                     :item_unit_value, :item_quantity, :item_funds_source,
-                    :item_active, :item_inactive, :updated_by
+                    :item_active, :item_inactive, :updated_by, 0
                 );', [
                     'updated_by' => $_SESSION['user']['user_id'],
                     'item_code' => $item_code,
@@ -73,4 +73,4 @@ if (in_array($file_ext, $allowed_ext)) {
     error_throw(['import_resources' => ['file' => 'Invalid file extension.']]);
 }
 
-redirect('/coordinator/resources');
+redirect('/coordinator/resources/unassigned');

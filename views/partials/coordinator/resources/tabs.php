@@ -66,4 +66,12 @@
             Condemned
         </a>
     </li>
+    <li class="nav-item">
+        <a
+            class="nav-link <?php echo $_SERVER['REQUEST_URI'] === '/coordinator/resources/archived' ? 'active' : '' ?>"
+            aria-current="<?php echo $_SERVER['REQUEST_URI'] === '/coordinator/resources/archived' ? 'page' : '' ?>"
+            href="/coordinator/resources/archived">
+            Archived
+        </a>
+    </li>
 </ul>
