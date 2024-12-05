@@ -71,6 +71,9 @@ $router->post('/coordinator/resources/condemned/s', 'resources/condemned/show.ph
 $router->get('/coordinator/resources/assigned', 'resources/assigned/index.php')->only('coordinator');
 $router->post('/coordinator/resources/assigned/s', 'resources/assigned/show.php')->only('coordinator');
 $router->patch('/coordinator/resources/assigned', 'resources/assigned/patch.php')->only('coordinator');
+$router->get('/coordinator/resources/archived', 'resources/archived/index.php')->only('coordinator');
+$router->post('/coordinator/resources/archived/s', 'resources/archived/show.php')->only('coordinator');
+$router->patch('/coordinator/resources/archived', 'resources/archived/patch.php')->only('coordinator');
 
 //Assign resource to school
 $router->patch('/coordinator/resources/unassigned', '/resources/unassigned/patch.php')->only('coordinator');

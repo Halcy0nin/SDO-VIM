@@ -77,9 +77,9 @@ function formatTimestamp($timestamp, $format = 'M d, Y')
 function generateSKU($category, $productName, $fundsName)
 {
 
-    $categoryPart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $category), 0, 4));
-    $productPart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $productName), 0, 3));
-    $fundsPart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $fundsName), 0, 3));
+    $categoryPart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $category), 0, 6));
+    $productPart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $productName), 0, 4));
+    $fundsPart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $fundsName), 0, 4));
 
     $sku = $categoryPart . '-' . $productPart . '-' . $fundsPart;
 
