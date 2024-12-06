@@ -47,11 +47,11 @@ if (in_array($file_ext, $allowed_ext)) {
                 $db->query('INSERT INTO school_inventory (
                     item_code, item_article, item_desc, date_acquired,
                     item_unit_value, item_quantity, item_funds_source,
-                    item_active, item_inactive, school_id, updated_by
+                    item_active, item_inactive, school_id, updated_by, item_request_status, item_assigned_status
                 ) VALUES (
                     :item_code, :item_article, :item_desc, :date_acquired,
                     :item_unit_value, :item_quantity, :item_funds_source,
-                    :item_active, :item_inactive, :id, :updated_by
+                    :item_active, :item_inactive, :id, :updated_by, 1, 2
                 );', [
                     'updated_by' => $_SESSION['user']['user_id'],
                     'id' => $id ?? null,
