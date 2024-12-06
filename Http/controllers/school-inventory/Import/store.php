@@ -70,6 +70,7 @@ if (in_array($file_ext, $allowed_ext)) {
             }
         }
         $rowCount++;
+        toast('Successfully imported items from spreadsheet file.');
     }
 } else {
     error_throw(['import_resources' => ['file' => 'Invalid file extension.']]);
