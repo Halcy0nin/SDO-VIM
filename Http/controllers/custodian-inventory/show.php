@@ -81,7 +81,12 @@ $items_count = $db->query("
     FROM school_inventory si
     LEFT JOIN schools s ON s.school_id = si.school_id
     $whereClause
-    AND item_request_status = 1
+    AND
+        si.item_request_status = 1
+    AND 
+        si.item_assigned_status = 2
+    AND 
+        si.is_archived = 0
 ", $parameters)->find();
 
 $pagination['pages_total'] = ceil(($items_count['total'] ?? 0) / $pagination['pages_limit']);
