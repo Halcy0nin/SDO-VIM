@@ -33,11 +33,11 @@ $pagination = [
 
 $resources_count = $db->query('
 SELECT 
-    COUNT(*) as total 
+    COUNT(*) AS total 
 FROM 
-    school_inventory si
-WHERE 
-    si.item_status = 3;
+    condemned_requests
+WHERE
+    is_active = 1
 ')->get();
 
 

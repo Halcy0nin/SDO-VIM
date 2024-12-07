@@ -37,6 +37,8 @@ SELECT
     COUNT(*) AS total 
 FROM 
     repair_requests
+WHERE
+    is_active = 1
 ')->get();
 
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);

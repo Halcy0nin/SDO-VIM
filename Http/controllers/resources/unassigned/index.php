@@ -54,7 +54,7 @@ $pagination = [
     'start' => 0,
 ];
 
-$resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory si WHERE si.school_id IS NULL')->get();
+$resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory si WHERE si.school_id IS NULL AND si.item_assigned_status = 0')->get();
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
@@ -86,7 +86,8 @@ LIMIT :start,:end
 ])->get();
 
 $schoolDropdownContent = $db->query('
-        SELECT school_name, school_id FROM schools;
+        SELECT school_name, school_id FROM schools
+        WHERE is_archived = 0;
 ') ->get();
 
 view('resources/unassigned/index.view.php', [

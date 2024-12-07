@@ -34,6 +34,7 @@ $pagination = [
 $itemRequestsCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM item_requests ir
+    WHERE ir.is_active = 1
 ')->find();
 
 $pagination['pages_total'] = ceil($itemRequestsCountQuery['total'] / $pagination['pages_limit']);

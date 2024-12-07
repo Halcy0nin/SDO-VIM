@@ -63,7 +63,7 @@ $pagination = [
 ];
 
 $resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory si WHERE 
-    si.item_assigned_status = 1 AND 2')->get();
+    si.item_assigned_status = 1')->get();
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 
@@ -87,10 +87,7 @@ FROM
 JOIN 
     schools s ON s.school_id = si.item_assigned_school
 WHERE 
-    si.item_assigned_status = 1;
-
-AND 
-    si.item_assigned_status = 2
+    si.item_assigned_status = 1
 AND 
     si.is_archived = 0
 LIMIT :start,:end

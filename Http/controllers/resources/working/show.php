@@ -93,6 +93,14 @@ $totalResourcesQuery = $db->query("
     FROM school_inventory si
     LEFT JOIN schools s ON s.school_id = si.school_id
     $whereClause
+    AND 
+        si.item_status = 1
+    AND 
+        si.is_archived = 0
+    AND
+        si.item_request_status = 1
+    AND 
+        si.item_assigned_status = 2
 ", $params)->get();
 
 $pagination['pages_total'] = ceil($totalResourcesQuery[0]['total'] / $pagination['pages_limit']);
@@ -117,12 +125,14 @@ $resources = $db->paginate("
     LEFT JOIN 
         schools s ON s.school_id = si.school_id
     $whereClause
+    AND 
+        si.item_status = 1
+    AND 
+        si.is_archived = 0
     AND
-    si.item_request_status = 1
+        si.item_request_status = 1
     AND 
-    si.item_assigned_status = 2
-    AND 
-    si.is_archived = 0
+        si.item_assigned_status = 2
     LIMIT :start, :end
 ", array_merge($params, [
     'start' => (int)$pagination['start'],

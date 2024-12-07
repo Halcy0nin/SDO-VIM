@@ -110,9 +110,33 @@ $conditions[] = "(
 // Build the final query with conditions
 $whereClause = 'WHERE ' . implode(' AND ', $conditions);
 
+$pagination = [
+    'pages_limit' => 10,
+    'pages_current' => isset($_GET['page']) ? (int)$_GET['page'] : 1,
+    'pages_total' => 0,
+    'start' => 0,
+];
+
+$resources_count = $db->query("
+SELECT 
+    COUNT(*) as total 
+FROM 
+    school_inventory si
+LEFT JOIN 
+    schools s ON s.school_id = si.school_id 
+    $whereClause
+    AND 
+    si.item_assigned_status = 1
+", $params)->get();
+
+$pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
+$pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
+$pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
+
+
 $resources = [];
 
-$resources = $db->query("
+$resources = $db->paginate("
     SELECT 
     si.item_code,
     si.item_article,
@@ -132,6 +156,7 @@ AND
 view('resources/assigned/index.view.php', [
     'heading' => 'Assigned Resources',
     'years' => $years,
+    'pagination' => $pagination,
     'notificationCount' => $notificationCount,
     'resources' => $resources,
     'startDate' => $_POST['yearFilter'] ?? '', // Keep original input for the view

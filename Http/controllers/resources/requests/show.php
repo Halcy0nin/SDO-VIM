@@ -146,7 +146,7 @@ LIMIT :start, :end;
 ]))->get();
 
 view('resources/requests/index.view.php', [
-    'heading' => 'Resource Requests',
+    'heading' => 'Add Item Requests',
     'notificationCount' => $notificationCount,
     'years' => $years,
     'resources' => $resources,
