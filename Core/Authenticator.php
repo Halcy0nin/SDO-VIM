@@ -14,7 +14,7 @@ class Authenticator
 {
     public function attempt($user_name, $password)
     {
-        $user = App::resolve(Database::class)->query('select * from users where user_name = :user_name', [
+        $user = App::resolve(Database::class)->query('select * from users where user_name = :user_name and is_archived = 0', [
             'user_name' => $user_name
         ])->find();
 
