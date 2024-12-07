@@ -26,7 +26,7 @@ require base_path('views/partials/head.php') ?>
         
     <div class="dropdown4">
          <div class="select">
-            <span class="selected">Filter</span>
+            <span class="selected">Roles</span>
             <div class="caret"></div>
          </div>
       
