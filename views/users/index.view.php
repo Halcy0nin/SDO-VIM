@@ -46,8 +46,7 @@ require base_path('views/partials/head.php') ?>
    </div>
 
    </div>
-
-
+   
     <section class="mx-12 mb-12 inline-block grow rounded">
         <?php require base_path('views/partials/coordinator/users/users_table.php') ?>
     </section>
@@ -119,20 +118,7 @@ dropdowns.forEach(dropdown4 => {
             }
         });
     });
-
-
-
-
-
-
-
-
-
-
-
 });
-
-
 </script> 
 
 <script>

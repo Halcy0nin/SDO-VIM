@@ -46,6 +46,18 @@ if ($notificationCount > 5){
 
 $requests = [];
 
+$pagination = [
+    'pages_limit' => 10,
+    'pages_current' => isset($_GET['page']) ? (int)$_GET['page'] : 1,
+    'pages_total' => 0,
+    'start' => 0,
+];
+
+$resources_count = $db->query('SELECT COUNT(*) as total FROM users u')->get();
+$pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
+$pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
+$pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
+
 $requests = $db->query("
     SELECT 
     u.user_name,
@@ -67,5 +79,6 @@ WHERE
 view('users/denied/index.view.php', [
     'heading' => 'Denied Requests',
     'notificationCount' => $notificationCount,
-    'requests' => $requests
+    'requests' => $requests,
+    'pagination' => $pagination
 ]);
