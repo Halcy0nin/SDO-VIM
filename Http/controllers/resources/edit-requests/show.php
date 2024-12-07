@@ -137,7 +137,7 @@ $years = range($currentYear, $earliestYear);
 
 // Render the view
 view('resources/edit-requests/index.view.php', [
-    'heading' => 'Resource Requests',
+    'heading' => 'Edit Item Requests',
     'notificationCount' => $notificationCount,
     'years' => $years,
     'itemRequests' => $itemRequests,
