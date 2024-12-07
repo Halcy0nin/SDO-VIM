@@ -11,13 +11,20 @@ require base_path('views/partials/head.php') ?>
 <main class="main-col">
     <section class="flex items-center pr-12 gap-3">
         <?php require base_path('views/partials/banner.php') ?>
-        <?php require base_path('views/partials/coordinator/schools/archived_schools_button.php') ?>
-        <?php require base_path('views/partials/coordinator/schools/add_school_modal.php') ?>
-        <?php require base_path('views/partials/coordinator/schools/import_school_modal.php') ?>
-        <?php require base_path('views/partials/coordinator/schools/export_school_modal.php') ?>
+
+        <a href="/coordinator/schools">
+            <button style="background-color: #434f72; color: white; border: none; border-radius: 0.375rem; font-weight: bold; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"
+                onmouseover="this.style.backgroundColor='#3a4565'"
+                onmouseout="this.style.backgroundColor='#434f72'"
+                class="flex items-center w-fit shrink-0 px-3 py-2 gap-2">
+                <i class="bi bi-arrow-left-circle-fill"></i>
+                <p>Schools</p>
+            </button>
+        </a>
+        
     </section>
     <section class="mx-12 flex flex-col">
-        <form class="search-container search" method="POST" action="/coordinator/schools/s">
+        <form class="search-container search" method="POST" action="/coordinator/schools/archived/s">
             <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
@@ -132,13 +139,11 @@ require base_path('views/partials/head.php') ?>
                                 <td>
                                     <div class="h-full w-full flex items-center gap-2">
                                         <button class="inventory-btn">
-                                            <a href="/coordinator/school-inventory/<?= $school['school_id'] ?>">
+                                            <a href="/coordinator/schools/archived/inventory/<?= $school['school_id'] ?>">
                                                 <i class="bi bi-box-seam-fill"></i>
                                             </a>
                                         </button>
-                                        <?php require base_path('views/partials/coordinator/schools/view_receipt_modal.php') ?>
-                                        <?php require base_path('views/partials/coordinator/schools/edit_school_modal.php') ?>
-                                        <?php require base_path('views/partials/coordinator/schools/delete_school_modal.php') ?>
+                                        <?php require base_path('views/partials/coordinator/schools/unarchive_school_modal.php') ?>
                                     </div>
                                 </td>
                             </tr>

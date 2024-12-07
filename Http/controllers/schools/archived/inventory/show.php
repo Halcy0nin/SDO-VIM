@@ -85,7 +85,7 @@ $resources_count = $db->query("
     LEFT JOIN schools s ON s.school_id = si.school_id
     $whereClause
     AND si.school_id = :id 
-    AND si.is_archived = 0
+    AND si.is_archived = 1
     AND si.item_request_status = 1
     AND
         item_request_status = 1
@@ -135,7 +135,7 @@ $items = $db->paginate("
     INNER JOIN users u ON h.user_id = u.user_id
     $whereClause
     AND si.school_id = :id 
-    AND si.is_archived = 0
+    AND si.is_archived = 1
     AND
         item_request_status = 1
     AND 
@@ -171,7 +171,7 @@ $statusMap = [
 ];
 
 // Render the view
-view('school-inventory/show.view.php', [
+view('schools/archived/inventory/index.view.php', [
     'id' => $params['id'] ?? null,
     'heading' => $schoolName,
     'years' => $years,

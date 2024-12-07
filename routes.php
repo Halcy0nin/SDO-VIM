@@ -84,6 +84,14 @@ $router->post('/coordinator/resources/importcsv', '/resources/import/store.php')
 
 $router->get('/coordinator/schools', 'schools/index.php')->only('coordinator');
 $router->post('/coordinator/schools/s', 'schools/show.php')->only('coordinator');
+
+$router->get('/coordinator/schools/archived', 'schools/archived/index.php')->only('coordinator');
+$router->post('/coordinator/schools/archived/s', 'schools/archived/show.php')->only('coordinator');
+$router->patch('/coordinator/schools/archived', '/schools/archived/patch.php')->only('coordinator');
+
+$router->get('/coordinator/schools/archived/inventory/{id}', 'schools/archived/inventory/index.php')->only('coordinator');
+$router->post('/coordinator/schools/archived/inventory/{id}/s', 'schools/archived/inventory/show.php')->only('coordinator');
+
 //Create School
 $router->post('/coordinator/schools', '/schools/store.php')->only('coordinator');
 //Edit School Details
