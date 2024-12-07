@@ -61,17 +61,11 @@ $resources_count = $db->query('
 SELECT 
     COUNT(*) as total 
 FROM 
-    school_inventory si
+    repair_requests rr
 WHERE 
-    si.item_status = 2
+    rr.is_active = 1
 AND
-    si.school_id = :id
-AND
-    si.item_request_status = 1
-AND 
-    si.item_assigned_status = 2
-AND 
-    si.is_archived = 0;
+    rr.school_id = :id;
 ',[
     'id' => $_SESSION['user']['school_id'] ?? null
 ])->get();
@@ -83,7 +77,7 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
 $currentYear = date('Y'); // Current year
-$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(request_date)) AS earliest_year FROM repair_requests')->find();
 $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
 

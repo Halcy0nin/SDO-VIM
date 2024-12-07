@@ -85,27 +85,23 @@ $pagination = [
 $conditions = [];
 $params = [
     'search_code' => '%' . strtolower($searchTerm) . '%',
-    'search_article' => '%' . strtolower($searchTerm) . '%',
-    'search_desc' => '%' . strtolower($searchTerm) . '%'
 ];
 
 // Apply date filter only if clearFilter was not clicked
 if (!$clearFilter) {
     if ($startDate && $endDate) {
-        $conditions[] = "si.date_acquired BETWEEN :startDate AND :endDate";
+        $conditions[] = "rr.request_date BETWEEN :startDate AND :endDate";
         $params['startDate'] = $startDate;
         $params['endDate'] = $endDate;
     } elseif ($endDate) {
-        $conditions[] = "si.date_acquired <= :endDate";
+        $conditions[] = "rr.request_date <= :endDate";
         $params['endDate'] = $endDate;
     }
 }
 
 // Combine search conditions
 $conditions[] = "(
-    si.item_code LIKE :search_code OR
-    si.item_article LIKE :search_article OR
-    si.item_desc LIKE :search_desc
+    rr.item_code LIKE :search_code
 )";
 
 // Build the final query with conditions
@@ -115,18 +111,12 @@ $resources_count = $db->query("
 SELECT 
     COUNT(*) as total 
 FROM 
-    school_inventory si
+    repair_requests rr
     $whereClause
-AND 
-    si.item_status = 2
 AND
-    si.school_id = :id 
+    rr.is_active = 1
 AND
-    si.item_request_status = 1
-AND 
-    si.item_assigned_status = 2
-AND 
-    si.is_archived = 0
+    rr.school_id = :id;
 ", array_merge($params, [
     'id' => $_SESSION['user']['school_id'] ?? null
     ]))->get();
@@ -138,7 +128,7 @@ $pagination['pages_current'] = max(1, min($pagination['pages_current'], $paginat
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
 $currentYear = date('Y'); // Current year
-$earliestYearQuery = $db->query('SELECT MIN(YEAR(date_acquired)) AS earliest_year FROM school_inventory')->find();
+$earliestYearQuery = $db->query('SELECT MIN(YEAR(request_date)) AS earliest_year FROM repair_requests')->find();
 $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
 

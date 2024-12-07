@@ -58,7 +58,13 @@ $pagination = [
 ];
 
 $resources_count = $db->query('SELECT COUNT(*) as total FROM school_inventory si WHERE
-    si.school_id = :id', ['id' => $_SESSION['user']['school_id'] ?? null,])->get();
+    si.school_id = :id 
+    AND
+    si.item_request_status = 1
+    AND 
+    si.item_assigned_status = 2
+    AND 
+    si.is_archived = 0', ['id' => $_SESSION['user']['school_id'] ?? null,])->get();
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 

@@ -61,17 +61,11 @@ $resources_count = $db->query('
 SELECT 
     COUNT(*) as total 
 FROM 
-    school_inventory si
+    condemned_requests cr
 WHERE 
-    si.item_status = 3
+    cr.is_active = 1
 AND
-    si.school_id = :id 
-AND
-    si.item_request_status = 1
-AND 
-    si.item_assigned_status = 2
-AND 
-    si.is_archived = 0;
+    cr.school_id = :id;
 ',[
     'id' => $_SESSION['user']['school_id'] ?? null
 ])->get();

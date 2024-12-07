@@ -87,27 +87,23 @@ $pagination = [
 $conditions = [];
 $params = [
     'search_code' => '%' . strtolower($searchTerm) . '%',
-    'search_article' => '%' . strtolower($searchTerm) . '%',
-    'search_desc' => '%' . strtolower($searchTerm) . '%'
 ];
 
 // Apply date filter only if clearFilter was not clicked
 if (!$clearFilter) {
     if ($startDate && $endDate) {
-        $conditions[] = "si.date_acquired BETWEEN :startDate AND :endDate";
+        $conditions[] = "cr.date_acquired BETWEEN :startDate AND :endDate";
         $params['startDate'] = $startDate;
         $params['endDate'] = $endDate;
     } elseif ($endDate) {
-        $conditions[] = "si.date_acquired <= :endDate";
+        $conditions[] = "cr.date_acquired <= :endDate";
         $params['endDate'] = $endDate;
     }
 }
 
 // Combine search conditions
 $conditions[] = "(
-    si.item_code LIKE :search_code OR
-    si.item_article LIKE :search_article OR
-    si.item_desc LIKE :search_desc 
+    cr.item_code LIKE :search_code
 )";
 
 // Build the final query with conditions
@@ -117,15 +113,13 @@ $resources_count = $db->query("
 SELECT 
     COUNT(*) as total 
 FROM 
-    school_inventory si
-LEFT JOIN 
-    schools s ON s.school_id = si.school_id 
-$whereClause
-AND 
-    si.item_status = 3
-AND 
-    si.school_id = :id
-",array_merge($params, [
+    condemned_requests cr
+    $whereClause
+AND
+    cr.is_active = 1
+AND
+    cr.school_id = :id;
+", array_merge($params, [
     'id' => $_SESSION['user']['school_id'] ?? null
     ]))->get();
 
