@@ -80,5 +80,6 @@ view('schools/index.view.php', [
     'schools' => $schools,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
+    'districtFilterValue' => $_POST['districtFilterValue'] ?? 'All',
     'pagination' => $pagination
 ]);

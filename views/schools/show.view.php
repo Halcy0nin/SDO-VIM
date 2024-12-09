@@ -21,8 +21,29 @@ require base_path('views/partials/head.php') ?>
             <button type="submit" class="search">
                 <i class="bi bi-search"></i>
             </button>
-        </form>
     </section>
+
+    <div class="dropdown4">
+         <div class="select">
+            <span class="selected">District</span>
+            <div class="caret"></div>
+         </div>
+      
+         <input id="districtFilterValue" name="districtFilterValue" value="<?= $districtFilterValue ?>" type="hidden" />
+            
+            <ul class="menu">
+                  <li data-value="All">All</li>
+                  <li data-value="1">Congressional I</li>
+                  <li data-value="2">Congressional II</li> <!-- Default option to show all schools -->
+            </ul>
+        </div>
+        <div class="date-filter-container7">
+        <input type="hidden" name="yearFilter" id="yearFilter" value="">
+        <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+        <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+
+      </form>
+   </div>
     <section class="mx-12 mb-12 inline-block grow rounded">
         <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
             <table class="table table-striped m-0">
@@ -219,4 +240,70 @@ require base_path('views/partials/head.php') ?>
       // Re-append sorted rows to the table
       rowsArray.forEach(row => table.appendChild(row));
    }
+</script>
+
+<script>  
+const dropdowns = document.querySelectorAll('.dropdown4');
+
+dropdowns.forEach(dropdown4 => {
+    const select = dropdown4.querySelector('.select');
+    const caret = dropdown4.querySelector('.caret');
+    const menu = dropdown4.querySelector('.menu');
+    const options = dropdown4.querySelectorAll('.menu li'); // Corrected to select all `li` elements
+    const selected = dropdown4.querySelector('.selected');
+
+    // Toggle dropdown menu visibility
+    select.addEventListener('click', () => {
+        select.classList.toggle('select-clicked');
+        caret.classList.toggle('caret-rotate');
+        menu.classList.toggle('menu-open');
+    });
+
+    // Add click event listener to each option
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            selected.innerText = option.innerText; // Update displayed text
+            select.classList.remove('select-clicked');
+            caret.classList.remove('caret-rotate');
+            menu.classList.remove('menu-open');
+            options.forEach(opt => opt.classList.remove('active')); // Remove active class from all
+            option.classList.add('active'); // Add active class to clicked option
+
+            // Update hidden input value
+            const value = option.getAttribute('data-value');
+            const roleFilterInput = document.getElementById('roleFilterValue');
+            if (roleFilterInput) {
+                roleFilterInput.value = value;
+            }
+        });
+    });
+});
+</script> 
+
+<script>
+    // JavaScript function to set the value of the hidden input for districtFilterValue
+    function setDistrictFilter(value, text) {
+        // Update the hidden input value for districtFilterValue
+        const districtFilterInput = document.getElementById('districtFilterValue');
+        if (districtFilterInput) {
+            districtFilterInput.value = value; // Set the value to the data-value
+        }
+
+        // Update the display text specifically for districtFilterValue
+        const districtFilterDisplay = document.querySelector('.dropdown4 .selected');
+        if (districtFilterDisplay) {
+            districtFilterDisplay.textContent = text; // Set the text to the clicked item's inner text
+        }
+    }
+
+    // Event listener for dropdown items
+    document.querySelectorAll('.dropdown4 .menu li').forEach(item => {
+        item.addEventListener('click', function () {
+            const value = this.getAttribute('data-value'); // Get the data-value
+            const text = this.textContent; // Get the display text
+
+            // Call setDistricFilter with the selected value and text
+            setDistrictFilter(value, text);
+        });
+    });
 </script>

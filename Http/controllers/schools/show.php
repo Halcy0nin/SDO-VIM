@@ -6,6 +6,15 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
+$districtFilterValue = $_POST['districtFilterValue'] ?? 'All';
+$clearFilter = isset($_POST['clearFilter']);
+$searchTerm = trim($_POST['search'] ?? '');
+
+if ($clearFilter) {
+    $districtFilterValue = 'All';
+    $searchTerm = '';
+}
+
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
@@ -22,6 +31,36 @@ if ($notificationCount > 5){
     $notificationCount = '5+';
 };
 
+$conditions = [];
+$parameters = [
+   'search_id' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+    'search_name' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+    'search_type' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+    'search_division' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+    'search_district' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+    'search_contact' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+    'search_email' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+    'search_no' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%'
+];
+
+
+// Apply filters
+if ($districtFilterValue !== 'All') {
+    $conditions[] = "s.district_id = :district";
+    $parameters['district'] = $districtFilterValue;
+}
+
+$conditions[] = "(
+    s.school_id LIKE :search_id OR
+    s.school_name LIKE :search_name OR
+    t.school_type LIKE :search_type OR
+    d.school_division LIKE :search_division OR
+    di.school_district LIKE :search_district OR
+    sc.contact_name LIKE :search_contact OR
+    sc.contact_email LIKE :search_email OR
+    sc.contact_no LIKE :search_no
+)";
+
 $schools = [];
 
 $pagination = [
@@ -31,7 +70,10 @@ $pagination = [
     'start' => 0,
 ];
 
-$resources_count = $db->query('
+$whereClause = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
+
+
+$resources_count = $db->query("
 SELECT 
     COUNT(*) as total 
 FROM 
@@ -40,32 +82,15 @@ JOIN types t ON s.type_id = t.id
 JOIN divisions d ON s.division_id = d.id
 JOIN districts di ON s.district_id = di.id
 LEFT JOIN school_contacts sc ON s.school_id = sc.school_id
-WHERE
-	s.school_id LIKE :search_id OR
-    s.school_name LIKE :search_name OR
-    t.school_type LIKE :search_type OR
-    d.school_division LIKE :search_division OR
-    di.school_district LIKE :search_district OR
-    sc.contact_name LIKE :search_contact OR
-    sc.contact_email LIKE :search_email OR
-    sc.contact_no LIKE :search_no
-', [
-    'search_id' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_name' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_type' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_division' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_district' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_contact' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_email' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_no' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-])->get();
+$whereClause
+",  $parameters)->get();
 
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 $pagination['start'] = ($pagination['pages_current'] - 1) * $pagination['pages_limit'];
 
 if ($resources_count[0]['total'] !== 0) {
-    $schools = $db->paginate('
+    $schools = $db->paginate("
     SELECT 
         s.school_id,
         s.school_name,
@@ -95,30 +120,14 @@ if ($resources_count[0]['total'] !== 0) {
             WHERE r2.school_id = r1.school_id
         )
     ) r ON s.school_id = r.school_id
-    WHERE
-        s.school_id LIKE :search_id OR
-        s.school_name LIKE :search_name OR
-        t.school_type LIKE :search_type OR
-        d.school_division LIKE :search_division OR
-        di.school_district LIKE :search_district OR
-        sc.contact_name LIKE :search_contact OR
-        sc.contact_email LIKE :search_email OR
-        sc.contact_no LIKE :search_no
+    $whereClause
     AND
         is_archived = 0
     LIMIT :start,:end
-', [
-    'search_id' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_name' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_type' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_division' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_district' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_contact' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_email' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
-    'search_no' => '%' . strtolower(trim($_POST['search'] ?? '')) . '%',
+",  array_merge($parameters, [
     'start' => (int)$pagination['start'],
-    'end' => (int)$pagination['pages_limit'],
-    ])->get();
+    'end' => (int)$pagination['pages_limit']
+]))->get();
 }
 
 view('schools/show.view.php', [
@@ -127,6 +136,7 @@ view('schools/show.view.php', [
     'notificationCount' => $notificationCount,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
+    'districtFilterValue' => $districtFilterValue,
     'pagination' => $pagination,
-    'search' => $_POST['search']
+    'search' => $searchTerm
 ]);
