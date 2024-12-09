@@ -35,7 +35,7 @@ try {
     toast('Failed to unarchive the school. Please try again.');
 
     // Redirect back to the schools list
-    redirect('/coordinator/schools');
+    redirect('/coordinator/schools/archived');
 
 } catch (Exception $e) {
     // Handle any other types of exceptions
@@ -45,5 +45,5 @@ try {
     toast('An unexpected error occurred. Please try again later.');
 
     // Redirect back to the schools list
-    redirect('/coordinator/schools');
+    redirect('/coordinator/schools/archived');
 }

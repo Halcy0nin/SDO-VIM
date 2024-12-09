@@ -6,15 +6,6 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
-$roleFilterValue = $_POST['roleFilterValue'] ?? 'All';
-$clearFilter = isset($_POST['clearFilter']);
-$searchTerm = trim($_POST['search'] ?? '');
-
-if ($clearFilter) {
-    $roleFilterValue = 'All';
-    $searchTerm = '';
-}
-
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
@@ -27,34 +18,9 @@ $notificationCountQuery = $db->query('
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
-// Initialize SQL conditions and parameters
-$conditions = [];
-$parameters = [
-    'search_id' => '%' . strtolower($searchTerm) . '%',
-    'search_school' => '%' . strtolower($searchTerm) . '%',
-    'search_school' => '%' . strtolower($searchTerm) . '%',
-    'search_uname' => '%' . strtolower($searchTerm) . '%',
-    'search_contact' => '%' . strtolower($searchTerm) . '%',
-    'search_no' => '%' . strtolower($searchTerm) . '%',
-    'search_email' => '%' . strtolower($searchTerm) . '%'
-];
-
-// Apply filters
-if ($roleFilterValue !== 'All') {
-    $conditions[] = "u.role = :role";
-    $parameters['role'] = $roleFilterValue;
-}
-
-$conditions[] = "(
-    u.user_id LIKE :search_id OR
-    s.school_name LIKE :search_school OR
-    u.user_name LIKE :search_uname OR
-    c.contact_name LIKE :search_contact OR
-    c.contact_no LIKE :search_no OR
-    c.contact_email LIKE :search_email
-)";
-
-$whereClause = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
+if ($notificationCount > 5){
+    $notificationCount = '5+';
+};
 
 $users = [];
 
@@ -75,9 +41,9 @@ $users = $db->paginate("
         u.user_id,
         u.school_id,
         u.user_name,
-        u.is_archived,
         u.date_added,
         u.date_modified,
+        u.is_archived,
         u.role as user_role,
         CASE
             WHEN u.role = 1 THEN 'Coordinator'
@@ -90,22 +56,20 @@ $users = $db->paginate("
     FROM users u
     LEFT JOIN schools s ON u.school_id = s.school_id
     LEFT JOIN school_contacts c ON u.school_id = c.school_id
-    $whereClause
-    AND
-        u.is_archived = 0
+    WHERE
+        u.is_archived = 1
     LIMIT :start,:end
-",  array_merge($parameters, [
+", [
     'start' => (int)$pagination['start'],
-    'end' => (int)$pagination['pages_limit']
-]))->get();
+    'end' => (int)$pagination['pages_limit'],
+])->get();
 
-view('users/index.view.php', [
-    'heading' => 'Users',
-    'users' => $users,
+view('users/archived/index.view.php', [
+    'heading' => 'Archived Users',
     'notificationCount' => $notificationCount,
+    'users' => $users,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],
-    'pagination' => $pagination,
     'roleFilterValue' => $_POST['roleFilterValue'] ?? 'All',
-    'search' => $searchTerm
+    'pagination' => $pagination
 ]);

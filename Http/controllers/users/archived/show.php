@@ -92,15 +92,15 @@ $users = $db->paginate("
     LEFT JOIN school_contacts c ON u.school_id = c.school_id
     $whereClause
     AND
-        u.is_archived = 0
+        u.is_archived = 1
     LIMIT :start,:end
 ",  array_merge($parameters, [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit']
 ]))->get();
 
-view('users/index.view.php', [
-    'heading' => 'Users',
+view('users/archived/index.view.php', [
+    'heading' => 'Archived Users',
     'users' => $users,
     'notificationCount' => $notificationCount,
     'errors' => Session::get('errors') ?? [],

@@ -31,4 +31,12 @@
             Denied Requests
         </a>
     </li>
+    <li class="nav-item">
+        <a
+            class="nav-link <?php echo str_contains($_SERVER['REQUEST_URI'], 'archived') ? 'active' : '' ?>"
+            aria-current="<?php echo str_contains($_SERVER['REQUEST_URI'], 'archived') ? 'page' : '' ?>"
+            href="/coordinator/users/archived">
+            Archived
+        </a>
+    </li>
 </ul>

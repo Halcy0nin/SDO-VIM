@@ -42,6 +42,7 @@ $users = $db->paginate("
         u.school_id,
         u.user_name,
         u.date_added,
+        u.is_archived,
         u.date_modified,
         u.role as user_role,
         CASE
