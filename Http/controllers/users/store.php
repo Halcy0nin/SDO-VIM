@@ -76,13 +76,4 @@ try {
     // Redirect back to the user creation form
     redirect('/coordinator/users');
 
-} catch (Exception $e) {
-    // Handle any other types of exceptions
-    error_log($e->getMessage());
-
-    // Show a general error toast message
-    toast('An unexpected error occurred. Please try again later.');
-
-    // Redirect back to the user creation form
-    redirect('/coordinator/users');
 }

@@ -58,7 +58,7 @@ class UserAddForm
             $this->errors['add_user']['password'] = 'Please enter a valid password with at least 8 characters.';
         } elseif (!Validator::no_whitespace($attributes['password'])) {
             $this->errors['add_user']['password'] = 'Password should not contain any whitespace.';
-        } elseif (!Validator::regex($attributes['password'], '/[!@#$%^&*(),.?":{}|<>]/')) {
+        } elseif (!Validator::regex($attributes['password'], '/[!@#$%^&*(),.?":{}|<>_\-]/')) {
             $this->errors['add_user']['password'] = 'Password must include at least one special character.';
         }
         
