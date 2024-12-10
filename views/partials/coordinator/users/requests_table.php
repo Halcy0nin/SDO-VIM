@@ -1,10 +1,44 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <div class="table-responsive inline-block mt-0 bg-zinc-50 rounded border-[1px]">
     <table class="table table-striped">
         <thead>
-            <th class="w-[8ch]">ID</th>
-            <th>Requester</th>
-            <th>Requested Username</th>
-            <th class="w-[5ch]">Date Requested</th>
+            <th class="w-[8ch]">
+                <div class="header-content">
+                    ID
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                    </span>
+                </div>
+            </th>
+            <th>
+                <div class="header-content">
+                    Requester
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                    </span>
+                </div>
+            </th>
+            <th>
+                <div class="header-content">
+                    Requested Username
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
+                    </span>
+                </div>
+            </th>
+            <th class="w-[5ch]">
+                <div class="header-content">
+                    Date Requested
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                    </span>
+                </div>
+            </th>
             <?php if ($options ?? false): ?>
                 <th class="w-[12ch]">Actions</th>
             <?php endif; ?>
@@ -65,3 +99,32 @@
         </tfoot>
     </table>
 </div>
+
+<script>
+   let sortOrder = 'asc'; // Initially set to ascending order
+
+   function sortTable(columnIndex) {
+      const table = document.querySelector("table tbody");
+      const rowsArray = Array.from(table.rows);
+
+      // Toggle the sort order
+      sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+      // Sorting rows
+      rowsArray.sort((rowA, rowB) => {
+         const cellA = rowA.cells[columnIndex].innerText.trim();
+         const cellB = rowB.cells[columnIndex].innerText.trim();
+
+         if (!isNaN(cellA) && !isNaN(cellB)) {
+            // Compare numbers
+            return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
+         } else {
+            // Compare text
+            return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+         }
+      });
+
+      // Re-append sorted rows to the table
+      rowsArray.forEach(row => table.appendChild(row));
+   }
+</script>
