@@ -990,10 +990,17 @@ body {
   background-color: rgba(67, 79, 114, 0.8);
 }
 
+
+.parent-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /* Optional: vertically align if needed */
+  padding-right: 50px; /* Optional: add spacing from the edge */
+}
+
 .move-button {
-  position: absolute; /* Position the button absolutely */
-  right: 4rem; /* Align it 20px from the right side */
-  top: 10rem; /* Adjust to your preference */
+  justify-content: end;
+  margin-top: -3.5rem; /* Adjust to your preference */
   display: flex;
   align-items: center;
   padding: 15px 20px;

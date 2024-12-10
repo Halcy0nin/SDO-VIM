@@ -1,9 +1,11 @@
 <!-- Modal Button -->
 
-<button class="move-button" data-bs-toggle="modal" data-bs-target="#assignResourceModal">
-    <i class="bi bi-stack"></i>
-    <p>Assign Resources</p>
-</button>
+<div class="parent-container">
+    <button class="move-button" data-bs-toggle="modal" data-bs-target="#assignResourceModal">
+        <i class="bi bi-stack"></i>
+        <p>Assign Resources</p>
+    </button>
+</div>
 
 <!-- Modal -->
 <main class="modal fade" id="assignResourceModal" tabindex="-1" aria-labelledby="assignResourceModalLabel" aria-hidden="true">
