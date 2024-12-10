@@ -39,9 +39,17 @@ require base_path('views/partials/head.php') ?>
          <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
          </form>
       </div>
+
+      <div id="untag_multi_resource" style="display:none">
+         <?php require base_path('views/partials/coordinator/resources/untag_multi_resource_modal.php') ?>
+      </div>
+
       <div class="table-responsive h-full mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped">
             <thead>
+               <th>
+                  <input type="checkbox" id="select-all-button" />
+               </th>
                <th>ID</th>
                <th>Item Article</th>
                <th>Date Assigned</th>
@@ -51,6 +59,9 @@ require base_path('views/partials/head.php') ?>
             <tbody>
                <?php foreach ($resources as $resource): ?>
                   <tr>
+                     <td>
+                        <input type="checkbox" value="<?php echo htmlspecialchars($resource['item_code']) ?>" id="select_<?php echo htmlspecialchars($resource['item_code']) ?>" name="selected_items[]" class="item-checkbox" />
+                     </td>
                      <td><?= htmlspecialchars($resource['item_code']) ?></td>
                      <td><?= htmlspecialchars($resource['item_article']) ?></td>
                      <td><?= htmlspecialchars(formatTimestamp($resource['item_assigned_date']) ?? '') ?></td>
@@ -96,6 +107,8 @@ require base_path('views/partials/head.php') ?>
 
 <?php require base_path('views/partials/footer.php') ?>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
 <script>  
 // Select both dropdown1 and dropdown-date
 const dropdowns = document.querySelectorAll('.dropdown1, .dropdown-date5');
@@ -137,4 +150,43 @@ dropdowns.forEach(dropdown => {
         document.getElementById('yearFilter').value = year;
         document.querySelector('.selected').textContent = year;
     }
+</script>
+
+<script>
+$(document).ready(function() {
+    const assignMultiResource = document.getElementById('untag_multi_resource');
+
+    // Function to update the visibility of the untag_multi_resource section
+    function updateStatusFields() {
+        const checkedCount = $(".item-checkbox:checked").length;
+        assignMultiResource.style.display = checkedCount > 0 ? 'block' : 'none';
+    }
+
+    // Event handler for the select-all button
+    $("#select-all-button").click(function() {
+        $(".item-checkbox").prop('checked', this.checked); // Set all checkboxes
+        updateStatusFields(); // Update the display of the resource assignment section
+    });
+
+    // Event handler for individual checkbox changes
+    $(".item-checkbox").change(function() {
+        updateStatusFields(); // Update the display whenever an individual checkbox changes
+    });
+
+    // Handle the opening of the modal
+    $("#untagResourceModal").on('show.bs.modal', function() {
+        // Clear any previous selected items
+        $('#selectedItemsContainer').empty();
+
+        // Get the checked checkboxes
+        $(".item-checkbox:checked").each(function() {
+            const itemCode = $(this).val();
+            // Create a hidden input for each selected item
+            $('#selectedItemsContainer').append('<input type="hidden" name="selected_items[]" value="' + itemCode + '">');
+        });
+    });
+
+    // Initial call to set the state of the resource assignment section
+    updateStatusFields();
+});
 </script>

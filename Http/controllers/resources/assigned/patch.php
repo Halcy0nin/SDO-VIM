@@ -6,9 +6,9 @@ use Core\App;
 $db = App::resolve(Database::class);
 
 try {
+    $selectedItems = $_POST['selected_items'] ?? [];
     if (isset($_POST['approve_assigned_item'])) { // Check if 'approve_assigned_item' button was pressed
         // Get the selected items from the POST request
-        $selectedItems = $_POST['selected_items'] ?? [];
         $school_id = $_POST['school_id'] ?? null;
         $item_code = $_POST['item_code'] ?? null;
 
