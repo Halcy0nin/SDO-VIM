@@ -52,8 +52,6 @@ class SchoolAddForm
 
         if (!Validator::string($attributes['school_name'], 1, 32)) {
             $this->errors['add_school']['school_name'] = 'Please enter a valid School Name.';
-        } elseif (!Validator::no_whitespace($attributes['school_name'])) {
-            $this->errors['add_school']['school_name'] = 'School Name should not contain any whitespace.';
         }
 
         if (!Validator::regex($attributes['school_type'], '/^(1|2)$/')) {
@@ -70,20 +68,14 @@ class SchoolAddForm
 
         if (!Validator::string($attributes['contact_name'], 1, 32)) {
             $this->errors['add_school']['contact_name'] = 'Please enter a valid Contact Name that is under 32 characters.';
-        } elseif (!Validator::no_whitespace($attributes['contact_name'])) {
-            $this->errors['add_school']['contact_name'] = 'Contact Name should not contain any whitespace.';
         }
 
         if (!Validator::regex($attributes['contact_no'], '/^\d{11}$/')) {
             $this->errors['add_school']['contact_no'] = 'Please enter a valid 11-digit contact number.';
-        } elseif (!Validator::no_whitespace($attributes['contact_no'])) {
-            $this->errors['add_school']['contact_no'] = 'Contact number should not contain any whitespace.';
         }
 
         if (!Validator::email($attributes['contact_email'])) {
             $this->errors['add_school']['contact_email'] = 'Please enter a valid email address.';
-        } elseif (!Validator::no_whitespace($attributes['contact_email'])) {
-            $this->errors['add_school']['contact_email'] = 'Email should not contain any whitespace.';
         }
     }
 

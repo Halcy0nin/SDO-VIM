@@ -49,45 +49,31 @@ class ResourceAddForm
     public function __construct(public array $attributes)
     {
         if (!Validator::string($attributes['item_article'], 1, 50)) {
-            $this->errors['add_resource']['item_article'] = 'There are errors with your string!';
-        } elseif (!Validator::no_whitespace($attributes['item_article'])) {
-            $this->errors['add_resource']['item_article'] = 'Item Article should not contain any whitespace.';
+            $this->errors['add_resource']['item_article'] = 'Invalid Item Article Input';
         }
 
         if (!Validator::string($attributes['item_desc'], 1, 50)) {
-            $this->errors['add_resource']['item_desc'] = 'There are errors with your string!';
-        } elseif (!Validator::no_whitespace($attributes['item_desc'])) {
-            $this->errors['add_resource']['item_desc'] = 'Item Description should not contain any whitespace.';
+            $this->errors['add_resource']['item_desc'] = 'Invalid Item Description Input';
         }
 
         if (!Validator::regex($attributes['item_unit_value'], '/^\$?(([1-9](\d*|\d{0,2}(,\d{3})*))|0)(\.\d{1,2})?$/')) {
-            $this->errors['add_resource']['item_unit_value'] = 'There are errors with your string!';
-        } elseif (!Validator::no_whitespace($attributes['item_unit_value'])) {
-            $this->errors['add_resource']['item_unit_value'] = 'Item Unit Value should not contain any whitespace.';
-        }
+            $this->errors['add_resource']['item_unit_value'] = 'Invalid Item Unit Value Input';
+        } 
 
         if (!Validator::regex($attributes['item_quantity'], '/^\d{1,10}$/')) {
-            $this->errors['add_resource']['item_quantity'] = 'There are errors with your string!';
-        } elseif (!Validator::no_whitespace($attributes['item_quantity'])) {
-            $this->errors['add_resource']['item_quantity'] = 'Item Quantity should not contain any whitespace.';
-        }
+            $this->errors['add_resource']['item_quantity'] = 'Invalid Item Quantity Input';
+        } 
 
         if (!Validator::regex($attributes['item_active'], '/^\d{1,11}$/')) {
-            $this->errors['add_resource']['item_active'] = 'There are errors with your string!';
-        } elseif (!Validator::no_whitespace($attributes['item_active'])) {
-            $this->errors['add_resource']['item_active'] = 'Item Active should not contain any whitespace.';
-        }
+            $this->errors['add_resource']['item_active'] = 'Invalid Active Item Input';
+        } 
 
         if (!Validator::regex($attributes['item_inactive'], '/^\d{1,11}$/')) {
-            $this->errors['add_resource']['item_inactive'] = 'There are errors with your string!';
-        } elseif (!Validator::no_whitespace($attributes['item_inactive'])) {
-            $this->errors['add_resource']['item_inactive'] = 'Item Inactive should not contain any whitespace.';
-        }
+            $this->errors['add_resource']['item_inactive'] = 'Invalid Inactive Item Input';
+        } 
 
         if (!Validator::string($attributes['item_funds_source'], 1, 50)) {
-            $this->errors['add_resource']['item_funds_source'] = 'There are errors with your string!';
-        } elseif (!Validator::no_whitespace($attributes['item_funds_source'])) {
-            $this->errors['add_resource']['item_funds_source'] = 'Item Funds Source should not contain any whitespace.';
+            $this->errors['add_resource']['item_funds_source'] = 'Invalid Source of Fund Input';
         }
     }
 
