@@ -5,7 +5,6 @@ require base_path('views/partials/head.php') ?>
 
 <!-- Your HTML code goes here -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <main class="main-col">
    <section class="flex items-center pr-12 gap-3">
       <?php require base_path('views/partials/banner.php') ?>

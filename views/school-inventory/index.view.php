@@ -79,8 +79,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Article
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
                            </span>
                   </div>
                </th>
@@ -88,8 +88,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Description
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
                            </span>
                   </div>
                </th>
@@ -97,8 +97,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Date Acquired
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
                            </span>
                   </div>
                </th>
@@ -106,8 +106,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Status
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
                            </span>
                   </div>
                </th>
@@ -115,8 +115,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Source of Funds
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(5)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(5)"></i>
                            </span>
                   </div>
                </th>
@@ -124,8 +124,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Unit Value
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(6)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(6)"></i>
                            </span>
                   </div>
                </th>
@@ -133,8 +133,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Qty
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(7)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(7)"></i>
                            </span>
                   </div>
                </th>
@@ -142,8 +142,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Total Value
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(8)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(8)"></i>
                            </span>
                   </div>
                </th>
@@ -151,8 +151,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Active
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(9)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(9)"></i>
                            </span>
                   </div>
                </th>
@@ -160,8 +160,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Inactive
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(10)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(10)"></i>
                            </span>
                   </div>
                </th>
@@ -169,8 +169,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Last Updated
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(11)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(11)"></i>
                            </span>
                   </div>
                </th>
@@ -178,8 +178,8 @@ require base_path('views/partials/head.php') ?>
                   <div class="header-content">
                            Action
                            <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(12)"></i>
+                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(12)"></i>
                            </span>
                   </div>
                </th>
