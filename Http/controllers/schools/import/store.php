@@ -6,6 +6,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 $db = App::resolve(Database::class);
 
+try {
 // Check for upload errors
 if ($_FILES['uploadedForm']['error'] > 0) {
     error_throw(['import_school' => ['uploadedForm' => 'Oh No! Something happened while uploading, please try again.']]);
@@ -88,4 +89,16 @@ if (in_array($file_ext, $allowed_ext)) {
     error_throw(['import_school' => ['file' => 'Invalid file extension.']]);
 }
 
+redirect('/coordinator/schools');
+
+} catch (PDOException $e) {
+    // Handle the database error gracefully
+    error_log($e->getMessage());  // Log the error for debugging
+
+    // Show an error toast message
+    toast('Failed to import schools. Please try again.');
+
+    // Redirect back to the previous page or the form
+    redirect('/coordinator/schools');
+}
 redirect('/coordinator/schools');
