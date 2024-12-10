@@ -80,7 +80,15 @@ require base_path('views/partials/head.php') ?>
                      </span>
                   </div>
                </th>
-               <th>No. Of Items</th>
+               <th>
+                  <div class="header-content">
+                     No. of Items
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                     </span>
+                  </div>
+               </th>
                <th>Actions</th>
             </thead>
             <tbody class="oveflow-y-scroll">
