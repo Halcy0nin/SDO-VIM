@@ -16,31 +16,31 @@ require base_path('views/partials/head.php') ?>
    </section>
 
    <form method="POST" action="/coordinator/school-inventory/<?= $id ?>/s">
-   
-   <section class="mx-12 flex flex-col">
-      <div class="search-container2 search">
-         <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
-         <button type="submit" class="search">
-            <i class="bi bi-search"></i>
-         </button>
-   </section>
 
-   
-   <div class="dropdown2">
+      <section class="mx-12 flex flex-col">
+         <div class="search-container2 search">
+            <input type="text" name="search" id="search" placeholder="Search" value="<?= $search ?? '' ?>" />
+            <button type="submit" class="search">
+               <i class="bi bi-search"></i>
+            </button>
+      </section>
+
+
+      <div class="dropdown2">
          <div class="select">
             <span class="selected">Filter</span>
             <div class="caret"></div>
          </div>
-         
-            <input id="statusFilterValue" name="statusFilterValue" value="<?= $statusFilterValue ?>" type="hidden" /> <!-- Hidden input to store selected value -->
-            
-            <ul class="menu">
-                  <li data-value="All">Status</li> 
-                  <li data-value="1">Working</li>
-                  <li data-value="2">For Repair</li>
-                  <li data-value="3">Condemned</li>
-            </ul>
-   </div>
+
+         <input id="statusFilterValue" name="statusFilterValue" value="<?= $statusFilterValue ?>" type="hidden" /> <!-- Hidden input to store selected value -->
+
+         <ul class="menu">
+            <li data-value="All">Status</li>
+            <li data-value="1">Working</li>
+            <li data-value="2">For Repair</li>
+            <li data-value="3">Condemned</li>
+         </ul>
+      </div>
       <div class="dropdown-date2">
          <div class="select">
             <span class="selected">Date Range</span>
@@ -49,137 +49,137 @@ require base_path('views/partials/head.php') ?>
          <ul class="menu">
             <?php foreach ($years as $year): ?>
                <li data-value="<?= htmlspecialchars($year); ?>" onclick="setYearFilter('<?= htmlspecialchars($year); ?>')">
-                     <?= htmlspecialchars($year); ?>
-                  </li>
+                  <?= htmlspecialchars($year); ?>
+               </li>
             <?php endforeach; ?>
          </ul>
       </div>
       <div class="date-filter-container8">
-      <input type="hidden" name="yearFilter" id="yearFilter" value="">
-      <button type="submit" class="filter-button" id="filter-btn">Filter</button>
-      <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
-      </form>
+         <input type="hidden" name="yearFilter" id="yearFilter" value="">
+         <button type="submit" class="filter-button" id="filter-btn">Filter</button>
+         <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
+   </form>
    </div>
-   
+
    <section class="mx-12 mb-12 inline-block grow rounded">
       <div class="table-responsive inline-block mt-4 bg-zinc-50 rounded border-[1px]">
          <table class="table table-striped m-0">
             <thead>
                <th style="width: 20ch;">
                   <div class="header-content">
-                           Item Code
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Item Code
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
+                     </span>
                   </div>
                </th>
                <th style="width: 10ch;">
                   <div class="header-content">
-                           Article
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Article
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                     </span>
                   </div>
                </th>
                <th style="width: 10ch;">
                   <div class="header-content">
-                           Description
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Description
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(2)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(2)"></i>
+                     </span>
                   </div>
                </th>
                <th style="width: 12ch;">
                   <div class="header-content">
-                           Date Acquired
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Date Acquired
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(3)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(3)"></i>
+                     </span>
                   </div>
                </th>
                <th style="width: 11ch;">
                   <div class="header-content">
-                           Status
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Status
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                     </span>
                   </div>
                </th>
                <th>
                   <div class="header-content">
-                           Source of Funds
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Source of Funds
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(5)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(5)"></i>
+                     </span>
                   </div>
                </th>
                <th>
                   <div class="header-content">
-                           Unit Value
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Unit Value
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(6)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(6)"></i>
+                     </span>
                   </div>
                </th>
                <th>
                   <div class="header-content">
-                           Qty
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Qty
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(7)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(7)"></i>
+                     </span>
                   </div>
                </th>
                <th>
                   <div class="header-content">
-                           Total Value
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Total Value
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(8)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(8)"></i>
+                     </span>
                   </div>
                </th>
                <th>
                   <div class="header-content">
-                           Active
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Active
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(9)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(9)"></i>
+                     </span>
                   </div>
                </th>
                <th>
                   <div class="header-content">
-                           Inactive
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Inactive
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(10)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(10)"></i>
+                     </span>
                   </div>
                </th>
                <th>
                   <div class="header-content">
-                           Last Updated
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Last Updated
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(11)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(11)"></i>
+                     </span>
                   </div>
                </th>
                <th>
                   <div class="header-content">
-                           Action
-                           <span class="sort-icons">
-                              <i class="fas fa-sort-up sort-icon" onclick=" sortTable(0)"></i>
-                              <i class="fas fa-sort-down sort-icon" onclick=" sortTable(0)"></i>
-                           </span>
+                     Action
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(12)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(12)"></i>
+                     </span>
                   </div>
                </th>
             </thead>
@@ -236,7 +236,7 @@ require base_path('views/partials/head.php') ?>
                               class="pagination-link">
                               <i class="bi bi-chevron-right"></i>
                            </a>
-                           <a href="/coordinator/school-inventory/<?= $id?>?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
+                           <a href="/coordinator/school-inventory/<?= $id ?>?page=<?= htmlspecialchars($pagination['pages_total']) ?>"
                               class="pagination-link">
                               <i class="bi bi-chevron-bar-right"></i>
                            </a>
@@ -253,62 +253,62 @@ require base_path('views/partials/head.php') ?>
 <?php require base_path('views/partials/footer.php') ?>
 
 <script>
-function sortTable(columnIndex, sortOrder) {
-    const table = document.querySelector("table tbody");
-    const rowsArray = Array.from(table.rows);
+   function sortTable(columnIndex, sortOrder) {
+      const table = document.querySelector("table tbody");
+      const rowsArray = Array.from(table.rows);
 
-    // Sorting rows
-    rowsArray.sort((rowA, rowB) => {
-        const cellA = rowA.cells[columnIndex].innerText.trim();
-        const cellB = rowB.cells[columnIndex].innerText.trim();
-        
-        if (!isNaN(cellA) && !isNaN(cellB)) {
+      // Sorting rows
+      rowsArray.sort((rowA, rowB) => {
+         const cellA = rowA.cells[columnIndex].innerText.trim();
+         const cellB = rowB.cells[columnIndex].innerText.trim();
+
+         if (!isNaN(cellA) && !isNaN(cellB)) {
             // Compare numbers
             return sortOrder === 'asc' ? cellA - cellB : cellB - cellA;
-        } else {
+         } else {
             // Compare text
             return sortOrder === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-        }
-    });
+         }
+      });
 
-    // Re-append sorted rows to the table
-    rowsArray.forEach(row => table.appendChild(row));
-}
+      // Re-append sorted rows to the table
+      rowsArray.forEach(row => table.appendChild(row));
+   }
 </script>
 
-<script>  
-// Select both dropdown1 and dropdown-date
-const dropdowns = document.querySelectorAll('.dropdown2, .dropdown-date2');
+<script>
+   // Select both dropdown1 and dropdown-date
+   const dropdowns = document.querySelectorAll('.dropdown2, .dropdown-date2');
 
-dropdowns.forEach(dropdown => {
+   dropdowns.forEach(dropdown => {
 
-   const select = dropdown.querySelector('.select');
-   const caret = dropdown.querySelector('.caret');
-   const menu = dropdown.querySelector('.menu');
-   const options = dropdown.querySelectorAll('.menu li'); // Updated to query all list items
-   const selected = dropdown.querySelector('.selected');
+      const select = dropdown.querySelector('.select');
+      const caret = dropdown.querySelector('.caret');
+      const menu = dropdown.querySelector('.menu');
+      const options = dropdown.querySelectorAll('.menu li'); // Updated to query all list items
+      const selected = dropdown.querySelector('.selected');
 
-   // Toggle dropdown menu on select click
-   select.addEventListener('click', () => {
-      select.classList.toggle('select-clicked');
-      caret.classList.toggle('caret-rotate');
-      menu.classList.toggle('menu-open');
-   });
+      // Toggle dropdown menu on select click
+      select.addEventListener('click', () => {
+         select.classList.toggle('select-clicked');
+         caret.classList.toggle('caret-rotate');
+         menu.classList.toggle('menu-open');
+      });
 
-   // Loop through each option in the menu
-   options.forEach(option => {
-      option.addEventListener('click', () => {
-         selected.innerText = option.innerText;
-         select.classList.remove('select-clicked');
-         caret.classList.remove('caret-rotate');
-         menu.classList.remove('menu-open');
-         options.forEach(option => {
-            option.classList.remove('active');
+      // Loop through each option in the menu
+      options.forEach(option => {
+         option.addEventListener('click', () => {
+            selected.innerText = option.innerText;
+            select.classList.remove('select-clicked');
+            caret.classList.remove('caret-rotate');
+            menu.classList.remove('menu-open');
+            options.forEach(option => {
+               option.classList.remove('active');
+            });
+            option.classList.add('active');
          });
-         option.classList.add('active');
-      });   
+      });
    });
-});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -343,48 +343,48 @@ dropdowns.forEach(dropdown => {
 </script>
 
 <script>
-    // JavaScript function to set the value of the hidden input
-    function setYearFilter(year) {
+   // JavaScript function to set the value of the hidden input
+   function setYearFilter(year) {
       // Update the hidden input value for yearFilter
-    const yearFilterInput = document.getElementById('yearFilter');
-    if (yearFilterInput) {
-        yearFilterInput.value = year;
-    }
+      const yearFilterInput = document.getElementById('yearFilter');
+      if (yearFilterInput) {
+         yearFilterInput.value = year;
+      }
 
-    // Update the display text specifically for yearFilter
-    const yearFilterDisplay = document.querySelector('.yearFilter .selected');
-    if (yearFilterDisplay) {
-        yearFilterDisplay.textContent = year;
-    }
-    }
+      // Update the display text specifically for yearFilter
+      const yearFilterDisplay = document.querySelector('.yearFilter .selected');
+      if (yearFilterDisplay) {
+         yearFilterDisplay.textContent = year;
+      }
+   }
 </script>
 
 <script>
-    // JavaScript function to set the value of the hidden input for statusFilterValue
-    function setStatusFilter(value, text) {
-        // Update the hidden input value for statusFilterValue
-        const statusFilterInput = document.getElementById('statusFilterValue');
-        if (statusFilterInput) {
-            statusFilterInput.value = value; // Set the value to the data-value
-        }
+   // JavaScript function to set the value of the hidden input for statusFilterValue
+   function setStatusFilter(value, text) {
+      // Update the hidden input value for statusFilterValue
+      const statusFilterInput = document.getElementById('statusFilterValue');
+      if (statusFilterInput) {
+         statusFilterInput.value = value; // Set the value to the data-value
+      }
 
-        // Update the display text specifically for statusFilterValue
-        const statusFilterDisplay = document.querySelector('.dropdown2 .selected');
-        if (statusFilterDisplay) {
-            statusFilterDisplay.textContent = text; // Set the text to the clicked item's inner text
-        }
-    }
+      // Update the display text specifically for statusFilterValue
+      const statusFilterDisplay = document.querySelector('.dropdown2 .selected');
+      if (statusFilterDisplay) {
+         statusFilterDisplay.textContent = text; // Set the text to the clicked item's inner text
+      }
+   }
 
-    // Event listener for dropdown items
-    document.querySelectorAll('.dropdown2 .menu li').forEach(item => {
-        item.addEventListener('click', function () {
-            const value = this.getAttribute('data-value'); // Get the data-value
-            const text = this.textContent; // Get the display text
+   // Event listener for dropdown items
+   document.querySelectorAll('.dropdown2 .menu li').forEach(item => {
+      item.addEventListener('click', function() {
+         const value = this.getAttribute('data-value'); // Get the data-value
+         const text = this.textContent; // Get the display text
 
-            // Call setStatusFilter with the selected value and text
-            setStatusFilter(value, text);
-        });
-    });
+         // Call setStatusFilter with the selected value and text
+         setStatusFilter(value, text);
+      });
+   });
 </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
