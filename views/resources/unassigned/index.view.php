@@ -22,10 +22,6 @@ require base_path('views/partials/head.php') ?>
       </section>
    </section>
 
-   <div id="assign_multi_resource" style="display:none">
-      <?php require base_path('views/partials/coordinator/resources/assign_multi_resource_modal.php') ?>
-   </div>
-
    <div class="dropdown-date1">
       <div class="select">
          <span class="selected">Date Range</span>
@@ -44,6 +40,10 @@ require base_path('views/partials/head.php') ?>
       <button type="submit" class="filter-button" id="filter-btn">Filter</button>
       <button name="clearFilter" type="submit" class="filter-button" id="filter-btn">Clear Filter</button>
       </form>
+   </div>
+
+   <div id="assign_multi_resource" style="display:none">
+      <?php require base_path('views/partials/coordinator/resources/assign_multi_resource_modal.php') ?>
    </div>
 
    <section class="mx-12 mb-12 h-dvh rounded flex flex-col">

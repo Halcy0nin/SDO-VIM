@@ -990,12 +990,18 @@ body {
   background-color: rgba(67, 79, 114, 0.8);
 }
 
-
 .parent-container {
   display: flex;
   justify-content: flex-end;
   align-items: center; /* Optional: vertically align if needed */
   padding-right: 50px; /* Optional: add spacing from the edge */
+}
+
+.parent-container1 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /* Optional: vertically align if needed */
+  padding-right: 0px; /* Optional: add spacing from the edge */
 }
 
 .move-button {
