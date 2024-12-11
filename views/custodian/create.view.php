@@ -28,6 +28,8 @@ require base_path('views/partials/head.php') ?>
    </section>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
 <script>
    const articleNames = JSON.parse('<?php echo $articleNames; ?>');
    const articleCounts = JSON.parse('<?php echo $articleCounts; ?>');
@@ -142,11 +144,31 @@ require base_path('views/partials/head.php') ?>
             title: {
                display: true,
                text: 'Inventory Status Ratio'
+            },
+            datalabels: {
+               anchor: 'center',
+               align: 'center',
+               formatter: (value, ctx) => {
+                  const total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
+                  const percentages = ctx.dataset.data.map(val => (val / total) * 100);
+                  const rounded = percentages.map((p, i) => i === ctx.dataset.data.length - 1
+                     ? Math.round(100 - percentages.slice(0, -1).reduce((a, b) => a + Math.round(b), 0))
+                     : Math.round(p)
+                  );
+                  return `${rounded[ctx.dataIndex]}%`;
+               },
+               color: '#000',
+               font: {
+                  weight: 'bold',
+                  size:10
+               }
             }
          }
-      }
+      },
+      plugins: [ChartDataLabels] 
    });
 </script>
+
 
 <script>
    const i_ratio_ctx = document.getElementById('i_ratio').getContext('2d');
@@ -164,14 +186,34 @@ require base_path('views/partials/head.php') ?>
          responsive: true,
          maintainAspectRatio: false,
          plugins: {
-            title: {
-               display: true,
-               text: 'Inventory Item Ratio'
+         title: {
+            display: true,
+            text: 'Inventory Item Ratio'
+         },
+         datalabels: {
+            anchor: 'center',
+            align: 'center',
+            formatter: (value, ctx) => {
+               const total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
+               const percentages = ctx.dataset.data.map(val => (val / total) * 100);
+               const rounded = percentages.map((p, i) => i === ctx.dataset.data.length - 1
+                  ? Math.round(100 - percentages.slice(0, -1).reduce((a, b) => a + Math.round(b), 0))
+                  : Math.round(p)
+               );
+               return `${rounded[ctx.dataIndex]}%`;
+            },
+            color: '#000',
+            font: {
+               weight: 'bold',
+               size: 10
             }
          }
       }
-   });
+   },
+   plugins: [ChartDataLabels] 
+});
 </script>
+
 <?php require base_path('views/partials/footer.php') ?>
 
 <script>  

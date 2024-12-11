@@ -42,7 +42,8 @@
                 </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Approve</button>
+                    <button type="submit" class="btn font-bold text-white bg-red-500 hover:bg-red-400">Reject</button>
+                    <button name="approve_request" type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Approve</button>
                 </div>
             </form>
         </div>
