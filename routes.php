@@ -198,6 +198,11 @@ $router->patch('/custodian/custodian-resources/repair', 'custodian-resources/rep
 $router->get('/custodian/custodian-resources/condemned', 'custodian-resources/condemned/index.php')->only('custodian');
 $router->post('/custodian/custodian-resources/condemned/s', 'custodian-resources/condemned/show.php')->only('custodian');
 
+$router->get('/custodian/custodian-resources/requests', 'custodian-resources/requests/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/requests/s', 'custodian-resources/requests/show.php')->only('custodian');
+
+$router->get('/custodian/custodian-resources/edit-requests', 'custodian-resources/edit-requests/index.php')->only('custodian');
+$router->post('/custodian/custodian-resources/edit-requests/s', 'custodian-resources/edit-requests/show.php')->only('custodian');
 //Assign Item to School
 $router->patch('/custodian/custodian-resources/unassigned', '/custodian-resources/unassigned/patch.php')->only('custodian');
 
