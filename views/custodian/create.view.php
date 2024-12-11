@@ -9,6 +9,9 @@ require base_path('views/partials/head.php') ?>
       <?php require base_path('views/partials/banner.php') ?>
       <div class="school-name-container">
             <h2 class="school-name"><?= $schoolName ?></h2>
+            <h2 class="date">
+               <?php echo "Data as of " . date("F Y"); ?>
+            </h2>
       </div>    
       <!-- Hide add receipt temporarily -->
       <!-- <//?php require base_path('views/partials/custodian/add_receipt_modal.php') ?> -->
