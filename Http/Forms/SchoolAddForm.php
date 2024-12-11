@@ -71,7 +71,7 @@ class SchoolAddForm
         }
 
         if (!Validator::regex($attributes['contact_no'], '/^\d{11}$/')) {
-            $this->errors['add_school']['contact_no'] = 'Please enter a valid 11-digit contact number.';
+            $this->errors['add_school']['contact_no'] = 'Please enter a valid 11-digit contact number. ';
         }
 
         if (!Validator::email($attributes['contact_email'])) {
