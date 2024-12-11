@@ -32,12 +32,8 @@ $pagination = [
 ];
 
 $resources_count = $db->query('
-SELECT 
-    COUNT(*) as total 
-FROM 
-    school_inventory si
-WHERE 
-    si.item_request_status = 0;
+    SELECT COUNT(*) AS total
+    FROM add_item_requests
 ')->get();
 
 
@@ -52,30 +48,41 @@ $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
 
 $resources = $db->paginate('
-SELECT 
-    si.item_code,
-    si.item_article,
-    si.item_desc,
-    si.item_quantity,
-    si.item_total_value,
-    s.school_name,
-    si.item_status AS status,
-    si.item_requested_by,
-    si.date_acquired,
-    si.item_date_requested
-    FROM school_inventory si
-    JOIN schools s ON s.school_id = si.school_id
-    WHERE si.item_request_status = 0
-LIMIT :start, :end;
+ SELECT 
+        ar.id,
+        ar.item_code,
+        ar.school_id,
+        ar.date_acquired,
+        s.school_name,
+        ar.request_date,
+        ar.item_article,
+        ar.item_desc,
+        ar.item_quantity,
+        ar.item_active,
+        ar.item_inactive,
+        ar.item_unit_value,
+        ar.item_request_status,
+        ar.item_funds_source
+    FROM add_item_requests ar
+    JOIN schools s ON s.school_id = ar.school_id
+    ORDER BY ar.request_date DESC
+    LIMIT :start, :end;
 ', [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
 ])->get();
 
+$statusMap = [
+    0 => 'Pending',
+    1 => 'Approved',
+    2 => 'Rejected'
+];
+
 view('resources/requests/index.view.php', [
     'heading' => 'Add Item Requests',
     'notificationCount' => $notificationCount,
     'years' => $years,
+    'statusMap' => $statusMap,
     'resources' => $resources,
     'errors' => Session::get('errors') ?? [],
     'old' => Session::get('old') ?? [],

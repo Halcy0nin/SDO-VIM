@@ -9,8 +9,10 @@ try {
     $id = $_POST['id'];
     $item_code = $id . '-' . generateSKU($_POST['item_article'], $_POST['item_desc'], $_POST['item_funds_source']);
 
+    if (isset($_POST['approve_request'])) {
+
     // Insert request into `item_requests` table
-    $db->query('UPDATE item_requests SET is_active = 0 WHERE id = :id;', [
+    $db->query('UPDATE item_requests SET item_request_status = 1 WHERE id = :id;', [
         'id' => $_POST['request_to_update']
     ]);
 
@@ -38,7 +40,15 @@ try {
         'item_inactive' => $_POST['item_inactive']
     ]);
   
-
+    } else {
+        $db->query('UPDATE item_requests 
+        SET item_request_status = 2
+        WHERE id = :id;', [
+        'id' => $_POST['request_to_update'],
+        ]);
+        // Show a success message
+      toast('Successfully rejected item with code: ' . $item_code);
+    }
     // Show a success message
     toast('Successfully updated item with code: ' . $item_code);
 

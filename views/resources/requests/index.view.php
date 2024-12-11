@@ -80,19 +80,31 @@ require base_path('views/partials/head.php') ?>
                      </span>
                   </div>
                </th>
+               <th>
+                  <div class="header-content">
+                     Status
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                     </span>
+                  </div>
+               </th>
                <th>Actions</th>
             </thead>
             <tbody class="oveflow-y-scroll">
                <?php if (count($resources) > 0): ?>
                   <?php foreach ($resources as $resource): ?>
                      <tr>
-                        <td><?= htmlspecialchars($resource['item_code']) ?></td>
-                        <td><?= htmlspecialchars($resource['item_article']) ?></td>
-                        <td><?= htmlspecialchars($resource['school_name']) ?></td>
-                        <td><?= htmlspecialchars(formatTimestamp($resource['item_date_requested'])) ?></td>
+                        <td><?php echo htmlspecialchars($resource['item_code']); ?></td>
+                        <td><?php echo htmlspecialchars($resource['item_article']); ?></td>
+                        <td><?php echo htmlspecialchars($resource['school_name']); ?></td>
+                        <td><?php echo htmlspecialchars(formatTimestamp($resource['request_date'])); ?></td>
+                        <td><?php echo htmlspecialchars($statusMap[$resource['item_request_status']]); ?></td>
                         <td>
                            <div class="h-full w-full flex items-center gap-2">
-                              <?php require base_path('views/partials/coordinator/resources/approve_resource_modal.php') ?>
+                           <?php if ($resource['item_request_status'] == 0): ?>
+                              <?php require base_path('views/partials/coordinator/resources/approve_resource_modal.php'); ?>
+                           <?php endif; ?>
                         </td>
                      </tr>
                   <?php endforeach; ?>

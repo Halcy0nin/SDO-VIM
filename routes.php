@@ -56,7 +56,7 @@ $router->patch('/coordinator/resources/s', 'resources/show.php')->only('coordina
 $router->get('/coordinator/resources/unassigned', 'resources/unassigned/index.php')->only('coordinator');
 $router->post('/coordinator/resources/unassigned/s', 'resources/unassigned/show.php')->only('coordinator');
 $router->get('/coordinator/resources/requests', 'resources/requests/index.php')->only('coordinator');
-$router->patch('/coordinator/resources/requests', 'resources/requests/patch.php')->only('coordinator');
+$router->post('/coordinator/resources/requests', 'resources/requests/store.php')->only('coordinator');
 $router->post('/coordinator/resources/requests/s', 'resources/requests/show.php')->only('coordinator');
 $router->get('/coordinator/resources/edit-requests', 'resources/edit-requests/index.php')->only('coordinator');
 $router->patch('/coordinator/resources/edit-requests', 'resources/edit-requests/patch.php')->only('coordinator');

@@ -33,8 +33,7 @@ $pagination = [
 // Count total item requests
 $itemRequestsCountQuery = $db->query('
     SELECT COUNT(*) AS total
-    FROM item_requests ir
-    WHERE ir.is_active = 1
+    FROM item_requests
 ')->find();
 
 $pagination['pages_total'] = ceil($itemRequestsCountQuery['total'] / $pagination['pages_limit']);
@@ -46,6 +45,7 @@ $itemRequests = $db->paginate('
      SELECT 
         ir.id,
         ir.item_code,
+        ir.item_request_status,
         ir.school_id,
         s.school_name,
         ir.request_date,
@@ -58,7 +58,6 @@ $itemRequests = $db->paginate('
         ir.item_funds_source
     FROM item_requests ir
     JOIN schools s ON s.school_id = ir.school_id
-    WHERE ir.is_active = 1
     ORDER BY ir.request_date DESC
     LIMIT :start, :end;
 ', [
@@ -77,6 +76,11 @@ $earliestYearQuery = $db->query('SELECT MIN(YEAR(request_date)) AS earliest_year
 $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
 
+$statusMap = [
+    0 => 'Pending',
+    1 => 'Approved',
+    2 => 'Rejected'
+];
 
 // Render the view
 view('resources/edit-requests/index.view.php', [
@@ -84,6 +88,7 @@ view('resources/edit-requests/index.view.php', [
     'notificationCount' => $notificationCount,
     'years' => $years,
     'itemRequests' => $itemRequests,
+    'statusMap' => $statusMap,
     'oldValues' => $oldValues,
     'pagination' => $pagination,
     'errors' => Session::get('errors') ?? [],
