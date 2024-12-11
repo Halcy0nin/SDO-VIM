@@ -155,7 +155,8 @@ require base_path('views/partials/head.php') ?>
                                                 <i class="bi bi-box-seam-fill"></i>
                                             </a>
                                         </button>
-                                        <?php require base_path('views/partials/coordinator/schools/view_receipt_modal.php') ?>
+                                        <!-- hide view receipt temporarily -->
+                                        <!-- <//?php require base_path('views/partials/coordinator/schools/view_receipt_modal.php') ?> -->
                                         <?php require base_path('views/partials/coordinator/schools/edit_school_modal.php') ?>
                                         <?php require base_path('views/partials/coordinator/schools/delete_school_modal.php') ?>
                                     </div>
