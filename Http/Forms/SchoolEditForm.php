@@ -69,7 +69,7 @@ class SchoolEditForm
             $this->errors[$attributes['_school_id']]['school_division'] = 'Please select a valid School Division.';
         }
         
-        if (!Validator::string($attributes['contact_name'], 1, 32)) {
+        if (!Validator::string($attributes['contact_name'], 1, 50)) {
             $this->errors[$attributes['_school_id']]['contact_name'] = 'Please enter a valid Contact Name that is under 32 characters.';
         }
         

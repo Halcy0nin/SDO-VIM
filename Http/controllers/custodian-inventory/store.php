@@ -25,8 +25,20 @@
 
 use Core\Database;
 use Core\App;
+use Http\Forms\SchoolItemsAddForm;
+
 
 $db = App::resolve(Database::class);
+
+$form = SchoolItemsAddForm::validate($attributes = [
+    'item_article' => $_POST['item_article'],
+    'item_desc' => $_POST['item_desc'],
+    'item_unit_value' => $_POST['item_unit_value'],
+    'item_quantity' => $_POST['item_quantity'],
+    'item_funds_source' => $_POST['item_funds_source'],
+    'item_active' => $_POST['item_active'],
+    'item_inactive' => $_POST['item_inactive']
+]);
 
 try {
     $id = $_POST['id'];
@@ -55,28 +67,17 @@ try {
     ]);
 
     // Show a success message
-    toast('Successfully requested item to add with code: ' . $item_code);
+    toast('Successfully added item with item code: ' . $item_code);
 
-    // Redirect to the inventory page
     redirect('/custodian/custodian-inventory');
-
 } catch (PDOException $e) {
-    // Log the error message for debugging
+    // Handle database errors gracefully
+    // Log the error for debugging purposes
     error_log($e->getMessage());
 
-    // Show an error toast message
-    toast('Failed to add the item. Please try again.');
+    // Show a toast message for the user
+    toast('Failed to add item. Please try again.');
 
-    // Redirect back to the inventory page
-    redirect('/custodian/custodian-inventory');
-
-} catch (Exception $e) {
-    // Handle any other types of exceptions
-    error_log($e->getMessage());
-
-    // Show a general error toast message
-    toast('An unexpected error occurred. Please try again later.');
-
-    // Redirect back to the inventory page
+    // Optionally, redirect the user back to the form
     redirect('/custodian/custodian-inventory');
 }

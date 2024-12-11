@@ -48,7 +48,7 @@ class UserAddForm
 
     public function __construct(public array $attributes)
     {
-        if (!Validator::regex($attributes['add_user'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['user_name'], 15, 30)) {
+        if (!Validator::regex($attributes['user_name'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['user_name'], 15, 30)) {
             $this->errors['add_user']['user_name'] = 'Please enter 15 up to 30 characters long username.';
         }
 

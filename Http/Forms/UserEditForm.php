@@ -49,8 +49,8 @@ class UserEditForm
     public function __construct(public array $attributes)
     {
 
-        if (!Validator::string($attributes['user_name'], 1, 100)) {
-            $this->errors[$attributes['user_id']]['user_name'] = 'Please enter a valid user name.';
+        if (!Validator::regex($attributes['user_name'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['user_name'], 15, 30)) {
+            $this->errors['user_id']['user_name'] = 'Please enter 15 up to 30 characters long username.';
         }
         
         if (!Validator::regex($attributes['school_id'], '/^(\d{6})?$/')) {
