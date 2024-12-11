@@ -53,7 +53,7 @@ class SchoolEditForm
             $this->errors[$attributes['_school_id']]['school_id'] = 'Please enter a valid 6-digit School ID.';
         }
         
-        if (!Validator::string($attributes['school_name'], 1, 50)) {
+        if (!Validator::regex($attributes['school_name'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['school_name'], 1, 50)) {
             $this->errors[$attributes['_school_id']]['school_name'] = 'Please enter a valid School Name.';
         } 
         
@@ -69,7 +69,7 @@ class SchoolEditForm
             $this->errors[$attributes['_school_id']]['school_division'] = 'Please select a valid School Division.';
         }
         
-        if (!Validator::string($attributes['contact_name'], 1, 50)) {
+        if (!Validator::regex($attributes['contact_name'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['contact_name'], 1, 50)) {
             $this->errors[$attributes['_school_id']]['contact_name'] = 'Please enter a valid Contact Name that is under 32 characters.';
         }
         
