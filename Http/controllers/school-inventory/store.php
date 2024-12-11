@@ -1,8 +1,19 @@
 <?php
 use Core\Database;
 use Core\App;
+use Http\Forms\SchoolItemsAddForm;
 
 $db = App::resolve(Database::class);
+
+$form = SchoolItemsAddForm::validate($attributes = [
+    'item_article' => $_POST['item_article'],
+    'item_desc' => $_POST['item_desc'],
+    'item_unit_value' => $_POST['item_unit_value'],
+    'item_quantity' => $_POST['item_quantity'],
+    'item_funds_source' => $_POST['item_funds_source'],
+    'item_active' => $_POST['item_active'],
+    'item_inactive' => $_POST['item_inactive']
+]);
 
 $id = $_POST['id'];
 $item_code = $id . '-' . generateSKU($_POST['item_article'], $_POST['item_desc'], $_POST['item_funds_source']);

@@ -3,6 +3,7 @@
 use Core\Database;
 use Core\App;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Http\Forms\SchoolItemsAddForm;
 
 $db = App::resolve(Database::class);
 
@@ -40,6 +41,18 @@ if (in_array($file_ext, $allowed_ext)) {
                 $item_inactive = !empty($row[5]) ? $row[5] : 0;
                 $date_acquired = !empty($row[6]) ? $row[6] : null;
                 $item_funds_source = !empty($row[7]) ? $row[7] : null;
+
+                $form = SchoolItemsAddForm::validate($attributes = [
+                    'item_code' => $item_code,
+                    'item_article' => $item_article,
+                    'item_desc' => $item_desc,
+                    'date_acquired' => $date_acquired,
+                    'item_unit_value' => $item_unit_value,
+                    'item_quantity' => $item_quantity,
+                    'item_funds_source' => $item_funds_source,
+                    'item_active' => $item_active,
+                    'item_inactive' => $item_inactive
+                ]);
 
                 $id = $_POST['id'];
                 $item_code = $id . '-' . generateSKU($item_article, $item_desc, $item_funds_source);

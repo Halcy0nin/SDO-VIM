@@ -42,38 +42,38 @@ namespace Http\Forms;
 use Core\ValidationException;
 use Core\Validator;
 
-class ResourceAddForm
+class SchoolItemsAddForm
 {
     protected $errors = [];
 
     public function __construct(public array $attributes)
     {
-        if (!Validator::regex($attributes['item_article'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['item_article'], 1, 50)) {
-            $this->errors['add_resource']['item_article'] = '<span class="error-message">Invalid Item Article Input</span>';
+        if (!Validator::string($attributes['item_article'], 1, 50)) {
+            $this->errors['add_item']['item_article'] = '<span class="error-message">Invalid Item Article Input</span>';
         }
     
-        if (!Validator::regex($attributes['item_desc'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['item_desc'], 1, 50)) {
-            $this->errors['add_resource']['item_desc'] = '<span class="error-message1">Invalid Item Description Input</span>';
+        if (!Validator::string($attributes['item_desc'], 1, 50)) {
+            $this->errors['add_item']['item_desc'] = '<span class="error-message1">Invalid Item Description Input</span>';
         }
     
         if (!Validator::regex($attributes['item_unit_value'], '/^\$?(([1-9](\d*|\d{0,2}(,\d{3})*))|0)(\.\d{1,2})?$/')) {
-            $this->errors['add_resource']['item_unit_value'] = '<span class="error-message">Invalid Item Unit Value Input</span>';
+            $this->errors['add_item']['item_unit_value'] = '<span class="error-message">Invalid Item Unit Value Input</span>';
         } 
     
         if (!Validator::regex($attributes['item_quantity'], '/^\d{1,10}$/')) {
-            $this->errors['add_resource']['item_quantity'] = '<span class="error-message1">Invalid Item Quantity Input</span>';
+            $this->errors['add_item']['item_quantity'] = '<span class="error-message1">Invalid Item Quantity Input</span>';
         } 
     
         if (!Validator::regex($attributes['item_active'], '/^\d{1,11}$/')) {
-            $this->errors['add_resource']['item_active'] = '<span class="error-message">Invalid Active Item Input</span>';
+            $this->errors['add_item']['item_active'] = '<span class="error-message">Invalid Active Item Input</span>';
         } 
     
         if (!Validator::regex($attributes['item_inactive'], '/^\d{1,11}$/')) {
-            $this->errors['add_resource']['item_inactive'] = '<span class="error-message1">Invalid Inactive Item Input</span>';
+            $this->errors['add_item']['item_inactive'] = '<span class="error-message1">Invalid Inactive Item Input</span>';
         } 
     
-        if (!Validator::regex($attributes['item_funds_source'], '/^[a-zA-Z0-9\s]+$/') ||!Validator::string($attributes['item_funds_source'], 1, 50)) {
-            $this->errors['add_resource']['item_funds_source'] = '<span class="error-message">Invalid Source of Fund Input</span>';
+        if (!Validator::string($attributes['item_funds_source'], 1, 50)) {
+            $this->errors['add_item']['item_funds_source'] = '<span class="error-message">Invalid Source of Fund Input</span>';
         }
     }
 

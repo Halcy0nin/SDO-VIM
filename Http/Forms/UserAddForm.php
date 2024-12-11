@@ -48,11 +48,11 @@ class UserAddForm
 
     public function __construct(public array $attributes)
     {
-        if (!Validator::string($attributes['user_name'], 1)) {
-            $this->errors['add_user']['user_name'] = 'Please enter a valid user name.';
+        if (!Validator::regex($attributes['add_user'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['user_name'], 15, 30)) {
+            $this->errors['add_user']['user_name'] = 'Please enter 15 up to 30 characters long username.';
         }
 
-        if (!Validator::string($attributes['password'], 8)) {
+        if (!Validator::string($attributes['password'], 8, 50)) {
             $this->errors['add_user']['password'] = 'Please enter a valid password with at least 8 characters.';
         } elseif (!Validator::no_whitespace($attributes['password'])) {
             $this->errors['add_user']['password'] = 'Password should not contain any whitespace.';
