@@ -72,6 +72,23 @@ body {
   border-radius: 50%;
 }
 
+.sidebar-icon1 {
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 0.75rem;
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+.sidebar-icon1 {
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
 .sidebar-list {
   width: 100%;
   display: flex;
@@ -990,10 +1007,23 @@ body {
   background-color: rgba(67, 79, 114, 0.8);
 }
 
+.parent-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /* Optional: vertically align if needed */
+  padding-right: 50px; /* Optional: add spacing from the edge */
+}
+
+.parent-container1 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /* Optional: vertically align if needed */
+  padding-right: 0px; /* Optional: add spacing from the edge */
+}
+
 .move-button {
-  position: absolute; /* Position the button absolutely */
-  right: 4rem; /* Align it 20px from the right side */
-  top: 10rem; /* Adjust to your preference */
+  justify-content: end;
+  margin-top: -3.5rem; /* Adjust to your preference */
   display: flex;
   align-items: center;
   padding: 15px 20px;
@@ -1081,4 +1111,5 @@ body {
       margin-top: 0; /* Removes any extra margin */
       top: 100%; /* Ensures dropdown appears directly below the dropdown button */
   }
+
 

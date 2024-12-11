@@ -1,10 +1,11 @@
 <!-- Modal Button -->
 
-<button class="move-button" data-bs-toggle="modal" data-bs-target="#untagResourceModal">
-    <i class="bi bi-stack"></i>
-    <p>Untag Resources</p>
-</button>
-
+<div class="parent-container1">
+    <button class="move-button" data-bs-toggle="modal" data-bs-target="#untagResourceModal">
+        <i class="bi bi-stack"></i>
+        <p>Untag Resources</p>
+    </button>
+</div>
 <!-- Modal -->
 <main class="modal fade" id="untagResourceModal" tabindex="-1" aria-labelledby="untagResourceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered w-1/2">
