@@ -7,7 +7,11 @@ require base_path('views/partials/head.php') ?>
 <main class="main-col">
    <section class="flex items-center pr-12 gap-3">
       <?php require base_path('views/partials/banner.php') ?>
-      <?php require base_path('views/partials/custodian/add_receipt_modal.php') ?>
+      <div class="school-name-container">
+            <h2 class="school-name"><?= $schoolName ?></h2>
+      </div>    
+      <!-- Hide add receipt temporarily -->
+      <!-- <//?php require base_path('views/partials/custodian/add_receipt_modal.php') ?> -->
    </section>
    
    <section class="mx-6 px-12 flex gap-6">

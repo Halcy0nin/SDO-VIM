@@ -7,7 +7,15 @@ use Core\App;
 $db = App::resolve(Database::class);
 
 $schoolId = $_SESSION['user']['school_id'] ?? null;
+$schoolName = $db->query('
+    SELECT s.school_name 
+    FROM schools s 
+    WHERE s.school_id = :id',
+    [
+        'id' => $_SESSION['user']['school_id'] ?? null
+    ])->find();
 
+$schoolName = $schoolName['school_name'] ?? 'Unnamed School';
 // Total Equipment
 $total_equipment_count_query = $db->query('
     SELECT COUNT(item_code) as total_count
@@ -190,6 +198,7 @@ if ($notificationCount > 5){
 
 view('custodian/create.view.php', [
     'heading' => 'Dashboard',
+    'schoolName' => $schoolName,
     'notificationCount' => $notificationCount,
     'errors' => Session::get('errors'),
     'totalEquipment' => $total_equipment_count,
