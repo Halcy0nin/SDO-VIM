@@ -1127,3 +1127,22 @@ body {
   display: block; /* Ensures each error message appears on a new line */
 }
 
+.school-name-container {
+  display: flex; /* Use Flexbox for layout control */
+  align-items: flex-end; /* Aligns content to the right */
+  margin-left: 20rem; 
+}
+
+.school-name-container .school-name {
+  margin-top: 2rem;
+  margin-right: 4.5rem;
+  width: 40rem;
+  text-align: right;
+}
+
+.school-name-container .date {
+  width: 250px;
+  margin-top: 6rem; /* Adds spacing above the date */
+  margin-left: -20rem;
+  text-align: right; /* Ensures the text is aligned to the right */
+}
