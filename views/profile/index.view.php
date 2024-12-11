@@ -17,9 +17,7 @@ require base_path('views/partials/head.php') ?>
    <section>
         <div class="box-area">
         <div class="single-box">
-            <div class="img-area">
-            <img src="https://depedvalenzuela.com/wp-content/uploads/2024/03/DO-LOGO.png" alt="SDO Logo">
-            </div>
+        <img src="/sdo.png" class="sidebar-icon1" style="width: 240px; height: auto; clip-path: circle(50%); margin-top: -3rem; " />
             <div class="img-text">
             <h1><span class="header-text"><strong>Custodian Name</strong></span></h1>
             <h1><?php echo $info['user_name']; ?></h1>

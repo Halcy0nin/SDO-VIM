@@ -11,10 +11,10 @@ require base_path('views/partials/head.php') ?>
    </section>
    
    <section class="mx-6 px-12 flex gap-6">
-      <?php dashboard_card('Total Equipments', $totalEquipment); ?>
-      <?php dashboard_card('Working', $totalWorking, 'bi-patch-check-fill'); ?>
-      <?php dashboard_card('For Repair', $totalRepair, 'bi-tools'); ?>
-      <?php dashboard_card('Condemned', $totalCondemned, 'bi-exclamation-diamond-fill'); ?>
+      <?php dashboard_card('Total Equipments', $totalEquipment, 'bi-boxes', '#434f72', '#434f72', '#434f72'); ?>
+      <?php dashboard_card('Working', $totalWorking, 'bi-patch-check-fill', '#27ae5f', '#27ae5f', '#27ae5f'); ?>
+      <?php dashboard_card('For Repair', $totalRepair, 'bi-tools','#F1C40F', '#F1C40F', '#F1C40F'); ?>
+      <?php dashboard_card('Condemned', $totalCondemned, 'bi-exclamation-diamond-fill','#E74C3C', '#E74C3C', '#E74C3C'); ?>
    </section>
    <section class="grow mx-12 px-6 py-6 flex flex-col gap-6 text-red-500">
       <div class="flex items-center gap-6 h-1/2">

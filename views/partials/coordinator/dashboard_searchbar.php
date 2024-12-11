@@ -1,7 +1,7 @@
 <form class="search-containers search" method="POST" action="/coordinator">
     <input name="_method" value="PATCH" hidden />
     <input type="hidden" name="schoolSearchValue" id="schoolSearchValue" />
-    <input type="text" name="search" id="search" placeholder="Search" value="<?= htmlspecialchars($search ?? '') ?>" onkeyup="showDropdown()" />
+    <input type="text" name="search" id="search" placeholder="Search School" value="<?= htmlspecialchars($search ?? '') ?>" onkeyup="showDropdown()" />
     <button type="submit" class="search" onclick="handleSubmit(event)">
         <i class="bi bi-search"></i>
     </button>

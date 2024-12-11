@@ -43,7 +43,7 @@ require base_path('views/partials/head.php') ?>
       </div>
       <div class="dropdown-date2">
          <div class="select">
-            <span class="selected">Date Range</span>
+            <span class="selected">Select Year</span>
             <div class="caret"></div>
          </div>
          <ul class="menu">

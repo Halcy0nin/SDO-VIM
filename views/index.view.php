@@ -66,7 +66,7 @@ require base_path('views/partials/head.php')
             <button class="btn-signin">Log In</button>
         </form>
         <section>
-            <i class="bi bi-boxes boxes"></i>
+            <img src="/sdo.png" class="sidebar-icon2" style="width: 170px; height: auto; clip-path: circle(50%); margin-top: -3rem; margin-bottom: 1rem; " />
             <h2>ICT - Resource</h2>
             <h2>Inventory System</h2>
         </section>
