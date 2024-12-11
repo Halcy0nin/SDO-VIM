@@ -100,7 +100,7 @@
                     </span>
                 </div>
                 <?php if (isset($errors['add_school']['contact_no']) || isset($errors['add_school']['contact_email'])): ?>
-                    <p class="error flex gap-2"><?= $errors['add_school']['contact_no'] ?> <?= $errors['add_school']['contact_no'] ?></p>
+                    <p class="error flex gap-2"><?= $errors['add_school']['contact_no'] ?><?= $errors['add_school']['contact_email'] ?></p>
                 <?php endif; ?>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
