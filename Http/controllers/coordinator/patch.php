@@ -83,77 +83,138 @@ function runCountQuery($db, $baseQuery, $condition, $params) {
     return $db->query($baseQuery . $condition, $params)->find()['total_count'] ?? 0;
 }
 
-// Count total equipment
-$total_equipment_count = runCountQuery(
-    $db,
-    "SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id ",
-    "$combinedCondition 
+if ($schoolNameToFilter == 'All Schools') {
+    $combinedCondition = "";
+    $params = [];
+    $baseTotalCountQuery = "SELECT COUNT(item_code) as total_count FROM school_inventory";
+    $baseWorkingCountQuery = "SELECT COUNT(item_code) as total_count FROM school_inventory";
+    $baseRepairCountQuery = "SELECT COUNT(item_code) as total_count FROM school_inventory";
+    $baseCondemnedCountQuery = "SELECT COUNT(item_code) as total_count FROM school_inventory";
+    $baseTotalCondition = " WHERE item_request_status = 1 AND item_assigned_status = 2 AND is_archived = 0";
+    $baseWorkingCondition = " WHERE item_status = 1 AND item_request_status = 1 AND item_assigned_status = 2 AND is_archived = 0";
+    $baseRepairCondition = " WHERE item_status = 2 AND item_request_status = 1 AND item_assigned_status = 2 AND is_archived = 0";
+    $baseCondemnedCondition = " WHERE item_status = 3 AND item_request_status = 1 AND item_assigned_status = 2 AND is_archived = 0";
+    $finalArticleCountQuery = "SELECT item_article, COUNT(*) as article_count
+    FROM school_inventory
+    WHERE item_article IS NOT NULL
     AND
     item_request_status = 1
     AND 
     item_assigned_status = 2
     AND 
-    si.is_archived = 0",
+    is_archived = 0
+    GROUP BY item_article
+    ORDER BY article_count DESC
+    LIMIT 5";
+    $finalStatusCountQuery = "SELECT item_status, COUNT(*) as status_count FROM school_inventory WHERE item_status IN (1, 2, 3)
+    AND
+    item_request_status = 1
+    AND 
+    item_assigned_status = 2
+    AND 
+    is_archived = 0
+    GROUP BY item_status";
+}else {
+    $baseTotalCountQuery = "SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id";
+    $baseWorkingCountQuery = "SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 1";
+    $baseRepairCountQuery = "SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 2";
+    $baseCondemnedCountQuery = "SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 3";
+    $baseArticleCountQuery = "SELECT si.item_article, COUNT(*) AS article_count
+    FROM school_inventory AS si
+    JOIN schools AS s ON si.school_id = s.school_id";
+    $baseStatusCountQuery = "SELECT si.item_status, COUNT(*) AS status_count
+    FROM school_inventory AS si
+    JOIN schools AS s ON si.school_id = s.school_id";
+    $baseTotalCondition = " $combinedCondition AND item_request_status = 1 AND item_assigned_status = 2 AND si.is_archived = 0";
+    $baseWorkingCondition = " $combinedCondition AND item_request_status = 1 AND item_assigned_status = 2 AND si.is_archived = 0";
+    $baseRepairCondition = " $combinedCondition AND item_request_status = 1 AND item_assigned_status = 2 AND si.is_archived = 0";
+    $baseCondemnedCondition = " $combinedCondition AND item_request_status = 1 AND item_assigned_status = 2 AND si.is_archived = 0";
+    
+    // Base article count query
+    $baseArticleCountQuery = "
+        SELECT si.item_article, COUNT(*) AS article_count
+        FROM school_inventory AS si
+        JOIN schools AS s ON si.school_id = s.school_id
+    ";
+
+    // Define the base condition
+    $baseArticleCondition = " WHERE si.item_article IS NOT NULL";
+
+    // Append dynamic conditions if applicable
+    if ($combinedCondition) {
+        $baseArticleCondition .= ' AND ' . implode(' AND ', $conditions); // Ensure $conditions are properly defined
+    }
+
+    // Final condition part
+    $baseArticleCondition .= "
+        AND item_request_status = 1
+        AND item_assigned_status = 2
+        AND si.is_archived = 0
+        GROUP BY si.item_article
+        ORDER BY article_count DESC
+        LIMIT 5
+    ";
+
+    // Combine the base query with the conditions
+    $finalArticleCountQuery = $baseArticleCountQuery . $baseArticleCondition;
+
+    // Base status count query
+    $baseStatusCountQuery = "
+    SELECT si.item_status, COUNT(*) AS status_count
+    FROM school_inventory AS si
+    JOIN schools AS s ON si.school_id = s.school_id
+    ";
+
+    // Initialize the base condition
+    $baseStatusCondition = " WHERE si.item_status IN (1, 2, 3) 
+    AND item_request_status = 1
+    AND item_assigned_status = 2
+    AND si.is_archived = 0";
+
+    // Append dynamic conditions if applicable
+    if ($combinedCondition) {
+        $baseStatusCondition .= ' AND ' . implode(' AND ', $conditions); // Ensure $conditions are properly defined
+    }
+
+    // Combine the base query with the conditions
+    $finalStatusCountQuery = $baseStatusCountQuery . $baseStatusCondition . " GROUP BY si.item_status";
+
+}
+// Count total equipment
+$total_equipment_count = runCountQuery(
+    $db,
+    "$baseTotalCountQuery",
+    "$baseTotalCondition",
     $params
 );
 
 // Count total working equipment
 $total_working_count = runCountQuery(
     $db,
-    'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 1',
-    "$combinedCondition 
-    AND
-    item_request_status = 1
-    AND 
-    item_assigned_status = 2
-    AND 
-    si.is_archived = 0",
+   "$baseWorkingCountQuery",
+    "$baseWorkingCondition",
     $params
 );
 
 // Count total need repair equipment
 $total_repair_count = runCountQuery(
     $db,
-    'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 2',
-    "$combinedCondition 
-    AND
-    item_request_status = 1
-    AND 
-    item_assigned_status = 2
-    AND 
-    si.is_archived = 0",
+   "$baseRepairCountQuery",
+    "$baseRepairCondition",
     $params
 );
 
 // Count total condemned equipment
 $total_condemned_count = runCountQuery(
     $db,
-    'SELECT COUNT(si.item_code) AS total_count FROM school_inventory AS si JOIN schools AS s ON si.school_id = s.school_id AND si.item_status = 3',
-    "$combinedCondition 
-    AND
-    item_request_status = 1
-    AND 
-    item_assigned_status = 2
-    AND 
-    si.is_archived = 0",
+    "$baseCondemnedCountQuery",
+    "$baseCondemnedCondition",
     $params
 );
 
 // Item Article Counts (Top 5)
-$itemArticleCountQuery = $db->query('
-    SELECT si.item_article, COUNT(*) AS article_count
-    FROM school_inventory AS si
-    JOIN schools AS s ON si.school_id = s.school_id
-    WHERE si.item_article IS NOT NULL' . ($combinedCondition ? ' AND ' . implode(' AND ', $conditions) : '') . '
-    AND
-    item_request_status = 1
-    AND 
-    item_assigned_status = 2
-    AND 
-    si.is_archived = 0
-    GROUP BY si.item_article
-    ORDER BY article_count DESC
-    LIMIT 5',
+$itemArticleCountQuery = $db->query("
+    $finalArticleCountQuery",
     $params
 );
 $itemArticleCounts = $itemArticleCountQuery->get();
@@ -172,11 +233,9 @@ $statusMap = [
 ];
 
 // Status Labels and Counts for chart
-$itemStatusCountQuery = $db->query('
-    SELECT si.item_status, COUNT(*) AS status_count
-    FROM school_inventory AS si
-    JOIN schools AS s ON si.school_id = s.school_id' . ($combinedCondition ? ' AND ' . implode(' AND ', $conditions) : '') . '
-    GROUP BY si.item_status',
+$itemStatusCountQuery = $db->query("
+$finalStatusCountQuery
+",
     $params
 );
 $itemStatusCounts = $itemStatusCountQuery->get();
@@ -218,7 +277,7 @@ $monthsJson = json_encode($months);
 $itemCountsJson = json_encode($itemCounts);
 
 // Populate school dropdown content
-$schoolDropdownContent = $db->query("SELECT school_name FROM schools")->get();
+$schoolDropdownContent = $db->query("SELECT school_name FROM schools WHERE is_archived = 0")->get();
 
 // Render view with the data
 view('coordinator/create.view.php', [

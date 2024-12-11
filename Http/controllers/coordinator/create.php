@@ -161,7 +161,7 @@ $itemCountsJson = json_encode($itemCounts);
 
 
 $schoolDropdownContent = $db->query('
-        SELECT school_name FROM schools;
+        SELECT school_name FROM schools WHERE is_archived = 0;
 ') ->get();
 
 $notificationCountQuery = $db->query('
