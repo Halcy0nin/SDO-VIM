@@ -117,6 +117,27 @@ require base_path('views/partials/head.php') ?>
 <script>
    const statusLabels = JSON.parse('<?php echo $statusLabels; ?>');
    const statusCounts = JSON.parse('<?php echo $statusCounts; ?>');
+   
+   // Define a consistent color mapping for each status
+   const statusColorMap = {
+       'Working': {
+           background: 'rgba(22, 163, 72, 0.5)', // Green
+           border: 'rgba(22, 163, 74, 1)' // Dark Green
+       },
+       'Need Repair': {
+           background: 'rgba(255, 159, 64, 0.5)', // Orange
+           border: 'rgba(255, 144, 32, 1)' // Dark Orange
+       },
+       'Condemned': {
+           background: 'rgba(255, 99, 132, 0.5)', // Red
+           border: 'rgba(255, 64, 105, 1)' // Dark Red
+       }
+   };
+
+   // Create arrays for background and border colors based on status labels
+   const backgroundColors = statusLabels.map(label => statusColorMap[label]?.background || 'rgba(0, 0, 0, 0.5)');
+   const borderColors = statusLabels.map(label => statusColorMap[label]?.border || 'rgba(0, 0, 0, 1)');
+
    const ratio_ctx = document.getElementById('ratio').getContext('2d');
    const ratio = new Chart(ratio_ctx, {
       type: 'pie',
@@ -124,16 +145,8 @@ require base_path('views/partials/head.php') ?>
          labels: statusLabels,
          datasets: [{
             data: statusCounts,
-            backgroundColor: [
-               'rgba(22, 163, 72, 0.5)',
-               'rgba(255, 159, 64, 0.5)',
-               'rgba(255, 99, 132, 0.5)',
-            ],
-            borderColor: [
-               'rgba(22, 163, 74, 1)',
-               'rgba(255, 144, 32, 1)',
-               'rgba(255, 64, 105, 1)',
-            ],
+            backgroundColor: backgroundColors,
+            borderColor: borderColors,
             borderWidth: 1
          }]
       },
@@ -160,7 +173,7 @@ require base_path('views/partials/head.php') ?>
                color: '#000',
                font: {
                   weight: 'bold',
-                  size:10
+                  size: 10
                }
             }
          }
