@@ -1112,4 +1112,18 @@ body {
       top: 100%; /* Ensures dropdown appears directly below the dropdown button */
   }
 
+  .error-message {
+    color: red;
+    font-size: 10px;
+    margin-top: -5px;
+    display: block; /* Ensures each error message appears on a new line */
+}
+
+.error-message1 {
+  color: red;
+  font-size: 10px;
+  margin-left: 50%;
+  margin-top: -7%;
+  display: block; /* Ensures each error message appears on a new line */
+}
 

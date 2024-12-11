@@ -49,31 +49,31 @@ class ResourceAddForm
     public function __construct(public array $attributes)
     {
         if (!Validator::string($attributes['item_article'], 1, 50)) {
-            $this->errors['add_resource']['item_article'] = 'Invalid Item Article Input';
+            $this->errors['add_resource']['item_article'] = '<span class="error-message">Invalid Item Article Input</span>';
         }
-
+    
         if (!Validator::string($attributes['item_desc'], 1, 50)) {
-            $this->errors['add_resource']['item_desc'] = 'Invalid Item Description Input';
+            $this->errors['add_resource']['item_desc'] = '<span class="error-message1">Invalid Item Description Input</span>';
         }
-
+    
         if (!Validator::regex($attributes['item_unit_value'], '/^\$?(([1-9](\d*|\d{0,2}(,\d{3})*))|0)(\.\d{1,2})?$/')) {
-            $this->errors['add_resource']['item_unit_value'] = 'Invalid Item Unit Value Input';
+            $this->errors['add_resource']['item_unit_value'] = '<span class="error-message">Invalid Item Unit Value Input</span>';
         } 
-
+    
         if (!Validator::regex($attributes['item_quantity'], '/^\d{1,10}$/')) {
-            $this->errors['add_resource']['item_quantity'] = 'Invalid Item Quantity Input';
+            $this->errors['add_resource']['item_quantity'] = '<span class="error-message1">Invalid Item Quantity Input</span>';
         } 
-
+    
         if (!Validator::regex($attributes['item_active'], '/^\d{1,11}$/')) {
-            $this->errors['add_resource']['item_active'] = 'Invalid Active Item Input';
+            $this->errors['add_resource']['item_active'] = '<span class="error-message">Invalid Active Item Input</span>';
         } 
-
+    
         if (!Validator::regex($attributes['item_inactive'], '/^\d{1,11}$/')) {
-            $this->errors['add_resource']['item_inactive'] = 'Invalid Inactive Item Input';
+            $this->errors['add_resource']['item_inactive'] = '<span class="error-message1">Invalid Inactive Item Input</span>';
         } 
-
+    
         if (!Validator::string($attributes['item_funds_source'], 1, 50)) {
-            $this->errors['add_resource']['item_funds_source'] = 'Invalid Source of Fund Input';
+            $this->errors['add_resource']['item_funds_source'] = '<span class="error-message">Invalid Source of Fund Input</span>';
         }
     }
 
