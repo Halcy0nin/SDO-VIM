@@ -25,6 +25,7 @@
 
 use Core\Database;
 use Core\App;
+use Core\Session;
 
 $db = App::resolve(Database::class);
 
@@ -100,6 +101,8 @@ view('resources/assigned/index.view.php', [
     'heading' => 'Assigned Resources',
     'years' => $years,
     'notificationCount' => $notificationCount,
+    'errors' => Session::get('errors') ?? [],
+    'old' => Session::get('old') ?? [],
     'resources' => $resources,
     'pagination' => $pagination
 ]);

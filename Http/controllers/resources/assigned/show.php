@@ -25,6 +25,7 @@
 
 use Core\Database;
 use Core\App;
+use Core\Session;
 
 $db = App::resolve(Database::class);
 
@@ -158,6 +159,8 @@ view('resources/assigned/index.view.php', [
     'years' => $years,
     'pagination' => $pagination,
     'notificationCount' => $notificationCount,
+    'errors' => Session::get('errors') ?? [],
+    'old' => Session::get('old') ?? [],
     'resources' => $resources,
     'startDate' => $_POST['yearFilter'] ?? '', // Keep original input for the view
     'endDate' => $_POST['yearFilter'] ?? '',
