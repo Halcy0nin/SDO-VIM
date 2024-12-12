@@ -32,27 +32,23 @@ $db = App::resolve(Database::class);
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
-    WHERE
-        viewed IS NULL
-    AND (
-        (user_id = :user_id AND (created_by != :user_id OR created_by IS NULL))
-        OR is_public = 1
-    );
+    WHERE viewed IS NULL
+    AND  created_by != :user_id 
 ',[
-    'user_id' => get_uid()
+    'user_id' => get_uid(),
 ])->find();
 
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
+if ($notificationCount > 5){
+    $notificationCount = '5+';
+};
+
 $currentYear = date('Y'); // Current year
 $earliestYearQuery = $db->query('SELECT MIN(YEAR(item_assigned_date)) AS earliest_year FROM school_inventory')->find();
 $earliestYear = $earliestYearQuery['earliest_year'] ?? date('Y');
 $years = range($currentYear, $earliestYear);
-
-if ($notificationCount > 5){
-    $notificationCount = '5+';
-};
 
 $resources = [];
 

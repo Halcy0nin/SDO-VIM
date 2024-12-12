@@ -24,12 +24,18 @@ $pagination = [
 ];
 
 $activitycount = $db->query('
-SELECT COUNT(*) as total FROM notifications
-WHERE
-    created_by != :user_id
-', [
-    'user_id' => get_uid(),
-])->get();
+SELECT 
+    u.user_name,
+    COUNT(n.user_id) AS total
+FROM 
+    notifications n
+JOIN 
+    users u ON n.user_id = u.user_id
+GROUP BY 
+    u.user_name
+ORDER BY 
+    total DESC;
+')->get();
 
 $pagination['pages_total'] = ceil($activitycount[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
@@ -51,15 +57,12 @@ FROM
     notifications n
 JOIN
     users u ON n.user_id = u.user_id
-WHERE
-    n.created_by != :user_id
 ORDER BY
-    n.date_added DESC;
+    n.date_added DESC
 LIMIT :start,:end
 ', [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
-    'user_id' => get_uid(),
 ])->get();
 
 $notificationCountQuery = $db->query('

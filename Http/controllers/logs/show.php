@@ -90,11 +90,7 @@ GROUP BY
 ORDER BY 
     total DESC;
 $whereClause
-AND
-    n.created_by != :user_id
-", array_merge($params, [
-    'user_id' => get_uid()
-]))->get();
+", $params)->get();
 
 $pagination['pages_total'] = ceil($activitycount[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
@@ -117,15 +113,12 @@ FROM
 JOIN
     users u ON n.user_id = u.user_id
 $whereClause
-AND
-    n.created_by != :user_id
 ORDER BY
-    n.date_added DESC;
+    n.date_added DESC
 LIMIT :start,:end
 ", array_merge($params, [
     'start' => (int)$pagination['start'],
     'end' => (int)$pagination['pages_limit'],
-    'user_id' => get_uid(),
 ]))->get();
 
 $notificationCountQuery = $db->query('

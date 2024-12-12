@@ -56,14 +56,10 @@ if ($startDate && strlen($startDate) === 4) { // Year input
 $notificationCountQuery = $db->query('
     SELECT COUNT(*) AS total
     FROM notifications
-    WHERE
-        viewed IS NULL
-    AND (
-        (user_id = :user_id AND (created_by != :user_id OR created_by IS NULL))
-        OR is_public = 1
-    );
+    WHERE viewed IS NULL
+    AND  created_by != :user_id 
 ',[
-    'user_id' => get_uid()
+    'user_id' => get_uid(),
 ])->find();
 
 // Extract the total count
