@@ -329,8 +329,7 @@ body {
 
 .dropdown-resource {
   position: relative;
-  width: 100%;
-  max-width: 350px;
+  width: 76%;
   cursor: pointer;
   border: 1px solid #434F72;
   border-radius: 8px;
@@ -347,10 +346,6 @@ body {
 .dropdown-toggle {
   margin-left: 0rem;
 }
-
-
-
-
 
 .select {
   background: #fff;
@@ -1075,8 +1070,6 @@ body {
   background-color: #FFFFFF !important;
 }
 
-
-
 .dropdown-item {
   padding: 0.5rem 0.5rem; /* Ensure consistent padding */
   border: none; /* Remove unwanted borders */
@@ -1094,7 +1087,7 @@ body {
   border: none; /* Remove unwanted borders */
   width: 50rem;
   line-height: 2rem;
-
+  font-size: 16px;
 }
 .dropdown-items:hover {
   padding: 1rem 1rem;
@@ -1211,4 +1204,22 @@ body {
   font-size: 18px;
   color: #3F4A6B;
   margin: 0;
+}
+
+.btn-secondary.dropdown-toggle {
+  padding: 0px 0px; /* Padding for a comfortable click area */
+}
+
+
+.btn-secondary.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 220px; /* Adjust horizontal spacing */
+  position: relative;
+  top: 2px; /* Adjust vertical position */
+  content: ""; /* Ensure the arrow appears */
+  border-top: 5px solid; /* Arrow size */
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-bottom: none;
+  color: currentColor; /* Use the same color as the text */
 }
