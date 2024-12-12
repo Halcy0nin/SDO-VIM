@@ -19,6 +19,10 @@
                     <i class="bi bi-people-fill sidebar-li-icon"></i>
                     <h6 class="sidebar-li-text">Users</h6>
                 </a>
+                <a href="/coordinator/logs" class="<?php echo str_contains($_SERVER['REQUEST_URI'], 'logs') ? 'sidebar-li-alt' : 'sidebar-li' ?>">
+                    <i class="bi bi-file-bar-graph-fill"></i>
+                    <h6 class="sidebar-li-text">System Logs</h6>
+                </a>
             <?php elseif ($_SESSION['user']['role'] === 2) : ?>
                 <a href="/custodian" class="<?php echo $_SERVER['REQUEST_URI'] === '/custodian' ? 'sidebar-li-alt' : 'sidebar-li' ?>">
                     <i class="bi bi-bar-chart-line-fill sidebar-li-icon"></i>

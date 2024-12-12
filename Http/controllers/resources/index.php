@@ -40,6 +40,7 @@ AND
 AND 
     is_archived = 0
 ')->get();
+
 $pagination['pages_total'] = ceil($resources_count[0]['total'] / $pagination['pages_limit']);
 $pagination['pages_current'] = max(1, min($pagination['pages_current'], $pagination['pages_total']));
 

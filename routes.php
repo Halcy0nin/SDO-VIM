@@ -160,6 +160,9 @@ $router->get('/coordinator/users/archived', 'users/archived/index.php')->only('c
 $router->post('/coordinator/users/archived/s', 'users/archived/show.php')->only('coordinator');
 $router->patch('/coordinator/users/archived', 'users/archived/patch.php')->only('coordinator');
 
+$router->get('/coordinator/logs', 'logs/index.php')->only('coordinator');
+$router->patch('/coordinator/logs/s', 'logs/show.php')->only('coordinator');
+
 // Custodian Routes
 $router->get('/custodian', 'custodian/create.php')->only('custodian');
 
