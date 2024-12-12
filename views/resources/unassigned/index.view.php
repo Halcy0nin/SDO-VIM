@@ -80,7 +80,7 @@ require base_path('views/partials/head.php') ?>
                      </span>
                   </div>
                </th>
-               <th>Actions</th>
+               
             </thead>
             <tbody>
                <?php if (count($resources) > 0): ?>
@@ -92,11 +92,6 @@ require base_path('views/partials/head.php') ?>
                         <td><?= htmlspecialchars($resource['item_code']) ?></td>
                         <td><?= htmlspecialchars($resource['item_article']) ?></td>
                         <td><?= htmlspecialchars(formatTimestamp($resource['date_acquired'])) ?></td>
-                        <td>
-                           <div class="h-full w-full flex items-center gap-2">
-                              <?php require base_path('views/partials/coordinator/resources/assign_resource_modal.php') ?>
-                           </div>
-                        </td>
                      </tr>
                   <?php endforeach; ?>
                <?php else: ?>

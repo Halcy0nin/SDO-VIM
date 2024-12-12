@@ -331,7 +331,6 @@ dropdowns.forEach(dropdown => {
    const caret = dropdown.querySelector('.caret');
    const menu = dropdown.querySelector('.menu');
    const options = dropdown.querySelectorAll('.menu li'); // Updated to query all list items
-   const selected = dropdown.querySelector('.selected');
 
    // Toggle dropdown menu on select click
    select.addEventListener('click', () => {
