@@ -329,7 +329,7 @@ body {
 
 .dropdown-resource {
   position: relative;
-  width: 76%;
+  width: 69%;
   cursor: pointer;
   border: 1px solid #434F72;
   border-radius: 8px;
@@ -1064,7 +1064,7 @@ body {
 
 .dropdown-menu {
   padding: 0rem 0rem; /* Ensure consistent padding */
-  width:22rem !important;
+  width: 20rem !important;
   position: absolute !important;
   left: -0.7rem !important;
   background-color: #FFFFFF !important;
@@ -1085,15 +1085,15 @@ body {
 .dropdown-items {
   padding: 1rem 1rem; /* Ensure consistent padding */
   border: none; /* Remove unwanted borders */
-  width: 50rem;
+  width: 40rem;
   line-height: 2rem;
-  font-size: 16px;
+  font-size: 14px;
 }
 .dropdown-items:hover {
   padding: 1rem 1rem;
   color: #fff; /* Text color */
   background-color: #434F72 ;
-  width: 100rem;
+  width: 80rem;
 }
 
 .nav-item .nav-link {
@@ -1213,7 +1213,7 @@ body {
 
 .btn-secondary.dropdown-toggle::after {
   display: inline-block;
-  margin-left: 220px; /* Adjust horizontal spacing */
+  margin-left: 185px; /* Adjust horizontal spacing */
   position: relative;
   top: 2px; /* Adjust vertical position */
   content: ""; /* Ensure the arrow appears */
