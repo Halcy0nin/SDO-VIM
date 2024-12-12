@@ -12,7 +12,7 @@ require base_path('views/partials/head.php') ?>
                <h2 class="date1">
                   <?php echo "Data as of " . date("F Y"); ?>
                </h2>
-      </div>    
+      </div>  
       <!-- Hide add receipt temporarily -->
       <!-- <//?php require base_path('views/partials/custodian/add_receipt_modal.php') ?> -->
    </section>
