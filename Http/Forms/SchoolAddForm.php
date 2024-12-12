@@ -50,7 +50,7 @@ class SchoolAddForm
             $this->errors['add_school']['school_id'] = 'Please enter a valid 6-digit School ID.';
         }
 
-        if (!Validator::regex($attributes['school_name'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['school_name'], 1, 50)) {
+        if (!Validator::regex($attributes['school_name'], '/^[a-zA-Z0-9\s\.\-]+$/') || !Validator::string($attributes['school_name'], 1, 50)) {
             $this->errors['add_school']['school_name'] = 'Please enter a valid School Name.';
         }
 
@@ -66,8 +66,8 @@ class SchoolAddForm
             $this->errors['add_school']['school_division'] = 'Please select a valid School Division.';
         }
 
-        if (!Validator::regex($attributes['contact_name'], '/^[a-zA-Z0-9\s]+$/') || !Validator::string($attributes['contact_name'], 1, 50)) {
-            $this->errors['add_school']['contact_name'] = 'Please enter a valid Contact Name that is under 32 characters.';
+        if (!Validator::regex($attributes['contact_name'], '/^[a-zA-Z0-9\s\.\-]+$/') || !Validator::string($attributes['contact_name'], 1, 50)) {
+            $this->errors['add_school']['contact_name'] = 'Please enter a valid Contact Name that is under 50 characters.';
         }
 
         if (!Validator::regex($attributes['contact_no'], '/^\d{11}$/')) {
