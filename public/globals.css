@@ -1127,22 +1127,48 @@ body {
   display: block; /* Ensures each error message appears on a new line */
 }
 
-.school-name-container {
+
+.school-name-container1 {
   display: flex; /* Use Flexbox for layout control */
   align-items: flex-end; /* Aligns content to the right */
   margin-left: 20rem; 
 }
 
-.school-name-container .school-name {
+.school-name-container1 .school-name1 {
   margin-top: 2rem;
   margin-right: 4.5rem;
   width: 40rem;
   text-align: right;
 }
 
-.school-name-container .date {
+.school-name-container1 .date1 {
   width: 250px;
   margin-top: 6rem; /* Adds spacing above the date */
   margin-left: -20rem;
   text-align: right; /* Ensures the text is aligned to the right */
+}
+
+.school-name-container1 {
+  display: flex; /* Enable flexbox */
+  justify-content: flex-end; /* Align content to the right side */
+  align-items: center; /* Align items vertically */
+  width: 97%; /* Take full screen width */
+  padding: 15px 20px;
+  margin-top: -4rem;
+  z-index: -1;
+}
+
+.school-name1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #3F4A6B;
+  margin: 0;
+}
+
+.date1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  color: #3F4A6B;
+  margin: 0;
 }
