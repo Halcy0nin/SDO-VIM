@@ -203,16 +203,19 @@ $router->post('/custodian/custodian-resources/condemned/s', 'custodian-resources
 
 $router->get('/custodian/custodian-resources/requests', 'custodian-resources/requests/index.php')->only('custodian');
 $router->post('/custodian/custodian-resources/requests/s', 'custodian-resources/requests/show.php')->only('custodian');
+$router->patch('/custodian/custodian-resources/requests', 'custodian-resources/requests/patch.php')->only('custodian');
 
 $router->get('/custodian/custodian-resources/edit-requests', 'custodian-resources/edit-requests/index.php')->only('custodian');
 $router->post('/custodian/custodian-resources/edit-requests/s', 'custodian-resources/edit-requests/show.php')->only('custodian');
+$router->patch('/custodian/custodian-resources/edit-requests', 'custodian-resources/edit-requests/patch.php')->only('custodian');
+
 //Assign Item to School
 $router->patch('/custodian/custodian-resources/unassigned', '/custodian-resources/unassigned/patch.php')->only('custodian');
 
 //Profile Page
 $router->get('/custodian/profile', 'profile/index.php')->only('custodian');
 //Edit Username Request
-$router->post('/custodian/profile', 'profile/store.php')->only('custodian');
+$router->patch('/custodian/profile', 'profile/store.php')->only('custodian');
 
 $router->get('/403', 'http_errors/403.php');
 $router->get('/404', 'http_errors/404.php');

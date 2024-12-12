@@ -92,9 +92,7 @@ require base_path('views/partials/head.php') ?>
                         <td><?php echo htmlspecialchars($statusMap[$request['item_request_status']]); ?></td>
                         <td>
                            <div class="h-full w-full flex items-center gap-2">
-                              <?php if ($request['item_request_status'] == 0): ?>
                                  <?php require base_path('views/partials/coordinator/resources/approve_edit_resource_modal.php') ?>
-                              <?php endif; ?>
                         </td>
                      </tr>
                   <?php endforeach; ?>

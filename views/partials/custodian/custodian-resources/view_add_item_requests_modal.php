@@ -7,7 +7,8 @@
 <main class="modal fade " id="requestResourceModal<?php echo $resource['item_code']; ?>" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered w-1/2">
         <div class="modal-content">
-            <form action="/coordinator/resources/requests" method="POST" class="modal-body h-fit flex flex-col gap-2">
+            <form action="/custodian/custodian-resources/requests" method="POST" class="modal-body h-fit flex flex-col gap-2">
+                <input name="_method" value="PATCH" hidden />
                 <input name="request_to_update" value="<?php echo $resource["id"]; ?>" hidden />
                 <input name="id" value="<?php echo $resource["school_id"]; ?>" hidden />
                 <input name="item_code" value="<?php echo $resource["item_code"]; ?>" hidden />
@@ -61,7 +62,10 @@
                 </h1>
                 </div>
                 <div class="modal-footer mt-4">
-                    <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Close</button>
+                    <?php if ($resource['item_request_status'] == 0): ?>
+                        <button type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Cancel Request</button>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>

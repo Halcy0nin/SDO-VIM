@@ -75,7 +75,8 @@ $resources = $db->paginate('
 $statusMap = [
     0 => 'Pending',
     1 => 'Approved',
-    2 => 'Rejected'
+    2 => 'Rejected',
+    3 => 'Cancelled'
 ];
 
 view('resources/requests/index.view.php', [

@@ -7,7 +7,7 @@
 <main class="modal fade " id="editRequestModal<?php echo $request['id']; ?>" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered w-1/2">
         <div class="modal-content">
-            <form action="/coordinator/resources/edit-requests" method="POST" class="modal-body h-fit flex flex-col gap-2">
+            <form action="/custodian/custodian-resources/edit-requests" method="POST" class="modal-body h-fit flex flex-col gap-2">
                 <input name="_method" value="PATCH" hidden />
                 <input name="request_to_update" value="<?php echo $request["id"]; ?>" hidden />
                 <input name="id" value="<?php echo $request["school_id"]; ?>" hidden />
@@ -119,7 +119,10 @@
                 </h1>
                 </div>
                 <div class="modal-footer mt-4">
-                    <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Close</button>
+                    <?php if ($request['item_request_status'] == 0): ?>
+                        <button type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Cancel Request</button>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>

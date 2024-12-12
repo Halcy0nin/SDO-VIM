@@ -141,9 +141,9 @@ $years = range($currentYear, $earliestYear);
 $statusMap = [
     0 => 'Pending',
     1 => 'Approved',
-    2 => 'Rejected'
+    2 => 'Rejected',
+    3 => 'Cancelled'
 ];
-
 // Render the view
 view('custodian-resources/requests/index.view.php', [
     'heading' => 'Add Item Requests',
