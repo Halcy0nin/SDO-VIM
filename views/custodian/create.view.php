@@ -14,7 +14,6 @@ require base_path('views/partials/head.php') ?>
                </h2>
       </div>  
       <!-- Hide add receipt temporarily -->
-      <!-- <//?php require base_path('views/partials/custodian/add_receipt_modal.php') ?> -->
    </section>
    
    <section class="mx-6 px-12 flex gap-6">

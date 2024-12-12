@@ -159,7 +159,7 @@ require base_path('views/partials/head.php') ?>
                                             </a>
                                         </button>
                                         <!-- hide view receipt temporarily -->
-                                        <!-- <//?php require base_path('views/partials/coordinator/schools/view_receipt_modal.php') ?> -->
+                                        <?php require base_path('views/partials/coordinator/schools/view_receipt_modal.php') ?>
                                         <?php require base_path('views/partials/coordinator/schools/edit_school_modal.php') ?>
                                         <?php require base_path('views/partials/coordinator/schools/delete_school_modal.php') ?>
                                     </div>
