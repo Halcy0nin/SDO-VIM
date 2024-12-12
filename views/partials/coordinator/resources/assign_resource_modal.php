@@ -40,62 +40,113 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Add event listener for all modals
-    document.querySelectorAll('.modal').forEach(modal => {
-        const dropdown = modal.querySelector('.custom-dropdown');
-        const selected = modal.querySelector('#dropdown-selected');
-        const optionsContainer = modal.querySelector('.custom-dropdown-options');
-        const options = modal.querySelectorAll('.custom-option');
-        const hiddenInput = modal.querySelector('#school_id');
 
-        if (dropdown) {
-            // Toggle dropdown visibility when clicking on the selected area
-            dropdown.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent event from bubbling
-                dropdown.classList.toggle('active');
-                optionsContainer.style.display = dropdown.classList.contains('active') ? 'block' : 'none';
-            });
+// Function to initialize or re-initialize the dropdown behavior
+function initializeDropdown(modal) {
+    const dropdown = modal.querySelector('.custom-dropdown');
+    const selected = modal.querySelector('#dropdown-selected');
+    const optionsContainer = modal.querySelector('.custom-dropdown-options');
+    const options = modal.querySelectorAll('.custom-option');
+    const hiddenInput = modal.querySelector('#school_id');
 
-            // Handle option selection
-            options.forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const value = option.getAttribute('data-value');
-                    const text = option.textContent;
+    // Reset dropdown state when the modal is shown
+    dropdown.classList.remove('active');
+    optionsContainer.style.display = 'none';
+    selected.textContent = 'Select School';  // Optionally reset the selected label to default
 
-                    selected.textContent = text;
-                    hiddenInput.value = value;
+    // If there's only one option, set it as the default and hide the dropdown
+    if (options.length === 1) {
+        selected.textContent = options[0].textContent; // Select the only option
+        hiddenInput.value = options[0].getAttribute('data-value');
+        optionsContainer.style.display = 'none';  // Hide the dropdown
+        dropdown.classList.remove('active');  // Remove active class to prevent interaction
+    }
 
+    // Toggle dropdown visibility when clicking on the selected area
+    dropdown.addEventListener('click', toggleDropdown);
 
-
-
-
-                    // Close dropdown
-                    dropdown.classList.remove('active');
-                    optionsContainer.style.display = 'none';
-                });
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', () => {
-                dropdown.classList.remove('active');
-                optionsContainer.style.display = 'none';
-            });
-        }
+    // Update selected value and close dropdown when an option is clicked
+    options.forEach(option => {
+        option.addEventListener('click', selectOption);
     });
 
+    // Close dropdown if clicking outside of it
+    document.addEventListener('click', closeDropdownOutside);
 
-    // Reapply dropdown functionality on modal show
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('shown.bs.modal', () => {
+    // Helper functions
+
+    // Toggle dropdown open/close
+    function toggleDropdown(e) {
+        e.stopPropagation(); // Prevent click from bubbling up
+        if (options.length > 1) {
+            dropdown.classList.toggle('active');
+            optionsContainer.style.display = dropdown.classList.contains('active') ? 'block' : 'none';
+        }
+    }
+
+    // Select option and close dropdown
+    function selectOption(e) {
+        e.stopPropagation(); // Prevent click from bubbling up
+
+        const value = e.target.getAttribute('data-value');
+        const text = e.target.textContent;
+
+        // Update the display text of the dropdown to show the selected option
+        selected.textContent = text;
+        hiddenInput.value = value;
+
+        // Close the dropdown after selecting an option
+        dropdown.classList.remove('active');
+        optionsContainer.style.display = 'none';
+    }
+
+    // Close dropdown if clicking outside of it
+    function closeDropdownOutside(e) {
+        if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+            optionsContainer.style.display = 'none';
+        }
+    }
+
+    // Remove event listeners when modal is closed
+    modal.addEventListener('hidden.bs.modal', () => {
+        dropdown.removeEventListener('click', toggleDropdown);
+        options.forEach(option => {
+            option.removeEventListener('click', selectOption);
+        });
+        document.removeEventListener('click', closeDropdownOutside);
+    });
+}
+
+// Attach event listeners to modals to initialize dropdown when modal is shown
+const modals = document.querySelectorAll('.modal');
+modals.forEach(modal => {
+    modal.addEventListener('shown.bs.modal', function () {
+        // Re-initialize the dropdown each time the modal is shown
+        initializeDropdown(this);
+    });
+});
+
+// Handle the eye icon to show the modal and trigger the dropdown
+const eyeIcons = document.querySelectorAll('.view-btn');
+eyeIcons.forEach(icon => {
+    icon.addEventListener('click', (e) => {
+        const targetModalId = e.target.closest('[data-bs-target]').getAttribute('data-bs-target');
+        const modal = document.querySelector(targetModalId);
+
+        // Wait until the modal is shown, then trigger the dropdown
+        $(modal).on('shown.bs.modal', function () {
+            // Automatically open the dropdown when the modal is shown
             const dropdown = modal.querySelector('.custom-dropdown');
-            if (dropdown) {
-                dropdown.classList.remove('active');
-                const optionsContainer = dropdown.querySelector('.custom-dropdown-options');
-                optionsContainer.style.display = 'none';
+            const optionsContainer = modal.querySelector('.custom-dropdown-options');
+            if (dropdown && optionsContainer) {
+                dropdown.classList.add('active');
+                optionsContainer.style.display = 'block';
             }
         });
     });
+});
+
 });
 
 
