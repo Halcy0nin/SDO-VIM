@@ -586,7 +586,7 @@ body {
 .custom-dropdown {
   position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 350px;
   cursor: pointer;
   border: 1px solid #434F72;
   border-radius: 8px;
