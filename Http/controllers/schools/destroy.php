@@ -21,11 +21,23 @@ try {
         'id_to_delete' => $_POST['id_to_delete'],
     ]);
 
+    if (isset($_POST['delete_account'])){
+        $db->query('UPDATE users SET is_archived = 1 WHERE school_id = :id_to_delete', [
+            'id_to_delete' => $_POST['id_to_delete'],
+        ]);
+
+         // Show success message
+        toast('Successfully archived school with code: ' . $school['school_id'] . ' and its associated inventory items and user account.');
+        // Redirect to the schools list
+        redirect('/coordinator/schools');
+
+    }else{
     // Show success message
     toast('Successfully archived school with code: ' . $school['school_id'] . ' and its associated inventory items.');
 
     // Redirect to the schools list
     redirect('/coordinator/schools');
+    }
 
 } catch (PDOException $e) {
     // Log the error message for debugging

@@ -22,7 +22,10 @@
                     <h3 class="text-lg">
                         Are you sure you want to archive <span class="font-bold text-[#434F72]"><?php echo $school['school_name'] ?></span>?
                     </h3>
-                    <p>This action cannot be undone.</p>
+                    <div class="form-check form-switch">
+                        <input name="delete_account" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault"><b>Archive account associated with school?</b></label>
+                    </div>
                 </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>

@@ -21,12 +21,25 @@ try {
         'school_id' => $_POST['school_id']
     ]);
 
+    if (isset($_POST['unarchive_account'])){
+        $db->query('UPDATE users SET is_archived = 0 WHERE school_id = :school_id', [
+            'school_id' => $_POST['school_id'],
+        ]);
+
+         // Show success message
+        toast('Successfully unarchived school with code: ' . $school['school_id'] . ' and its associated inventory items and user account.');
+        // Redirect to the schools list
+        redirect('/coordinator/schools/archived');
+
+    }else{
+
     // Show success message
     toast('Successfully unarchived school with code: ' . $school['school_id'] . ' and its associated inventory items.');
 
     // Redirect to the schools list
     redirect('/coordinator/schools/archived');
 
+    }
 } catch (PDOException $e) {
     // Log the error message for debugging
     error_log($e->getMessage());
