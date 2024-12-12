@@ -11,6 +11,9 @@ require base_path('views/partials/head.php') ?>
 <main class="main-col">
     <section class="flex items-center pr-12 gap-3">
         <?php require base_path('views/partials/banner.php') ?>
+        <?php require base_path('views/partials/coordinator/users/add_user_modal.php') ?>
+        <?php require base_path('views/partials/coordinator/users/import_user_modal.php') ?>
+        <?php require base_path('views/partials/coordinator/users/export_user_modal.php') ?>
     </section>
     <section class="mx-12 mb-12 h-dvh rounded flex flex-col">
         <?php require base_path('views/partials/coordinator/users/tabs.php') ?>
