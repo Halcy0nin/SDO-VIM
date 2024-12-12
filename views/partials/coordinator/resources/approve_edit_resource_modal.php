@@ -117,16 +117,20 @@
                             ?> 
                     </span>
                 </h1>
-                <h1 style="font-size: 1.1em; margin-top: 50px; color: #434F72; font-family: 'Roboto', sans-serif;">
-                    Are you sure you want to apply these changes to: 
-                    <b style="color: #2c3e50;"><?php echo $request['item_code']; ?></b> to be added to: 
-                    <b style="color: #2c3e50;"><?php echo $request['school_name']; ?></b>?
-                </h1>
+                <?php if ($request['item_request_status'] == 0): ?>
+                    <h1 style="font-size: 1.1em; margin-top: 50px; color: #434F72; font-family: 'Roboto', sans-serif;">
+                        Are you sure you want to apply these changes to: 
+                        <b style="color: #2c3e50;"><?php echo $request['item_code']; ?></b> to be added to: 
+                        <b style="color: #2c3e50;"><?php echo $request['school_name']; ?></b>?
+                    </h1>
+                <?php endif; ?>
                 </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn font-bold text-white bg-red-500 hover:bg-red-400">Reject</button>
-                    <button name="approve_request" type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Approve</button>
+                    <?php if ($request['item_request_status'] == 0): ?>
+                        <button type="submit" class="btn font-bold text-white bg-red-500 hover:bg-red-400">Reject</button>
+                        <button name="approve_request" type="submit" class="btn font-bold text-white bg-green-500 hover:bg-green-400">Approve</button>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>
