@@ -48,17 +48,18 @@ try {
     $db->query('INSERT INTO add_item_requests (
         item_code, item_article, item_desc, date_acquired,
         item_unit_value, item_quantity, item_funds_source,
-        item_active, item_inactive, school_id
+        item_active, item_inactive, school_id, warranty_end
     ) VALUES (
         :item_code, :item_article, :item_desc, :date_acquired,
         :item_unit_value, :item_quantity, :item_funds_source,
-        :item_active, :item_inactive, :id
+        :item_active, :item_inactive, :id, :warranty_end
     );', [
         'id' => $id ?? null,
         'item_code' => $item_code,
         'item_article' => $_POST['item_article'],
         'item_desc' => $_POST['item_desc'],
         'date_acquired' => $_POST['date_acquired'],
+        'warranty_end' => $_POST['warranty_end'],
         'item_unit_value' => $_POST['item_unit_value'],
         'item_quantity' => $_POST['item_quantity'],
         'item_funds_source' => $_POST['item_funds_source'],

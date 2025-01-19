@@ -56,6 +56,7 @@ SELECT
         ar.item_code,
         ar.school_id,
         ar.date_acquired,
+        ar.warranty_end,
         s.school_name,
         ar.request_date,
         ar.item_article,

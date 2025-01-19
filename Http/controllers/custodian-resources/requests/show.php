@@ -107,6 +107,7 @@ $resources = $db->paginate("
         ar.school_id,
         s.school_name,
         ar.request_date,
+        ar.warranty_end,
         ar.item_article,
         ar.item_desc,
         ar.item_quantity,

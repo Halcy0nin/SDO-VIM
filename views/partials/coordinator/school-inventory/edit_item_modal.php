@@ -66,7 +66,12 @@
                 <?php endif; ?>
 
                 <div>
+                    <p>Date Acquired</p>
                     <input type="date" name="date_acquired" value="<?php echo $item['date_acquired'] ?>" />
+                </div>
+                <div>
+                    <p>Warranty End Date</p>
+                    <input type="date" name="warranty_end" value="<?php echo $item['warranty_end'] ?>" />
                 </div>
                 <div>
                     <?php text_input('Source of Funds', 'item_funds_source', 'Source Of Funds', $item['item_funds_source'] ?? '') ?>

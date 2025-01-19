@@ -100,6 +100,7 @@ $items = $db->paginate("
         item_article,
         si.school_id,
         item_desc,
+        warranty_end,
         date_acquired,
         date_updated,
         item_unit_value,

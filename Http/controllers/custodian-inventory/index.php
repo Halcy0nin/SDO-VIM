@@ -82,6 +82,7 @@ SELECT
         si.school_id,
         item_article,
         item_desc,
+        warranty_end,
         date_acquired,
         date_updated,
         item_unit_value,
