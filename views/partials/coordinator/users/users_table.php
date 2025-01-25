@@ -104,7 +104,7 @@
                                     <?php require base_path('views/partials/coordinator/users/unarchive_user_modal.php') ?>
                                 <?php else: ?>
                                     <!-- Default Buttons -->
-                                    <?php require base_path('views/partials/coordinator/users/password_change_modal.php') ?>
+                                    <?//php require base_path('views/partials/coordinator/users/password_change_modal.php') ?>
                                     <?php require base_path('views/partials/coordinator/users/edit_user_modal.php') ?>
                                     <?php require base_path('views/partials/coordinator/users/delete_user_modal.php') ?>
                                 <?php endif; ?>
