@@ -39,6 +39,15 @@
                     </span>
                 </div>
             </th>
+            <th class="w-[5ch]">
+                <div class="header-content">
+                    Status
+                    <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(4)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(4)"></i>
+                    </span>
+                </div>
+            </th>
             <?php if ($options ?? false): ?>
                 <th class="w-[12ch]">Actions</th>
             <?php endif; ?>
@@ -51,7 +60,8 @@
                         <td><?= htmlspecialchars($request['user_name']) ?></td>
                         <td><?= htmlspecialchars($request['new_username']) ?></td>
                         <td><?= htmlspecialchars($request['date_requested']) ?></td>
-                        <?php if ($options ?? false): ?>
+                        <td><?= htmlspecialchars($statusMap[$request['user_status']]) ?></td>
+                        <?php if ($request['user_status'] != 2 && $request['user_status'] != 3): ?>
                             <td>
                                 <div class="h-full w-full flex items-center gap-2">
                                     <?php require base_path('views/partials/coordinator/users/approve.php') ?>

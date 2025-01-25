@@ -215,7 +215,7 @@ $router->patch('/custodian/custodian-resources/unassigned', '/custodian-resource
 //Profile Page
 $router->get('/custodian/profile', 'profile/index.php')->only('custodian');
 //Edit Username Request
-$router->patch('/custodian/profile', 'profile/store.php')->only('custodian');
+$router->post('/custodian/profile', 'profile/store.php')->only('custodian');
 
 $router->get('/403', 'http_errors/403.php');
 $router->get('/404', 'http_errors/404.php');

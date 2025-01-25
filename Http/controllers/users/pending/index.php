@@ -72,16 +72,19 @@ FROM
 JOIN 
     schools s ON u.school_id = s.school_id
 JOIN 
-    user_requests r ON u.user_id = r.user_id
-WHERE 
-    r.user_status = 1;
-
-    
+    user_requests r ON u.user_id = r.user_id;
 ")->get();
+
+$statusMap = [
+    1 => 'Pending',
+    2 => 'Approved',
+    3 => 'Denied'
+];
 
 view('users/pending/index.view.php', [
     'notificationCount' => $notificationCount,
-    'heading' => 'Pending Requests',
+    'heading' => 'Requests',
     'requests' => $requests,
+    'statusMap' => $statusMap,
     'pagination' => $pagination
 ]);
