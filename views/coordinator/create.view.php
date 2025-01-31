@@ -75,7 +75,10 @@ require base_path('views/partials/head.php') ?>
       </div>
       <div class="flex items-center gap-6 h-1/2">
          <div class="h-full bg-zinc-50 border-[1px] rounded-lg p-3 shrink-0 w-1/3"><canvas id="i_ratio"></canvas></div>
-         <div class="h-full bg-zinc-50 border-[1px] rounded-lg p-3 flex-1"><canvas id="inventory"></canvas></div>
+         <div class="h-full bg-zinc-50 border-[1px] rounded-lg p-3 flex-1" style="max-width: 550px;"><canvas id="inventory"></canvas></div>
+         <div class="h-full bg-zinc-50 border-[1px] rounded-lg p-3 flex-1" style="max-width: 550px;"> <h3 class="text-lg font-semibold mb-2" style="color: black;">School Status</h3> 
+         <canvas id="schoolStatusCanvas" width="500" height="300"></canvas>
+</div>
       </div>
    </section>
 </main>
@@ -273,8 +276,6 @@ require base_path('views/partials/head.php') ?>
    });
 </script>
 
-
-
 <script>
    const i_ratio_ctx = document.getElementById('i_ratio').getContext('2d');
    const i_ratio = new Chart(i_ratio_ctx, {
@@ -317,6 +318,46 @@ require base_path('views/partials/head.php') ?>
    },
    plugins: [ChartDataLabels] 
 });
+</script>
+
+<script>
+  // Select the canvas element
+  const canvas = document.getElementById('schoolStatusCanvas');
+
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+
+    if (ctx) {
+      // Table settings
+      const rowHeight = 30; // Height of each row
+      const startX = 10; // Starting x position
+      const startY = 30; // Starting y position for the header (moved closer to the top)
+      const numberOfRows = 6; // 1 header row + 5 data rows
+      const columnOffsets = [-10, 60, 290, 420]; // Starting x positions for each column
+
+      // Table header
+      const headers = ["ID", "School Name", "Status", "Action"];
+      ctx.font = "bold 14px Arial";
+      ctx.fillStyle = "#000";
+
+      // Draw headers
+      headers.forEach((header, index) => {
+        ctx.fillText(header, startX + columnOffsets[index], startY);
+      });
+
+      // Empty rows (no placeholders, just vertical spacing)
+      ctx.font = "12px Arial";
+      for (let i = 1; i < numberOfRows; i++) {
+        const y = startY + i * rowHeight;
+
+        // Leave rows blank (no text added here)
+      }
+    } else {
+      console.error("2D context is not supported on this browser.");
+    }
+  } else {
+    console.error("Canvas element not found.");
+  }
 </script>
 
 <?php require base_path('views/partials/footer.php') ?>
