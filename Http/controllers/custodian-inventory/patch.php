@@ -21,7 +21,8 @@ try {
         item_active,
         item_inactive,
         item_unit_value,
-        item_funds_source
+        item_funds_source,
+        warranty_end
     ) VALUES (
         :item_code,
         :school_id,
@@ -32,12 +33,14 @@ try {
         :item_active,
         :item_inactive,
         :item_unit_value,
-        :item_funds_source
+        :item_funds_source,
+        :warranty_end
     );', [
         'item_code' => $item_code,
         'school_id' => $_POST['school_id'],
         'item_article' => $_POST['item_article'],
         'item_desc' => $_POST['item_desc'],
+        'warranty_end' => $_POST['warranty_end'],
         'item_quantity' => $_POST['item_quantity'],
         'item_active' => $_POST['item_active'] - $_POST['item_repair_count'] - $_POST['item_condemned_count'],
         'item_inactive' => $_POST['item_inactive'] + $_POST['item_repair_count'] + $_POST['item_condemned_count'],

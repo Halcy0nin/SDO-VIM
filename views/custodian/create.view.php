@@ -67,7 +67,7 @@ require base_path('views/partials/head.php') ?>
          plugins: {
             title: {
                display: true,
-               text: 'No. of Equpments per Article'
+               text: 'Top 5 Equipment by Quantity'
             }
          }
       }

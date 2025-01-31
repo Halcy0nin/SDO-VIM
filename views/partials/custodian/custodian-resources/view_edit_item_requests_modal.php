@@ -117,6 +117,10 @@
                             ?> 
                     </span>
                 </h1>
+                <h1 style="font-size: 1.1em; margin-bottom: 12px; color: #434F72; font-family: 'Roboto', sans-serif; font-weight: 700;">
+                    Warranty End Date 
+                    <span style="font-weight: 400; color: #000;"><?php echo formatTimestamp($request['warranty_end']) ?></span>
+                </h1>
                 </div>
                 <div class="modal-footer mt-4">
                     <button type="button" class="btn font-bold text-[#000] hover:text-red-500 border-[1px] border-[#000] hover:border-red-500" data-bs-dismiss="modal">Close</button>

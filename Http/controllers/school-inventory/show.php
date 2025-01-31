@@ -109,6 +109,7 @@ $items = $db->paginate("
         si.item_article,
         si.item_desc,
         si.date_acquired,
+        si.warranty_end,
         si.date_updated,
         si.item_unit_value,
         si.item_total_value,

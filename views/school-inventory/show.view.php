@@ -101,6 +101,24 @@ require base_path('views/partials/head.php') ?>
                      </span>
                   </div>
                </th>
+               <th style="width: 10ch;">
+                  <div class="header-content">
+                     Warranty End Date
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                     </span>
+                  </div>
+               </th>
+               <th style="width: 10ch;">
+                  <div class="header-content">
+                     Warranty Status
+                     <span class="sort-icons">
+                        <i class="fas fa-sort-up sort-icon" onclick=" sortTable(1)"></i>
+                        <i class="fas fa-sort-down sort-icon" onclick=" sortTable(1)"></i>
+                     </span>
+                  </div>
+               </th>
                <th style="width: 11ch;">
                   <div class="header-content">
                      Status
@@ -191,6 +209,12 @@ require base_path('views/partials/head.php') ?>
                         <td><?= htmlspecialchars($item['item_article']) ?></td>
                         <td><?= htmlspecialchars($item['item_desc']) ?></td>
                         <td><?= htmlspecialchars($item['date_acquired']) ?></td>
+                        <td><?= htmlspecialchars($item['warranty_end']) ?></td>
+                        <?php if (date('Y-m-d') >= $item['warranty_end']): ?>
+                           <td>Expired</td>
+                        <?php else: ?>
+                           <td>Active</td>
+                        <?php endif; ?>
                         <td><?= htmlspecialchars($statusMap[$item['item_status']]) ?></td>
                         <td><?= htmlspecialchars($item['item_funds_source']) ?></td>
                         <td><?= htmlspecialchars($item['item_unit_value']) ?></td>
@@ -219,7 +243,7 @@ require base_path('views/partials/head.php') ?>
             </tbody>
             <tfoot class="overflow-hidden">
                <tr>
-                  <td colspan="13" class="py-2 pr-4">
+                  <td colspan="15" class="py-2 pr-4">
                      <div class="w-full flex items-center justify-end gap-2">
                         <p class="grow text-end mr-2">Page - <?= htmlspecialchars($pagination['pages_current']) ?> / <?= htmlspecialchars($pagination['pages_total']) ?></p>
                         <?php if ($pagination['pages_total'] > 1): ?>

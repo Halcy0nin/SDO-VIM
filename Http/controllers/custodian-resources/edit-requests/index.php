@@ -50,6 +50,7 @@ $itemRequests = $db->paginate('
         ir.item_code,
         ir.item_request_status,
         ir.school_id,
+        ir.warranty_end,
         s.school_name,
         ir.request_date,
         ir.item_article,

@@ -68,6 +68,10 @@
                     <p class="text-xs text-zinc-500 ml-2 mb-1">Date Acquired</p>
                     <input type="date" name="date_acquired" value="$old['date_acquired']" class=" text-[#434F72]" />
                 </div>
+                <div class="my-1">
+                    <p class="text-xs text-zinc-500 ml-2 mb-1">Warranty End Date</p>
+                    <input type="date" name="warranty_end" class=" text-[#434F72]" />
+                </div>
                 <div>
                     <?php text_input('Source of Funds', 'item_funds_source', 'Source Of Funds', $old['item_funds_source'] ?? '') ?>
                 </div>
