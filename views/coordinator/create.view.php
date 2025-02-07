@@ -329,11 +329,11 @@ require base_path('views/partials/head.php') ?>
 
     if (ctx) {
       // Table settings
-      const rowHeight = 30; // Height of each row
+      const rowHeight = 40; // Increased row height for more gap
       const startX = 10; // Starting x position
-      const startY = 30; // Starting y position for the header (moved closer to the top)
+      const startY = 30; // Starting y position for the header
       const numberOfRows = 6; // 1 header row + 5 data rows
-      const columnOffsets = [-10, 60, 290, 420]; // Starting x positions for each column
+      const columnOffsets = [-10, 60, 290, 420]; // Column positions
 
       // Table header
       const headers = ["ID", "School Name", "Status", "Action"];
@@ -345,12 +345,14 @@ require base_path('views/partials/head.php') ?>
         ctx.fillText(header, startX + columnOffsets[index], startY);
       });
 
-      // Empty rows (no placeholders, just vertical spacing)
-      ctx.font = "12px Arial";
+      // Draw horizontal lines for rows (gray lines)
+      ctx.strokeStyle = "#ccc"; // Light gray color
       for (let i = 1; i < numberOfRows; i++) {
-        const y = startY + i * rowHeight;
-
-        // Leave rows blank (no text added here)
+        const y = startY + i * rowHeight + 5; // Increased spacing
+        ctx.beginPath();
+        ctx.moveTo(startX, y);
+        ctx.lineTo(canvas.width - 10, y);
+        ctx.stroke();
       }
     } else {
       console.error("2D context is not supported on this browser.");
