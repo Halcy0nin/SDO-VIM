@@ -76,8 +76,28 @@ require base_path('views/partials/head.php') ?>
       <div class="flex items-center gap-6 h-1/2">
          <div class="h-full bg-zinc-50 border-[1px] rounded-lg p-3 shrink-0 w-1/3"><canvas id="i_ratio"></canvas></div>
          <div class="h-full bg-zinc-50 border-[1px] rounded-lg p-3 flex-1" style="max-width: 550px;"><canvas id="inventory"></canvas></div>
-         <div class="h-full bg-zinc-50 border-[1px] rounded-lg p-3 flex-1" style="max-width: 550px;"> <h3 class="text-lg font-semibold mb-2" style="color: black;">School Status</h3> 
+         <div class="h-full bg-zinc-50 border-[1px] rounded-lg p-3 flex-1" style="max-width: 550px;"> <h3 class="text-lg font-bold mb-2" style="color: black;">School Status</h3> 
          <canvas id="schoolStatusCanvas" width="500" height="300"></canvas>
+         <!-- School Status Modal -->
+            <div class="modal fade" id="schoolModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header" style="font-weight: bold;color: black;">
+                     School Status Details
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body" style="color: black;">
+                     <p><strong>School Name:</strong> <span id="modalSchoolName"></span></p>
+                     <p><strong>Affected Percentage:</strong> <span id="modalAffectedPercentage"></span>%</p>
+                     <p><strong>Broken/Condemned Items:</strong></p>
+                     <ul id="modalItemList"></ul>
+                     </div>
+                     <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
 </div>
       </div>
    </section>
@@ -155,7 +175,7 @@ require base_path('views/partials/head.php') ?>
          plugins: {
             title: {
                display: true,
-               text: 'Top 5 Equipment by Quantity'
+               text: 'Top 5 Least Equipment by Quantity'
             }
          }
       }
@@ -321,46 +341,108 @@ require base_path('views/partials/head.php') ?>
 </script>
 
 <script>
-  // Select the canvas element
-  const canvas = document.getElementById('schoolStatusCanvas');
+  const canvas = document.getElementById("schoolStatusCanvas");
+  const schoolStatus = JSON.parse('<?php echo $schoolStatus; ?>');
 
   if (canvas) {
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
 
     if (ctx) {
-      // Table settings
-      const rowHeight = 40; // Increased row height for more gap
-      const startX = 10; // Starting x position
-      const startY = 30; // Starting y position for the header
-      const numberOfRows = 6; // 1 header row + 5 data rows
-      const columnOffsets = [-10, 60, 290, 420]; // Column positions
+      const rowHeight = 40;
+      const startX = 10;
+      const startY = 30;
+      const columnOffsets = [-10, 60, 290, 420];
+      const rowAreas = []; // Store row positions for click detection
 
-      // Table header
-      const headers = ["ID", "School Name", "Status", "Action"];
       ctx.font = "bold 14px Arial";
       ctx.fillStyle = "#000";
-
-      // Draw headers
+      const headers = ["ID", "School Name", "Status"];
+      
       headers.forEach((header, index) => {
         ctx.fillText(header, startX + columnOffsets[index], startY);
       });
 
-      // Draw horizontal lines for rows (gray lines)
-      ctx.strokeStyle = "#ccc"; // Light gray color
-      for (let i = 1; i < numberOfRows; i++) {
-        const y = startY + i * rowHeight + 5; // Increased spacing
+      ctx.strokeStyle = "#ccc";
+      ctx.beginPath();
+      ctx.moveTo(startX, startY + 10);
+      ctx.lineTo(canvas.width - startX, startY + 10);
+      ctx.stroke();
+
+      ctx.font = "12px Arial";
+
+      schoolStatus.forEach((school, i) => {
+        const affectedPercentage = parseFloat(school.affected_percentage);
+        const y = startY + (i + 1) * rowHeight;
+        const rowTop = y - 15;
+        const rowBottom = y + 10;
+
+        ctx.fillStyle = "#000";
+        ctx.fillText(school.school_id, startX + columnOffsets[0], y);
+        ctx.fillText(school.school_name, startX + columnOffsets[1], y);
+
+        let status, statusColor;
+        if (affectedPercentage > 50) {
+          status = "Critical";
+          statusColor = "#FF0000";
+        } else if (affectedPercentage === 50) {
+          status = "Warning";
+          statusColor = "#FFA500";
+        } else {
+          status = "Normal";
+          statusColor = "#000";
+        }
+
+        ctx.font = "bold 12px Arial";
+        ctx.fillStyle = statusColor;
+        ctx.fillText(status, startX + columnOffsets[2], y);
+        ctx.font = "12px Arial";
+        ctx.fillStyle = "#000";
+
+        rowAreas.push({ yStart: rowTop, yEnd: rowBottom, school });
+
+        ctx.strokeStyle = "#ccc";
         ctx.beginPath();
-        ctx.moveTo(startX, y);
-        ctx.lineTo(canvas.width - 10, y);
+        ctx.moveTo(startX, y + 10);
+        ctx.lineTo(canvas.width - startX, y + 10);
         ctx.stroke();
+      });
+
+      canvas.addEventListener("click", function (event) {
+        const rect = canvas.getBoundingClientRect();
+        const clickY = event.clientY - rect.top;
+
+        rowAreas.forEach(row => {
+          if (clickY >= row.yStart && clickY <= row.yEnd) {
+            openModal(row.school);
+          }
+        });
+      });
+
+      function openModal(school) {
+        document.getElementById("modalSchoolName").textContent = school.school_name;
+        document.getElementById("modalAffectedPercentage").textContent = school.affected_percentage;
+        
+        const itemList = document.getElementById("modalItemList");
+        itemList.innerHTML = ""; // Clear previous items
+
+        if (school.broken_condemned_items) {
+          const items = school.broken_condemned_items.split(", ");
+          items.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            itemList.appendChild(li);
+          });
+        } else {
+          itemList.innerHTML = "<li>No broken items</li>";
+        }
+
+        const modal = new bootstrap.Modal(document.getElementById("schoolModal"));
+        modal.show();
       }
-    } else {
-      console.error("2D context is not supported on this browser.");
     }
-  } else {
-    console.error("Canvas element not found.");
   }
 </script>
+
 
 <?php require base_path('views/partials/footer.php') ?>
 

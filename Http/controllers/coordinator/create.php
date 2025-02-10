@@ -73,7 +73,7 @@ $itemArticleCountQuery = $db->query('
     AND 
     is_archived = 0
     GROUP BY item_article
-    ORDER BY article_count DESC
+    ORDER BY article_count ASC
     LIMIT 5
 ');
 
@@ -173,6 +173,19 @@ $notificationCountQuery = $db->query('
     'user_id' => get_uid(),
 ])->find();
 
+//Schools in need of Allocation
+$school_status_query = $db->query('
+SELECT si.school_id, s.school_name, (SUM(si.item_count) / total_items.total_count) * 100 AS affected_percentage, 
+GROUP_CONCAT(CONCAT(si.item_article, " (", si.item_count, ")") SEPARATOR ", ") AS broken_condemned_items FROM  
+(SELECT school_id, item_article, COUNT(*) AS item_count FROM school_inventory WHERE item_status IN (2, 3) 
+GROUP BY school_id, item_article ) si JOIN schools s ON si.school_id = s.school_id 
+JOIN (SELECT school_id, COUNT(*) AS total_count FROM school_inventory GROUP BY school_id ) 
+total_items ON si.school_id = total_items.school_id GROUP BY si.school_id HAVING affected_percentage > 50 
+ORDER BY affected_percentage DESC;'
+);
+$schoolStatus = $school_status_query->get();
+$schoolStatusJson = json_encode($schoolStatus);
+
 // Extract the total count
 $notificationCount = $notificationCountQuery['total'];
 
@@ -194,6 +207,7 @@ view('coordinator/create.view.php', [
     'months' => $monthsJson,
     'itemCountsPerMonth' => $itemCountsJson,
     'schoolDropdownContent' => $schoolDropdownContent,
+    'schoolStatus' => $schoolStatusJson,
     'startDate' => null,
     'endDate' => null
 ]);
