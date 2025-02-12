@@ -350,63 +350,106 @@ require base_path('views/partials/head.php') ?>
     if (ctx) {
       const rowHeight = 40;
       const startX = 10;
-      const startY = 30;
-      const columnOffsets = [-10, 60, 290, 420];
-      const rowAreas = []; // Store row positions for click detection
+      const startY = 40;
+      const columnOffsets = [0, 60, 290, 420];
+      let rowAreas = []; // Store row positions for hover/click detection
+      let hoveredRow = null; // Track hovered row
 
-      ctx.font = "bold 14px Arial";
-      ctx.fillStyle = "#000";
-      const headers = ["ID", "School Name", "Status"];
-      
-      headers.forEach((header, index) => {
-        ctx.fillText(header, startX + columnOffsets[index], startY);
-      });
+      function drawTable() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
 
-      ctx.strokeStyle = "#ccc";
-      ctx.beginPath();
-      ctx.moveTo(startX, startY + 10);
-      ctx.lineTo(canvas.width - startX, startY + 10);
-      ctx.stroke();
-
-      ctx.font = "12px Arial";
-
-      schoolStatus.forEach((school, i) => {
-        const affectedPercentage = parseFloat(school.affected_percentage);
-        const y = startY + (i + 1) * rowHeight;
-        const rowTop = y - 15;
-        const rowBottom = y + 10;
-
+        ctx.font = "bold 14px Arial";
         ctx.fillStyle = "#000";
-        ctx.fillText(school.school_id, startX + columnOffsets[0], y);
-        ctx.fillText(school.school_name, startX + columnOffsets[1], y);
-
-        let status, statusColor;
-        if (affectedPercentage > 50) {
-          status = "Critical";
-          statusColor = "#FF0000";
-        } else if (affectedPercentage === 50) {
-          status = "Warning";
-          statusColor = "#FFA500";
-        } else {
-          status = "Normal";
-          statusColor = "#000";
-        }
-
-        ctx.font = "bold 12px Arial";
-        ctx.fillStyle = statusColor;
-        ctx.fillText(status, startX + columnOffsets[2], y);
-        ctx.font = "12px Arial";
-        ctx.fillStyle = "#000";
-
-        rowAreas.push({ yStart: rowTop, yEnd: rowBottom, school });
+        const headers = ["ID", "School Name", "Status"];
+        
+        headers.forEach((header, index) => {
+          ctx.fillText(header, startX + columnOffsets[index], startY);
+        });
 
         ctx.strokeStyle = "#ccc";
         ctx.beginPath();
-        ctx.moveTo(startX, y + 10);
-        ctx.lineTo(canvas.width - startX, y + 10);
+        ctx.moveTo(startX, startY + 10);
+        ctx.lineTo(canvas.width - startX, startY + 10);
         ctx.stroke();
+
+        ctx.font = "12px Arial";
+        rowAreas = []; // Reset row positions
+
+        schoolStatus.forEach((school, i) => {
+          const affectedPercentage = parseFloat(school.affected_percentage);
+          const y = startY + (i + 1) * rowHeight;
+          const rowTop = y - 15;
+          const rowBottom = y + 15;
+
+          rowAreas.push({ yStart: rowTop, yEnd: rowBottom, school });
+
+          // If hovered, draw a gray background covering the entire row
+          if (hoveredRow === i) {
+            ctx.fillStyle = "#e0e0e0"; // Light gray
+            ctx.fillRect(startX, rowTop - 15, canvas.width - startX * 2, rowHeight);
+          }
+
+          ctx.fillStyle = "#000";
+          ctx.fillText(school.school_id, startX + columnOffsets[0], y);
+          ctx.fillText(school.school_name, startX + columnOffsets[1], y);
+
+          let status, statusColor;
+          if (affectedPercentage > 50) {
+            status = "Critical";
+            statusColor = "#FF0000";
+          } else if (affectedPercentage === 50) {
+            status = "Warning";
+            statusColor = "#FFA500";
+          } else {
+            status = "Normal";
+            statusColor = "#000";
+          }
+
+          ctx.font = "bold 12px Arial";
+          ctx.fillStyle = statusColor;
+          ctx.fillText(status, startX + columnOffsets[2], y);
+          ctx.font = "12px Arial";
+          ctx.fillStyle = "#000";
+
+          ctx.strokeStyle = "#ccc";
+          ctx.beginPath();
+          ctx.moveTo(startX, y + 10);
+          ctx.lineTo(canvas.width - startX, y + 10);
+          ctx.stroke();
+        });
+      }
+
+      // Mouse move event for hover effect
+      canvas.addEventListener("mousemove", function (event) {
+      const rect = canvas.getBoundingClientRect();
+      const mouseY = event.clientY - rect.top;
+
+      let newHoveredRow = null;
+      let isHovering = false;
+
+  rowAreas.forEach((row, index) => {
+    if (mouseY >= row.yStart && mouseY <= row.yEnd) {
+      newHoveredRow = index;
+      isHovering = true;
+    }
+  });
+
+  if (newHoveredRow !== hoveredRow) {
+    hoveredRow = newHoveredRow;
+    drawTable(); // Redraw the table with hover effect
+  }
+
+  // Change cursor to pointer if hovering over a row, otherwise default
+  canvas.style.cursor = isHovering ? "pointer" : "default";
+});
+
+      // Mouse leave event to remove highlight
+      canvas.addEventListener("mouseleave", function () {
+        hoveredRow = null;
+        drawTable();
       });
 
+      // Click event to open modal
       canvas.addEventListener("click", function (event) {
         const rect = canvas.getBoundingClientRect();
         const clickY = event.clientY - rect.top;
@@ -439,6 +482,9 @@ require base_path('views/partials/head.php') ?>
         const modal = new bootstrap.Modal(document.getElementById("schoolModal"));
         modal.show();
       }
+
+      // Initial draw
+      drawTable();
     }
   }
 </script>
