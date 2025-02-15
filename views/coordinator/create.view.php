@@ -420,7 +420,7 @@ require base_path('views/partials/head.php') ?>
 
       function openModal(school) {
         document.getElementById("modalSchoolName").textContent = school.school_name;
-        document.getElementById("modalAffectedPercentage").textContent = school.affected_percentage;
+        document.getElementById("modalAffectedPercentage").textContent = parseFloat(school.affected_percentage).toFixed(1);
         
         const itemList = document.getElementById("modalItemList");
         itemList.innerHTML = ""; // Clear previous items
