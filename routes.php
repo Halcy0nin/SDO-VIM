@@ -42,6 +42,8 @@ $router->delete('/', 'session/destroy.php')->only('auth');
 $router->get('/notifications/latest', 'notifications/latest/show.php')->only('auth');
 $router->get('/notifications', 'notifications/index.php')->only('auth');
 
+$router->post('/inventory-check', 'coordinator/inventory_check.php')->only('coordinator');
+
 //Custodian-Specific notifications
 $router->get('/notifications/custodian/latest', 'notifications/custodian/show.php')->only('custodian');
 $router->get('/notifications/custodian', 'notifications/custodian/index.php')->only('custodian');

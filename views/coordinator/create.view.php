@@ -489,6 +489,30 @@ require base_path('views/partials/head.php') ?>
   }
 </script>
 
+<form id="invisible-form" action="/inventory-check" method="POST" style="display: none;">
+    <input type="hidden" name="action" value="send_inventory_email">
+</form>
+
+<script>
+    const isSessionInitialized = <?php echo (session_status() == PHP_SESSION_ACTIVE) ? 'true' : 'false'; ?>;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (isSessionInitialized) {
+            console.log('Session is initialized.');
+
+            // Prevent duplicate form submissions using sessionStorage
+            if (!sessionStorage.getItem('email_sent')) {
+                document.getElementById('invisible-form').submit();
+                sessionStorage.setItem('email_sent', 'true'); // Mark as sent in sessionStorage
+            } else {
+                console.log('Email already sent in this session.');
+            }
+        } else {
+            console.log('Session is not initialized.');
+        }
+    });
+</script>
+
 
 <?php require base_path('views/partials/footer.php') ?>
 
