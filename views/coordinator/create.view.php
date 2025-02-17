@@ -375,6 +375,17 @@ require base_path('views/partials/head.php') ?>
         ctx.font = "12px Arial";
         rowAreas = []; // Reset row positions
 
+         // Filter out schools that are only in "Normal" status
+         const criticalOrWarningSchools = schoolStatus.filter(school => parseFloat(school.affected_percentage) >= 50);
+
+         if (criticalOrWarningSchools.length === 0) {
+         // Display message if no schools are in Critical or Warning status
+         ctx.font = "bold 16px Arial";
+         ctx.fillStyle = "#666";
+         ctx.fillText("No schools in Critical or Warning status", canvas.width / 2 - 150, startY + 50);
+         return; // Exit function early
+         }
+
         schoolStatus.forEach((school, i) => {
           const affectedPercentage = parseFloat(school.affected_percentage);
           const y = startY + (i + 1) * rowHeight;

@@ -32,6 +32,13 @@ function checkInventoryAndSendEmail() {
     );
     $schoolStatus = $school_status_query->get();
 
+    // If no results, redirect without sending an email
+    if (empty($schoolStatus)) {
+        toast('No schools require urgent allocation.');
+        redirect('/');
+        exit;
+    }
+
     $recipient = 'SDO - Valenzuela ICT Coordinator';
     $user_email = 'xandrexxenosaquinde@gmail.com';
     // HTML email message
